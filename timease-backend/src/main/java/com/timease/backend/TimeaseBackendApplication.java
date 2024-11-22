@@ -8,6 +8,10 @@ public class TimeaseBackendApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TimeaseBackendApplication.class, args);
+
+		System.out.println("ALL IS FINE ==== UP AND RUNNING");
+		System.out.println("ALL IS FINE ==== UP AND RUNNING");
+		System.out.println("ALL IS FINE ==== U AND RUNNING");
 	}
 
 }
