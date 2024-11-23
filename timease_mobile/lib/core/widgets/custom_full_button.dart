@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:timease_mobile/constants.dart';
-import 'package:timease_mobile/core/utils/app_router.dart';
+import 'package:timease_mobile/core/utils/styles.dart';
 
-import '../utils/styles.dart';
 
 class CustomFullButton extends StatelessWidget {
   final String text;

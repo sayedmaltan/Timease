@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:timease_mobile/core/utils/app_router.dart';
+import 'package:timease_mobile/core/utils/function/email_check.dart';
 import 'package:timease_mobile/core/utils/function/password_check.dart';
 import 'package:timease_mobile/core/utils/styles.dart';
 import 'package:timease_mobile/core/widgets/custom_full_button.dart';
 import 'package:timease_mobile/core/widgets/custom_text_form_field.dart';
 import 'package:timease_mobile/features/authentication/presentation/views/widgets/custom_password_row.dart';
-import '../../../../../core/utils/function/email_check.dart';
 import 'custom_divider_with_Text.dart';
 import 'custom_field_column.dart';
 import 'custom_sign_with_google.dart';
@@ -56,6 +56,7 @@ class _LoginScreenViewBodyState extends State<LoginScreenViewBody> {
                 if (!isValidEmail(value)) {
                   return validateEmail(value);
                 }
+                return null;
               },
             ),
             CustomPasswordRow(
@@ -72,6 +73,7 @@ class _LoginScreenViewBodyState extends State<LoginScreenViewBody> {
               if (!isStrongPassword(value)) {
                 return validatePassword(value);
               }
+              return null;
             },
             ),
             SizedBox(

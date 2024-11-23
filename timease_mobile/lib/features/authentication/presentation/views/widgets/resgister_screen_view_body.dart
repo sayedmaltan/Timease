@@ -57,6 +57,7 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
                 if (!isValidEmail(value)) {
                   return validateEmail(value);
                 }
+                return null;
               },
             ),
             CustomFieldColumn(
@@ -67,6 +68,7 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
                 if (value.toString().isEmpty) {
                   return 'Please enter your name';
                 }
+                return null;
               },
             ),
             CustomPasswordRow(
@@ -84,6 +86,7 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
                 if (!isStrongPassword(value)) {
                   return validatePassword(value);
                 }
+                return null;
               },
             ),
             SizedBox(

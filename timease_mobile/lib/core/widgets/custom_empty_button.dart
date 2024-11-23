@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:timease_mobile/core/utils/app_router.dart';
-import 'package:timease_mobile/core/widgets/custom_full_button.dart';
+import 'package:timease_mobile/constants.dart';
+import 'package:timease_mobile/core/utils/styles.dart';
 
-import '../../constants.dart';
-import '../utils/styles.dart';
 
 class CustomEmptyButton extends StatelessWidget {
   final String text;
