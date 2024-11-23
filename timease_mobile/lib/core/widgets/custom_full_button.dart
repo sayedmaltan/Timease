@@ -3,26 +3,31 @@ import 'package:go_router/go_router.dart';
 import 'package:timease_mobile/constants.dart';
 import 'package:timease_mobile/core/utils/app_router.dart';
 
-import '../../../../../core/utils/styles.dart';
+import '../utils/styles.dart';
 
 class CustomFullButton extends StatelessWidget {
+  final String text;
+  final VoidCallback response;
+  final double height;
+
   const CustomFullButton({
     super.key,
+    required this.text,
+    required this.response,
+    this.height=56,
   });
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      height: 58,
+      height: height,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
       minWidth: double.infinity,
       color: kPrimaryColor,
-      onPressed: () {
-        context.push(AppRouter.loginScreen);
-      },
-      child: Text('Create an account', style: Styles.textStyleFullButton),
+      onPressed: response,
+      child: Text(text, style: Styles.textStyleFullButton),
     );
   }
 }

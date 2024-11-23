@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:timease_mobile/constants.dart';
 import 'package:timease_mobile/core/utils/app_router.dart';
+import 'core/utils/function/build_theme_data.dart';
 import 'core/utils/function/change_status_bar_color.dart';
 
 void main() {
@@ -16,13 +16,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp.router(
       debugShowCheckedModeBanner: false,
-     theme: ThemeData(
-       primaryColor: kPrimaryColor,
-       primaryColorLight: kPrimaryColor,
-       scaffoldBackgroundColor: Colors.white,
-     ),
+     theme: buildThemeData(),
      routerConfig: AppRouter.router,
     );
   }
+
 }
 

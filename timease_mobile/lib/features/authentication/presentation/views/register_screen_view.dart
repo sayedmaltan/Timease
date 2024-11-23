@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:timease_mobile/features/authentication/presentation/views/widgets/login_screen_view_body.dart';
+import 'package:timease_mobile/features/authentication/presentation/views/widgets/resgister_screen_view_body.dart';
 
-class LoginScreenView extends StatelessWidget {
-  const LoginScreenView({super.key});
+class RegisterScreenView extends StatelessWidget {
+  const RegisterScreenView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +15,8 @@ class LoginScreenView extends StatelessWidget {
             slivers: [
               SliverFillRemaining(
                 hasScrollBody: false,
-                child: LoginScreenViewBody(),
-              ),
+                child: RegisterScreenViewBody(),
+              )
             ],
           ),
         ),

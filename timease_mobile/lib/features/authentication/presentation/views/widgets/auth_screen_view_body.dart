@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:timease_mobile/constants.dart';
+import 'package:timease_mobile/core/utils/app_router.dart';
 import 'package:timease_mobile/core/utils/styles.dart';
-import 'custom_empty_button.dart';
-import 'custom_full_button.dart';
+import 'package:timease_mobile/core/widgets/custom_empty_button.dart';
+import 'package:timease_mobile/core/widgets/custom_full_button.dart';
 import 'custom_row.dart';
 
 class AuthScreenViewBody extends StatelessWidget {
@@ -24,20 +26,24 @@ class AuthScreenViewBody extends StatelessWidget {
           ),
           Text(
             "Connect with Timease",
-            style: Styles.textStyle40,
+            style: Styles.textStyle42,
           ),
           Text(
             "on the go",
-            style: Styles.textStyle40.copyWith(
-              color: kPrimaryColor
-            ),
+            style: Styles.textStyle42.copyWith(color: kPrimaryColor),
           ),
           Spacer(),
-          CustomFullButton(),
+          CustomFullButton(
+            text: 'Create an Account',
+            response: () => context.push(AppRouter.registerScreen),
+          ),
           SizedBox(
             height: 18,
           ),
-          CustomEmptyButton(),
+          CustomEmptyButton(
+            response: () => context.push(AppRouter.loginScreen),
+            text: 'Sign in',
+          ),
           SizedBox(
             height: 50,
           ),

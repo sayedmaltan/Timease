@@ -11,7 +11,9 @@ class SplashView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.dark,
         ),
       ),
       backgroundColor:Colors.white12,

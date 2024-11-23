@@ -34,7 +34,7 @@ class _SplashViewBodyState extends State<SplashViewBody> {
 void navigateToAuthScreenView() {
   Future.delayed(
     const Duration(
-      seconds: 3,
+      seconds: 2,
     ),
     () => context.pushReplacement(AppRouter.authScreen)
   );
