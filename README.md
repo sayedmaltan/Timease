@@ -21,7 +21,7 @@ To run the backend and database using Docker Compose, follow these steps:
 ## **Authentication Endpoints**
 
 ### **1. Register a New User**
-- **Endpoint:** `POST http://localhost:8080/api/v1/auth/register`
+- **Endpoint:** `POST http://localhost:8080/api/v1/auth/signup`
 - **Description:** Creates a new user with an email and password.
 - **Request Body:**
   ```json
