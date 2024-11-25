@@ -23,6 +23,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+
     @NotBlank
     @NotNull
     private  String first_name;
