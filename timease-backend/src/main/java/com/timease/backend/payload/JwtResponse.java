@@ -13,6 +13,7 @@ import java.util.UUID;
 public class JwtResponse {
 
     private String accessToken;
+    private String refreshToken;
     private String type = "Bearer";
     private UUID id;
     private String email;

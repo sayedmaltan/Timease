@@ -1,14 +1,13 @@
 package com.timease.backend.controller;
 
+import com.timease.backend.Service.RefreshTokenService;
 import com.timease.backend.Service.UserDetailsImpl;
 import com.timease.backend.Service.UserDetailsServiceImpl;
 import com.timease.backend.model.Enum.ERole;
+import com.timease.backend.model.RefreshToken;
 import com.timease.backend.model.Role;
 import com.timease.backend.model.User;
-import com.timease.backend.payload.JwtResponse;
-import com.timease.backend.payload.LoginRequest;
-import com.timease.backend.payload.MessageResponse;
-import com.timease.backend.payload.SignupRequest;
+import com.timease.backend.payload.*;
 import com.timease.backend.repository.RoleRepository;
 import com.timease.backend.security.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,20 +43,35 @@ public class AuthController {
     @Autowired
     private UserDetailsServiceImpl userService;
 
+    @Autowired
+    private RefreshTokenService refreshTokenService;
+
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+        if (!userService.existsByEmail(loginRequest.getEmail())) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: User Not Found"));
+
+        }
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication.getName());
+        String accessToken = jwtUtils.generateJwtToken(authentication.getName());
+
+        User user = userService.findByEmail(loginRequest.getEmail())
+                .orElseThrow(() -> new RuntimeException("Error: User not found."));
+
+        if (refreshTokenService.findByUser(user).isPresent()){
+            refreshTokenService.deleteByUser(user);
+        }
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        return ResponseEntity
-                .ok(new JwtResponse(jwt, "Bearer" ,userDetails.getId(), userDetails.getUsername(), roles));
+        return ResponseEntity.ok(new JwtResponse(accessToken, refreshToken.getToken(), "Bearer",
+                userDetails.getId(), userDetails.getUsername(), roles));
     }
 
     @PostMapping("/signup")
@@ -83,4 +97,31 @@ public class AuthController {
         userService.saveUser(user);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
+
+    @PostMapping("/refresh-token")
+    public ResponseEntity<?> refreshAccessToken(@RequestBody RefreshRequest request) {
+        RefreshToken refreshToken = refreshTokenService.findByToken(request.getRefreshToken())
+                .orElseThrow(() -> new RuntimeException("Error: Invalid refresh token!"));
+
+        if (refreshTokenService.isExpired(refreshToken)) {
+            refreshTokenService.deleteByUser(refreshToken.getUser());
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Refresh token expired!"));
+        }
+
+        String newAccessToken = jwtUtils.generateJwtToken(refreshToken.getUser().getEmail());
+
+        return ResponseEntity.ok(new JwtResponse(newAccessToken, refreshToken.getToken(), "Bearer", null,
+                refreshToken.getUser().getEmail(), null));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logoutUser(@RequestBody RefreshRequest request) {
+        RefreshToken refreshToken = refreshTokenService.findByToken(request.getRefreshToken())
+                .orElseThrow(() -> new RuntimeException("Error: Invalid refresh token!"));
+
+        refreshTokenService.deleteByUser(refreshToken.getUser());
+
+        return ResponseEntity.ok(new MessageResponse("User logged out successfully!"));
+    }
+
 }

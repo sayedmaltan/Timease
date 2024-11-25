@@ -11,7 +11,6 @@ public class TimeaseBackendApplication {
 
 		System.out.println("ALL IS FINE ==== UP AND RUNNING");
 		System.out.println("ALL IS FINE ==== UP AND RUNNING");
-		System.out.println("ALL IS FINE ==== U AND RUNNING");
 	}
 
 }
