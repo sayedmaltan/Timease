@@ -40,7 +40,7 @@ To run the backend and database using Docker Compose, follow these steps:
 ```
 
 
-## **1. Login a User**
+## **2. Login a User**
 
 - **Endpoint:** `POST http://localhost:8080/api/v1/auth/login`
 - **Description:**  `Authenticates a user and returns a JWT token.`
@@ -54,15 +54,65 @@ To run the backend and database using Docker Compose, follow these steps:
 
  - **Response:**
   ```json
-    {
-    "accessToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0ZXJAdGVzdC50ZXN0IiwiaWF0IjoxNzMyNDc4NjEwLCJleHAiOjE3MzI0ODIyMTB9.QFTpWgNbCJN381euzDig5kBNrhHdX-pfo0QjMFdH6Ko",
-    "type": "Bearer",
-    "id": "75483ccc-fa34-4d7d-8b1c-575ddf0bf338",
-    "email": "john.doe@example.com",
-    "roles": [
-        "ROLE_USER"
-    ]
+{
+     "accessToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0ZXJAdGVzdC50ZXN0IiwiaWF0IjoxNzMyNDc4NjEwLCJleHAiOjE3MzI0ODIyMTB9.QFTpWgNbCJN381euzDig5kBNrhHdX-pfo0QjMFdH6Ko",
+     "refreshToken": "aef12345-refresh-token-67890",
+     "type": "Bearer",
+     "id": "75483ccc-fa34-4d7d-8b1c-575ddf0bf338",
+     "email": "john.doe@example.com",
+     "roles": [
+         "ROLE_USER"
+        ]
 }
+
+```
+## **3.  Refresh Access Token**
+
+- **Endpoint:** `POST http://localhost:8080/api/v1/auth/refresh-token`
+- **Description:**  `Refreshes the access token using a valid refresh token.`
+- **Request Body:** 
+```json
+{
+  "refreshToken": "aef12345-refresh-token-67890"
+}
+
+```
+
+ - **Response(Successful):**
+  ```json
+{
+  "accessToken": "new-access-token",
+  "refreshToken": "aef12345-refresh-token-67890",
+  "type": "Bearer",
+  "email": "john.doe@example.com"
+}
+```
+- **Response(Expired or Invalid Refresh Token):**
+  ```json
+   {
+     "message": "Error: Refresh token expired!"
+   }
+  ```
+
+  
+## **4.  Logout User**
+
+- **Endpoint:** `PPOST http://localhost:8080/api/v1/auth/logout`
+- **Description:**  ` Logs out the user by invalidating the refresh token.`
+- **Request Body:** 
+```json
+{
+  "refreshToken": "aef12345-refresh-token-67890"
+}
+
+```
+
+ - **Response:**
+  ```json
+{
+  "message": "User logged out successfully!"
+}
+
 ```
 
 # **Test**
@@ -82,12 +132,16 @@ To run the backend and database using Docker Compose, follow these steps:
   }
   ```
 
-- **Response:**
--  If The user is logged in
+- **Response(User is Logged In):**
   ```json
     {
-  "message": "You are logged in, Here is your info : <username>"
-}
-
+        "message": "You are logged in, Here is your info : <username>" 
+    }
+   ```
+- **Response (User is Not Logged In):**
+-  If The user is logged in
+  ```json
+   {
+     "error": "Forbidden"
+   }
 ```
-- Else: 403 response
