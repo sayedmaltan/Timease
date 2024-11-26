@@ -7,6 +7,15 @@ class CustomTextFormField extends StatefulWidget {
   final bool isPassword;
   final TextEditingController controller;
   final FormFieldValidator validator;
+  final IconData? prefixIcon;
+  final IconData? suffixIcon;
+  final Color focusedBorderColor;
+  final double borderRadiusSize;
+  final FontWeight hintStyleWeight;
+  final VoidCallback? suffixIconResponse;
+  final Color suffixIconColor;
+  final bool isPasswordShown;
+  final ValueChanged? onChanged;
 
   const CustomTextFormField({
     super.key,
@@ -15,6 +24,15 @@ class CustomTextFormField extends StatefulWidget {
     required this.isPassword,
     required this.controller,
     required this.validator,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.focusedBorderColor = kPrimaryColor,
+    this.borderRadiusSize = 12,
+    this.hintStyleWeight = FontWeight.normal,
+    this.suffixIconResponse,
+    this.suffixIconColor = kSecPrimaryColor,
+    this.isPasswordShown = false,
+    this.onChanged,
   });
 
   @override
@@ -22,40 +40,47 @@ class CustomTextFormField extends StatefulWidget {
 }
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
-  bool isPasswordShown = false;
-  Icon suffixIcon = Icon(Icons.remove_red_eye_sharp);
-
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       keyboardType: widget.keyboardType,
       controller: widget.controller,
-      validator:widget.validator,
+      validator: widget.validator,
+      onChanged: widget.onChanged,
       decoration: InputDecoration(
-        suffixIconColor: kTextFFieldColor,
-        suffixIcon: widget.isPassword
+        prefixIconColor: kSecPrimaryColor.shade600,
+        suffixIconColor: kSecPrimaryColor,
+        prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon) : null,
+        suffixIcon: widget.suffixIcon != null
             ? IconButton(
-                onPressed: () {
-                  isPasswordShown
-                      ? suffixIcon = Icon(Icons.remove_red_eye_sharp)
-                      : suffixIcon = Icon(Icons.visibility_off_sharp);
-                  isPasswordShown = !isPasswordShown;
-                  setState(() {});
-                },
-                icon: suffixIcon,
+                onPressed: widget.suffixIconResponse,
+                icon: Icon(
+                  widget.suffixIcon,
+                  color: widget.suffixIconColor,
+                ),
               )
             : null,
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: widget.focusedBorderColor,
+          ),
+          borderRadius: BorderRadius.circular(widget.borderRadiusSize),
+        ),
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: kTextFFieldColor)),
+          borderRadius: BorderRadius.circular(widget.borderRadiusSize),
+          borderSide: BorderSide(color: kSecPrimaryColor),
+        ),
         hintText: widget.hintText,
-        hintStyle: TextStyle(color: kTextFFieldColor),
+        hintStyle: TextStyle(
+          color: kSecPrimaryColor,
+          fontWeight: widget.hintStyleWeight,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
       ),
       obscureText: widget.isPassword
-          ? isPasswordShown
+          ? widget.isPasswordShown
               ? false
               : true
           : false,

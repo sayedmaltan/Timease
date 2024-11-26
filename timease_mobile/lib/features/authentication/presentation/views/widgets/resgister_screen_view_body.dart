@@ -24,6 +24,8 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
   late TextEditingController emailController = TextEditingController();
   late TextEditingController nameController = TextEditingController();
   late TextEditingController passwordController = TextEditingController();
+  bool isPasswordShown = false;
+  IconData suffixIcon= Icons.remove_red_eye_sharp;
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +70,9 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
                 if (value.toString().isEmpty) {
                   return 'Please enter your name';
                 }
+                if (value.toString().length<2) {
+                  return 'Invalid name';
+                }
                 return null;
               },
             ),
@@ -81,12 +86,20 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
               controller: passwordController,
               keyboardType: TextInputType.visiblePassword,
               hintText: 'password',
-              isPassword: true,
-              validator: (value) {
-                if (!isStrongPassword(value)) {
-                  return validatePassword(value);
-                }
-                return null;
+              isPasswordShown: isPasswordShown,
+              isPassword: true, validator: (value) {
+              if (!isStrongPassword(value)) {
+                return validatePassword(value);
+              }
+              return null;
+            },
+              suffixIcon: suffixIcon ,
+              suffixIconResponse: () {
+                isPasswordShown
+                    ? suffixIcon = Icons.remove_red_eye_sharp
+                    : suffixIcon = Icons.visibility_off_sharp;
+                isPasswordShown = !isPasswordShown;
+                setState(() {});
               },
             ),
             SizedBox(

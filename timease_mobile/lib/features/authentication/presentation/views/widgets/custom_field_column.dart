@@ -29,6 +29,7 @@ class CustomFieldColumn extends StatelessWidget {
           height: 5,
         ),
         CustomTextFormField(
+
             keyboardType: TextInputType.emailAddress,
             hintText: hintText,
             isPassword: false,
