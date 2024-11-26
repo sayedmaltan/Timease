@@ -8,15 +8,20 @@ ThemeData buildThemeData() {
     primarySwatch: kPrimaryColor,
     primaryColor: kPrimaryColor,
     primaryColorLight: kPrimaryColor,
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: kBackgroundColor,
+      selectedItemColor: kPrimaryColor,
+      unselectedItemColor: kSecPrimaryColor,
+      type: BottomNavigationBarType.fixed,
+    ),
     buttonTheme: ButtonThemeData(buttonColor: kPrimaryColor),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         foregroundColor: kPrimaryColor,
       ).copyWith(
         splashFactory: NoSplash.splashFactory,
-
       ),
     ),
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: kBackgroundColor,
   );
 }

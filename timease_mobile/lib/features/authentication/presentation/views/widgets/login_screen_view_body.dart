@@ -23,6 +23,8 @@ class _LoginScreenViewBodyState extends State<LoginScreenViewBody> {
   late TextEditingController emailController = TextEditingController();
   late TextEditingController passwordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+  bool isPasswordShown = false;
+  IconData suffixIcon= Icons.remove_red_eye_sharp;
 
   @override
   Widget build(BuildContext context) {
@@ -69,12 +71,21 @@ class _LoginScreenViewBodyState extends State<LoginScreenViewBody> {
               controller: passwordController,
               keyboardType: TextInputType.visiblePassword,
               hintText: 'password',
+              isPasswordShown: isPasswordShown,
               isPassword: true, validator: (value) {
               if (!isStrongPassword(value)) {
                 return validatePassword(value);
               }
               return null;
             },
+             suffixIcon: suffixIcon ,
+             suffixIconResponse: () {
+                 isPasswordShown
+                     ? suffixIcon = Icons.remove_red_eye_sharp
+                     : suffixIcon = Icons.visibility_off_sharp;
+                 isPasswordShown = !isPasswordShown;
+                 setState(() {});
+             },
             ),
             SizedBox(
               height: 25,
@@ -83,7 +94,9 @@ class _LoginScreenViewBodyState extends State<LoginScreenViewBody> {
               text: 'Login',
               height: 52,
               response: () {
-                if (formKey.currentState!.validate()) {}
+                if (formKey.currentState!.validate()) {
+                  context.go(AppRouter.homeScreen);
+                }
               },
             ),
             SizedBox(
