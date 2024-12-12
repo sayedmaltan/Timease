@@ -38,7 +38,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/**").permitAll() // Public endpoints
-//                        .requestMatchers("/api/v1/test/**").permitAll() // Public endpoints
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()               // Secured endpoints
                 );
         http.addFilterBefore(JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);// JWT filter
