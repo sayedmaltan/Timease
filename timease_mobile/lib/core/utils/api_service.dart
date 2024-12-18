@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 class ApiService {
   final Dio dio;
-  final String _baseUrl = 'http://localhost:64687/api/v1/auth/';
+  final String _baseUrl = 'https://d30e-102-189-52-47.ngrok-free.app/api/v1/auth/';
 
   ApiService({required this.dio});
 

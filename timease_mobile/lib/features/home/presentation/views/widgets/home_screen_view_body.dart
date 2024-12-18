@@ -29,20 +29,21 @@ class _HomeScreenViewBodyState extends State<HomeScreenViewBody> {
         Divider(
           color: kSecPrimaryColor.shade400,
         ),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Text('YOUR EVENT TYPES',style: Styles.textStyleBlack.copyWith(color: kSecPrimaryColor.shade600)),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: HomeViewBodyEventsList(
-              eventName: 'Event name',
-              eventType: 'One-one one, 30 mins',
-              leftContainerColor: kPrimaryColor,
-            ),
-          ),
-        ),
+            Padding(
+               padding: const EdgeInsets.all(10.0),
+               child: Text('YOUR EVENT TYPES',style: Styles.textStyleBlack.copyWith(color: kSecPrimaryColor.shade600)),
+             ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: HomeViewBodyEventsList(
+                  eventName: 'Event name',
+                  eventType: 'One-one one, 30 mins',
+                  leftContainerColor: kPrimaryColor,
+                ),
+              ),
+            )
+        
       ],
     );
   }

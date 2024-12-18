@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:timease_mobile/core/utils/app_router.dart';
+import 'package:timease_mobile/core/utils/service_locator.dart';
 import 'core/utils/function/build_theme_data.dart';
 import 'core/utils/function/change_status_bar_color.dart';
 
 void main() {
   changeStatusBarColor();
+  setupServiceLocator();
   runApp(const MyApp());
 }
 

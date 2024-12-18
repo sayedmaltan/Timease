@@ -20,7 +20,7 @@ class ServerFailure extends Failure {
       case DioExceptionType.badCertificate:
         return ServerFailure(errMessage: 'Bad certificate');
       case DioExceptionType.badResponse:
-        ServerFailure.fromDioBadResponse(
+       return ServerFailure.fromDioBadResponse(
           statusCode: dioError.response!.statusCode!,
           statusBadResponse: dioError.response!.data,
         );
@@ -29,17 +29,27 @@ class ServerFailure extends Failure {
       case DioExceptionType.connectionError:
         return ServerFailure(errMessage: 'No internet Connection');
       case DioExceptionType.unknown:
-        print("sssssssssssssssssssssssssssssssssssss");
         return ServerFailure(
             errMessage: 'Opps there was an Error, Please try again');
+        default:
+          print("object2");
+          return ServerFailure(errMessage: 'Unexpected Error, Please try later!');
     }
-    return ServerFailure(errMessage: 'Unexpected Error, Please try later!');
+
   }
 
   factory ServerFailure.fromDioBadResponse(
       {required int statusCode, required dynamic statusBadResponse}) {
     if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
-      return ServerFailure(errMessage: statusBadResponse['message']);
+      String errMessage;
+      if(statusBadResponse.toString().isEmpty) {
+        print('message ${statusCode}');
+        errMessage='Unexpected Error, Please try later!';
+      }
+      else {
+        errMessage= statusBadResponse['message'];
+      }
+      return ServerFailure(errMessage: errMessage);
     } else if (statusCode == 404) {
       return ServerFailure(
           errMessage: 'Your request not found, please try later!');
@@ -47,7 +57,6 @@ class ServerFailure extends Failure {
       return ServerFailure(
           errMessage: 'Internal Server error, please try later!');
     }
-    print("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
     return ServerFailure(
         errMessage: 'Opps there was an Error, Please try again');
   }

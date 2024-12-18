@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:timease_mobile/core/utils/app_router.dart';
+import 'package:timease_mobile/core/utils/function/custom_awesome_dialog.dart';
 import 'package:timease_mobile/core/utils/function/email_check.dart';
 import 'package:timease_mobile/core/utils/function/password_check.dart';
 import 'package:timease_mobile/core/utils/styles.dart';
 import 'package:timease_mobile/core/widgets/custom_full_button.dart';
+import 'package:timease_mobile/core/widgets/custom_loading_button.dart';
 import 'package:timease_mobile/core/widgets/custom_text_form_field.dart';
 import 'package:timease_mobile/features/authentication/presentation/manger/login_cubit/login_cubit.dart';
 import 'package:timease_mobile/features/authentication/presentation/manger/login_cubit/login_state.dart';
@@ -31,9 +33,9 @@ class _LoginScreenViewBodyState extends State<LoginScreenViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LoginCubit,LoginState>(
+    return BlocConsumer<LoginCubit, LoginState>(
       builder: (context, state) {
-        LoginCubit loginCubit=LoginCubit.get(context);
+        LoginCubit loginCubit = LoginCubit.get(context);
         return Form(
           key: formKey,
           child: Padding(
@@ -97,15 +99,19 @@ class _LoginScreenViewBodyState extends State<LoginScreenViewBody> {
                 SizedBox(
                   height: 25,
                 ),
-                CustomFullButton(
-                  text: 'Login',
-                  height: 52,
-                  response: () {
-                    if (formKey.currentState!.validate()) {
-                      loginCubit.login(email: emailController.text, password: passwordController.text);
-                    }
-                  },
-                ),
+                state is LoginLoading
+                    ? CustomLoadingButton()
+                    : CustomFullButton(
+                        text: 'Login',
+                        height: 52,
+                        response: () {
+                          if (formKey.currentState!.validate()) {
+                            loginCubit.login(
+                                email: emailController.text,
+                                password: passwordController.text);
+                          }
+                        },
+                      ),
                 SizedBox(
                   height: 25,
                 ),
@@ -138,19 +144,12 @@ class _LoginScreenViewBodyState extends State<LoginScreenViewBody> {
         );
       },
       listener: (context, state) {
-        if(state is LoginSuccess) {
+        if (state is LoginSuccess) {
           context.go(AppRouter.homeScreen);
-        }
-        else if(state is LoginFailure)
-        {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.errMessage),));
-        }
-        else
-        {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('data'),));
+        } else if (state is LoginFailure) {
+          customAwesomeDialog(context,message: state.errMessage);
         }
       },
-
     );
   }
 }

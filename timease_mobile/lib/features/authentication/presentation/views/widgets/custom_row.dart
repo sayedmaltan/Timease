@@ -13,18 +13,18 @@ class CustomRow extends StatelessWidget {
     return Row(
       children: [
         Image.asset(
-          AssetsImages.logo,
-          height: 45,
-          width: 25,
+          AssetsImages.timeaseLogo,
+          width: 180,
+          height: 100,
           fit: BoxFit.cover,
         ),
-        SizedBox(
-          width: 6,
-        ),
-        Text(
-          'Timease',
-          style: Styles.customRowTextStyle,
-        ),
+        // SizedBox(
+        //   width: 6,
+        // ),
+        // Text(
+        //   'Timease',
+        //   style: Styles.customRowTextStyle,
+        // ),
       ],
     );
   }

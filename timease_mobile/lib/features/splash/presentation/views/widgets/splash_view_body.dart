@@ -24,7 +24,7 @@ class _SplashViewBodyState extends State<SplashViewBody> {
       children: [
         SizedBox(height:(MediaQuery.of(context).size.height/2)-220),
         Image.asset(
-          AssetsImages.logo,
+          AssetsImages.timeaseLogo,
           height: 220,
         ),
       ],

@@ -10,11 +10,12 @@ class RegisterCubit extends Cubit<RegisterState> {
     return BlocProvider.of(context);
   }
 
-  Future<void> login(
-      {required String email,
-      required String password,
-      required String firstName,
-      required String lastName}) async {
+  Future<void> register({
+    required String email,
+    required String password,
+    required String firstName,
+    required String lastName,
+  }) async {
     emit(RegisterLoading());
     var response = await authRepo.register(
       email: email,
@@ -24,11 +25,9 @@ class RegisterCubit extends Cubit<RegisterState> {
     );
     response.fold(
       (failure) {
-        print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
         emit(RegisterFailure(errMessage: failure.errMessage));
       },
       (registerModel) {
-        print("ddddddddddddddddddddddddddddddd");
         emit(RegisterSuccess(registerModel: registerModel));
       },
     );
