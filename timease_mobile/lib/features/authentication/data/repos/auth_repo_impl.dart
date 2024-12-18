@@ -43,7 +43,7 @@ class AuthRepoImpl implements AuthRepo {
       required String password}) async {
     try {
       var json = await apiService.post(
-        endPoint: 'auth/signup',
+        endPoint: 'signup',
         body: {
           "firstName": firstName,
           "lastName": lastName,

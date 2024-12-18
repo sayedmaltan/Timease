@@ -33,7 +33,7 @@ class CustomBottomNavBar extends StatelessWidget {
               heightFactor: 0.65,
               child: Image.asset(
                 height: 37,
-                AssetsImages.logo,
+                AssetsImages.tLogo,
                 fit: BoxFit.cover,
                 color: logoColor,
               ),

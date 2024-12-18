@@ -10,16 +10,17 @@ class LoginCubit extends Cubit<LoginState> {
     return BlocProvider.of(context);
   }
 
-  Future<void> login({required String email, required String password}) async {
+  Future<void> login({
+    required String email,
+    required String password,
+  }) async {
     emit(LoginLoading());
     var response = await authRepo.login(email: email, password: password);
     response.fold(
       (failure) {
-        print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
         emit(LoginFailure(errMessage: failure.errMessage));
       },
       (loginModel) {
-        print("ddddddddddddddddddddddddddddddd");
         emit(LoginSuccess(loginModel: loginModel));
       },
     );
