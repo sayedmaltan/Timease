@@ -17,4 +17,4 @@ EXPOSE 5173
 
 # Command to start the React app with live reload
 CMD ["npm", "run", "dev"]
-RUN npm i react-router-dom 
+# RUN npm i react-router-dom 

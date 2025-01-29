@@ -1,43 +1,24 @@
-import React, { useContext } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from 'react-router-dom';
-import AuthContext from '../context/AuthContext';
+import React from "react";
+import { Container, Nav, Navbar } from "react-bootstrap";
+import GetStartedButton from "./GetStartedButton.jsx";
 
-const Navbar = () => {
-  const { user, logout } = useContext(AuthContext);
-
+function TimeaseNav() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-    <AppBar position="static">
-      <Toolbar>
-        
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-        <Link to="/">Home</Link>
-        </Typography>
-        <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-        {user ? (
-        <>
-          <Link to="/dashboard">Dashboard</Link>
-          <button onClick={logout}>Logout</button>
-        </>
-      ) : (
-        <>
-          <Link sx={{ color: '#fff' }} to="/login">Login</Link>
-          <Link sx={{ color: '#fff' }}to="/signup">Sign Up</Link>
-        </>
-      )}
-                </Box>
-      </Toolbar>
-    </AppBar>
-  </Box>
+    <Navbar bg="dark" data-bs-theme="dark">
+      <Container>
+        {/* Brand Name on the Left */}
+        <Navbar.Brand href="#home">Timease</Navbar.Brand>
 
-  )
-};
+        {/* Navigation Links in the Center */}
+        <Nav className="me-auto">
+          <Nav.Link href="#about">About Us</Nav.Link>
+        </Nav>
 
-export default Navbar;
+        {/* Get Started Button on the Right */}
+        <GetStartedButton text="Get Started" size="sm" />
+      </Container>
+    </Navbar>
+  );
+}
+
+export default TimeaseNav;
