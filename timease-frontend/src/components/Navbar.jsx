@@ -15,6 +15,7 @@ function TimeaseNav() {
         </Nav>
 
         {/* Get Started Button on the Right */}
+        {/* Get Started Button on the Right */}
         <GetStartedButton text="Get Started" size="sm" />
       </Container>
     </Navbar>
