@@ -1,5 +1,7 @@
+plan_dir = "timease-backend"
+
 [phases.build]
-cmds = ["cd timease-backend && ./mvnw package -DskipTests"]
+cmds = ["./mvnw clean package -DskipTests"]
 
 [start]
-cmd = "java -jar timease-backend/target/*.jar"
+cmd = "java -jar target/*.jar"
