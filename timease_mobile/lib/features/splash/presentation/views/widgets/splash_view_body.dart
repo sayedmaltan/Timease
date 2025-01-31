@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:timease_mobile/constants.dart';
 import '../../../../../core/utils/app_router.dart';
 import '../../../../../core/utils/asstes.dart';
 
@@ -14,7 +15,7 @@ class _SplashViewBodyState extends State<SplashViewBody> {
   @override
   void initState() {
     super.initState();
-    navigateToAuthScreenView();
+    navigateToAuthOrHome();
   }
 
   @override
@@ -31,12 +32,16 @@ class _SplashViewBodyState extends State<SplashViewBody> {
     );
   }
 
-void navigateToAuthScreenView() {
+void navigateToAuthOrHome() {
   Future.delayed(
     const Duration(
       seconds: 2,
     ),
-    () => context.pushReplacement(AppRouter.authScreen)
+    () {
+      accessToken==''?
+      context.pushReplacement(AppRouter.authScreen):
+      context.pushReplacement(AppRouter.homeScreen);
+    }
   );
 }
 }

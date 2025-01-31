@@ -18,17 +18,16 @@ class AuthRepoImpl implements AuthRepo {
   }) async {
     try {
       var json = await apiService.post(
-        endPoint: 'login',
+        endPoint: 'auth/login',
         body: {
           'email': email,
           'password': password
         },
       );
     LoginModel loginModel= LoginModel.fromJson(json);
-    print('object');
       return right(loginModel);
     } catch (e) {
-      if (e is DioError) {
+      if (e is DioException) {
         return left(ServerFailure.fromDioError(dioError: e));
       }
       return left(ServerFailure(errMessage: e.toString()));
@@ -43,7 +42,7 @@ class AuthRepoImpl implements AuthRepo {
       required String password}) async {
     try {
       var json = await apiService.post(
-        endPoint: 'signup',
+        endPoint: 'auth/signup',
         body: {
           "firstName": firstName,
           "lastName": lastName,
@@ -54,7 +53,7 @@ class AuthRepoImpl implements AuthRepo {
       RegisterModel registerModel= RegisterModel.fromJson(json);
       return Right(registerModel);
     } catch (e) {
-      if (e is DioError) {
+      if (e is DioException) {
         return Left(ServerFailure.fromDioError(dioError: e));
       }
       return Left(ServerFailure(errMessage: e.toString()));

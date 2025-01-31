@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timease_mobile/constants.dart';
-import 'package:timease_mobile/features/home/presentation/views/widgets/contacts_screen_view_body.dart';
+import 'package:timease_mobile/features/home/presentation/views/widgets/events_screen_view_body.dart';
 import 'package:timease_mobile/features/home/presentation/views/widgets/custom_bottom_nav_bar.dart';
 import 'package:timease_mobile/features/home/presentation/views/widgets/custom_floating_action_button.dart';
 import 'package:timease_mobile/features/home/presentation/views/widgets/home_screen_view_body.dart';
@@ -19,8 +19,8 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   Color logoColor = Colors.green;
   List<Widget> homeScreensBody=[
     HomeScreenViewBody(),
+    EventsScreenViewBody(),
     MeetingsScreenViewBody(),
-    ContactsScreenViewBody(),
     NotificationsScreenViewBody(),
   ];
 
@@ -41,7 +41,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
           selectBottomNavBar: selectBottomNavBar,
           logoColor: logoColor,
         ),
-        floatingActionButton: selectBottomNavBar==0 ? CustomFloatingActionButton() : null,
+        floatingActionButton: selectBottomNavBar==1 ? CustomFloatingActionButton() : null,
       ),
     );
   }

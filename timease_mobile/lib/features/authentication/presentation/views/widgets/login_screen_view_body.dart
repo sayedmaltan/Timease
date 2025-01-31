@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:timease_mobile/constants.dart';
 import 'package:timease_mobile/core/utils/app_router.dart';
+import 'package:timease_mobile/core/utils/cash_helper.dart';
 import 'package:timease_mobile/core/utils/function/custom_awesome_dialog.dart';
 import 'package:timease_mobile/core/utils/function/email_check.dart';
 import 'package:timease_mobile/core/utils/function/password_check.dart';
@@ -145,6 +147,10 @@ class _LoginScreenViewBodyState extends State<LoginScreenViewBody> {
       },
       listener: (context, state) {
         if (state is LoginSuccess) {
+          CashHelper.setData('refreshToken', state.loginModel.refreshToken!);
+          CashHelper.setData('accessToken', state.loginModel.accessToken!);
+          accessToken=state.loginModel.accessToken!;
+          refreshToken=state.loginModel.refreshToken!;
           context.go(AppRouter.homeScreen);
         } else if (state is LoginFailure) {
           customAwesomeDialog(context,message: state.errMessage);
