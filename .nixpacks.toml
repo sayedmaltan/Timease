@@ -1,0 +1,5 @@
+[phases.build]
+cmds = ["cd timease-backend && ./mvnw package -DskipTests"]
+
+[start]
+cmd = "java -jar timease-backend/target/*.jar"
