@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timease_mobile/features/authentication/data/repos/auth_repo.dart';
 import 'package:timease_mobile/features/authentication/presentation/manger/register_cubit/register_state.dart';
