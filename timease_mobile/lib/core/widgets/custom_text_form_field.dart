@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:timease_mobile/constants.dart';
 
-class CustomTextFormField extends StatefulWidget {
+class CustomTextFormField extends StatelessWidget {
   final String hintText;
   final TextInputType keyboardType;
   final bool isPassword;
@@ -9,10 +9,13 @@ class CustomTextFormField extends StatefulWidget {
   final FormFieldValidator validator;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
+  final double? suffixIconSize;
   final Color focusedBorderColor;
+  final Color? enabledBorderColor;
   final double borderRadiusSize;
   final FontWeight hintStyleWeight;
   final VoidCallback? suffixIconResponse;
+  final VoidCallback? onTap;
   final Color suffixIconColor;
   final bool isPasswordShown;
   final ValueChanged? onChanged;
@@ -33,54 +36,55 @@ class CustomTextFormField extends StatefulWidget {
     this.suffixIconColor = kSecPrimaryColor,
     this.isPasswordShown = false,
     this.onChanged,
+    this.onTap,
+    this.enabledBorderColor,
+    this.suffixIconSize,
   });
 
   @override
-  State<CustomTextFormField> createState() => _CustomTextFormFieldState();
-}
-
-class _CustomTextFormFieldState extends State<CustomTextFormField> {
-  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      keyboardType: widget.keyboardType,
-      controller: widget.controller,
-      validator: widget.validator,
-      onChanged: widget.onChanged,
+      onTap: onTap,
+      keyboardType: keyboardType,
+      controller: controller,
+      validator: validator,
+      onChanged: onChanged,
       decoration: InputDecoration(
         prefixIconColor: kSecPrimaryColor.shade600,
         suffixIconColor: kSecPrimaryColor,
-        prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon) : null,
-        suffixIcon: widget.suffixIcon != null
+        prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
+        suffixIcon: suffixIcon != null
             ? IconButton(
-                onPressed: widget.suffixIconResponse,
+                onPressed: suffixIconResponse,
                 icon: Icon(
-                  widget.suffixIcon,
-                  color: widget.suffixIconColor,
+                  suffixIcon,
+                  size: suffixIconSize ?? 30,
+                  color: suffixIconColor,
                 ),
               )
             : null,
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: widget.focusedBorderColor,
+            color: focusedBorderColor,
           ),
-          borderRadius: BorderRadius.circular(widget.borderRadiusSize),
+          borderRadius: BorderRadius.circular(borderRadiusSize),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(widget.borderRadiusSize),
-          borderSide: BorderSide(color: kSecPrimaryColor),
+          borderRadius: BorderRadius.circular(borderRadiusSize),
+          borderSide:
+              BorderSide(color: enabledBorderColor ?? kSecPrimaryColor),
         ),
-        hintText: widget.hintText,
+        hintText: hintText,
         hintStyle: TextStyle(
           color: kSecPrimaryColor,
-          fontWeight: widget.hintStyleWeight,
+          fontWeight: hintStyleWeight,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
       ),
-      obscureText: widget.isPassword
-          ? widget.isPasswordShown
+      obscureText: isPassword
+          ? isPasswordShown
               ? false
               : true
           : false,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../../constants.dart';
-import '../../../../../core/utils/styles.dart';
-import 'custom_row_search_and_account.dart';
+import 'custom_search.dart';
+import 'custom_your_text.dart';
 import 'events_list.dart';
 
 class EventsScreenViewBody extends StatefulWidget {
@@ -22,19 +22,18 @@ class _EventsScreenViewBodyState extends State<EventsScreenViewBody> {
         SizedBox(
           height: 7,
         ),
-        CustomRowSearchAndAccount(controller: controller),
+        CustomSearch(
+          controller: controller,
+          text: 'Search event Types...',
+        ),
         SizedBox(
           height: 7,
         ),
         Divider(
           color: kSecPrimaryColor.shade400,
         ),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Text('YOUR EVENT TYPES',
-              style: Styles.textStyleBlack.copyWith(
-                color: kSecPrimaryColor.shade600,
-              )),
+        CustomYourText(
+          text: 'YOUR EVENT TYPES',
         ),
         Expanded(
           child: Padding(
@@ -50,3 +49,4 @@ class _EventsScreenViewBodyState extends State<EventsScreenViewBody> {
     );
   }
 }
+

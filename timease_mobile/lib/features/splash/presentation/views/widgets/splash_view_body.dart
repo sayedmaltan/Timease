@@ -39,8 +39,8 @@ void navigateToAuthOrHome() {
     ),
     () {
       accessToken==''?
-      context.pushReplacement(AppRouter.authScreen):
-      context.pushReplacement(AppRouter.homeScreen);
+      context.go(AppRouter.authScreen):
+      context.go(AppRouter.homeScreen);
     }
   );
 }

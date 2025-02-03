@@ -59,4 +59,25 @@ class AuthRepoImpl implements AuthRepo {
       return Left(ServerFailure(errMessage: e.toString()));
     }
   }
+
+
+
+   Future<Either<Failure, String>> logout({
+     required String refreshToken,
+   }) async {
+     try {
+       var json = await apiService.post(
+         endPoint: 'auth/logout',
+         body: {
+           'refreshToken': refreshToken
+         },
+       );
+       return right(json['message']);
+     } catch (e) {
+       if (e is DioException) {
+         return left(ServerFailure.fromDioError(dioError: e));
+       }
+       return left(ServerFailure(errMessage: e.toString()));
+     }
+   }
 }
