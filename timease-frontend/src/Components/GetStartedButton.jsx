@@ -1,10 +1,12 @@
-import React from "react";
 import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
-function GetStartedButton({ text = "Get Started", size = "sm" }) {
+// eslint-disable-next-line react/prop-types
+function GetStartedButton({l}) {
+  const navigate = useNavigate();
   return (
-    <Button variant="primary" size={size}>
-      {text}
+    <Button variant="primary" size={l} onClick={()=>navigate('/SignUp')}>
+      get Started
     </Button>
   );
 }
