@@ -9,7 +9,7 @@ abstract class Failure {
 class ServerFailure extends Failure {
   ServerFailure({required super.errMessage});
 
-  factory ServerFailure.fromDioError({required DioError dioError}) {
+  factory ServerFailure.fromDioError({required DioException dioError}) {
     switch (dioError.type) {
       case DioExceptionType.connectionTimeout:
         return ServerFailure(errMessage: 'Connection timeout with ApiServer');
@@ -32,7 +32,6 @@ class ServerFailure extends Failure {
         return ServerFailure(
             errMessage: 'Opps there was an Error, Please try again');
         default:
-          print("object2");
           return ServerFailure(errMessage: 'Unexpected Error, Please try later!');
     }
 
@@ -43,7 +42,6 @@ class ServerFailure extends Failure {
     if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
       String errMessage;
       if(statusBadResponse.toString().isEmpty) {
-        print('message ${statusCode}');
         errMessage='Unexpected Error, Please try later!';
       }
       else {

@@ -42,16 +42,18 @@ class CustomBottomNavBar extends StatelessWidget {
           ),
           BottomNavigationBarItem(
               icon: Icon(
-                Icons.calendar_today_outlined,
+                Icons.event_note_outlined,
+              ),
+              label: 'Events'),
+          BottomNavigationBarItem(
+              icon: Icon(
+                size: 22,
+                Icons.calendar_today_outlined
               ),
               label: 'Meetings'),
           BottomNavigationBarItem(
               icon: Icon(
-                Icons.people_alt_outlined,
-              ),
-              label: 'Contacts'),
-          BottomNavigationBarItem(
-              icon: Icon(
+                size: 25,
                 Icons.notifications_outlined,
               ),
               label: 'Notifications'),

@@ -114,27 +114,30 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
                 SizedBox(
                   height: 22,
                 ),
-                state is RegisterLoading?
-                CustomLoadingButton():
-                CustomFullButton(
-                  text: 'Register',
-                  height: 52,
-                  response: () {
-                    if (formKey.currentState!.validate()) {
-                      List<String> nameList = nameController.text.split(' ');
-                      String firstName = nameList[0];
-                      String secondName;
-                      (nameList.length > 1) ? secondName = nameList[1] :secondName= '';
+                state is RegisterLoading
+                    ? CustomLoadingButton()
+                    : CustomFullButton(
+                        text: 'Register',
+                        height: 52,
+                        response: () {
+                          if (formKey.currentState!.validate()) {
+                            List<String> nameList =
+                                nameController.text.split(' ');
+                            String firstName = nameList[0];
+                            String secondName;
+                            (nameList.length > 1)
+                                ? secondName = nameList[1]
+                                : secondName = '';
 
-                      registerCubit.register(
-                        email: emailController.text,
-                        password: passwordController.text,
-                        firstName: firstName,
-                        lastName: secondName,
-                      );
-                    }
-                  },
-                ),
+                            registerCubit.register(
+                              email: emailController.text,
+                              password: passwordController.text,
+                              firstName: firstName,
+                              lastName: secondName,
+                            );
+                          }
+                        },
+                      ),
                 SizedBox(
                   height: 20,
                 ),
@@ -166,13 +169,16 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
           ),
         );
       },
-      listener: (BuildContext context, RegisterState state) async {
-        if (state is RegisterSuccess) {
-          print(state.registerModel.message.toString());
-         await customAwesomeDialog(context,message: state.registerModel.message.toString());
+      listener: (BuildContext context, RegisterState state)  async {
+        if (state is RegisterSuccess)  {
+          await customAwesomeDialog(
+            context,
+            message: state.registerModel.message.toString(),
+            note: 'Registered Successfully',
+          );
           context.go(AppRouter.loginScreen);
         } else if (state is RegisterFailure) {
-          customAwesomeDialog(context,message: state.errMessage);
+          customAwesomeDialog(context, message: state.errMessage);
         }
       },
     );

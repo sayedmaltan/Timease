@@ -1,8 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:timease_mobile/core/utils/api_service.dart';
 import 'package:timease_mobile/core/utils/service_locator.dart';
 import 'package:timease_mobile/features/authentication/data/repos/auth_repo_impl.dart';
 import 'package:timease_mobile/features/authentication/presentation/manger/login_cubit/login_cubit.dart';

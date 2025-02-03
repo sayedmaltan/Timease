@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:timease_mobile/features/home/presentation/views/widgets/custom_event_container.dart';
 
-class HomeViewBodyEventsList extends StatelessWidget {
-  const HomeViewBodyEventsList({
+class EventsList extends StatelessWidget {
+  const EventsList({
     super.key,
     required this.eventName,
     required this.eventType,
@@ -24,7 +24,7 @@ class HomeViewBodyEventsList extends StatelessWidget {
           leftContainerColor: leftContainerColor,
         ),
       ),
-      itemCount: 20,
+      itemCount: 5,
     );
   }
 }

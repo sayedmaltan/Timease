@@ -29,12 +29,12 @@ class CustomFieldColumn extends StatelessWidget {
           height: 5,
         ),
         CustomTextFormField(
-
-            keyboardType: TextInputType.emailAddress,
-            hintText: hintText,
-            isPassword: false,
-            controller: controller,
-            validator: validator),
+          keyboardType: TextInputType.emailAddress,
+          hintText: hintText,
+          isPassword: false,
+          controller: controller,
+          validator: validator,
+        ),
         SizedBox(
           height: 14,
         ),

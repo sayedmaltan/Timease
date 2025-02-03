@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timease_mobile/constants.dart';
-import 'package:timease_mobile/core/utils/styles.dart';
-import 'package:timease_mobile/features/home/presentation/views/widgets/custom_row_search_and_account.dart';
-import 'package:timease_mobile/features/home/presentation/views/widgets/home_view_body_events_list.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class HomeScreenViewBody extends StatefulWidget {
   const HomeScreenViewBody({super.key});
@@ -12,40 +9,45 @@ class HomeScreenViewBody extends StatefulWidget {
 }
 
 class _HomeScreenViewBodyState extends State<HomeScreenViewBody> {
-  var controller = TextEditingController();
+  DateTime selectedDay = DateTime.now();
+  DateTime focusedDay = DateTime.now();
+  CalendarFormat calendarFormat = CalendarFormat.month;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: 7,
+        TableCalendar(
+
+          firstDay: DateTime.now(),
+          lastDay: DateTime.utc(
+            DateTime.now().year + 1,
+            DateTime.now().month,
+            DateTime.now().day,
+          ),
+          focusedDay: focusedDay,
+          selectedDayPredicate: (day) {
+            return isSameDay(selectedDay, day);
+          },
+          onDaySelected: (selectedDay, focusedDay) {
+            if (!isSameDay(this.selectedDay, selectedDay)) {
+              setState(() {
+                this.selectedDay = selectedDay;
+                this.focusedDay = focusedDay;
+              });
+            }
+          },
+          calendarFormat: calendarFormat,
+          onFormatChanged: (format) {
+            setState(() {
+              calendarFormat = format;
+            });
+          },
+          onPageChanged: (focusedDay) {
+            this.focusedDay = focusedDay;
+          },
         ),
-        CustomRowSearchAndAccount(controller: controller),
-        SizedBox(
-          height: 7,
-        ),
-        Divider(
-          color: kSecPrimaryColor.shade400,
-        ),
-            Padding(
-               padding: const EdgeInsets.all(10.0),
-               child: Text('YOUR EVENT TYPES',style: Styles.textStyleBlack.copyWith(color: kSecPrimaryColor.shade600)),
-             ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: HomeViewBodyEventsList(
-                  eventName: 'Event name',
-                  eventType: 'One-one one, 30 mins',
-                  leftContainerColor: kPrimaryColor,
-                ),
-              ),
-            )
-        
       ],
     );
   }
 }
-

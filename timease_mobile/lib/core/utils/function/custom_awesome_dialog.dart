@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../styles.dart';
-
-customAwesomeDialog(BuildContext context, {required String message}) {
+customAwesomeDialog(BuildContext context,
+    {required String message, String? note}) {
   return showDialog<String>(
     context: context,
     builder: (BuildContext context) => Dialog(
@@ -18,7 +17,7 @@ customAwesomeDialog(BuildContext context, {required String message}) {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Wrong Credentials',
+                note ?? 'Wrong Credentials',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
               ),
               const SizedBox(height: 15),
