@@ -1,15 +1,17 @@
 package com.timease.backend.model;
 
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.UUID;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -21,9 +23,12 @@ public class Availability {
 
     @ManyToOne
     @JoinColumn(name = "event_id", nullable = false)
+    @JsonIgnore
     private Event event;
 
-    private DayOfWeek dayOfWeek;
-    private LocalTime startTime;
-    private LocalTime endTime;
+    @Enumerated(EnumType.STRING)
+    private DayOfWeek dayOfWeek; // Example: MONDAY, TUESDAY, etc.
+
+    private LocalTime startTime; // Available from
+    private LocalTime endTime;   // Available until
 }

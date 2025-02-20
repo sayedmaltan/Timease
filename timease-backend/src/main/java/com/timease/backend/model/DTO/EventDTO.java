@@ -1,11 +1,9 @@
 package com.timease.backend.model.DTO;
 
 import com.timease.backend.model.Availability;
-import com.timease.backend.model.Enum.EventType;
-import com.timease.backend.model.User;
-import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,12 +19,10 @@ public class EventDTO {
 
     private String description;
 
-    private Integer isEnabled;
-
     private String location;
+    private int length;
+    private int maxAttendees;
 
-    @Enumerated(EnumType.STRING)
-    private EventType type; // ONLINE or OFFLINE
-
+    private int schedulingRange;
     private List<Availability> availability;
 }

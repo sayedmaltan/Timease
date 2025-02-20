@@ -1,55 +1,96 @@
 package com.timease.backend.Service;
 
-import com.timease.backend.model.DTO.MeetingDTO;
+import com.timease.backend.model.Availability;
 import com.timease.backend.model.Event;
 import com.timease.backend.model.Meeting;
 import com.timease.backend.model.User;
+import com.timease.backend.repository.AvailabilityRepository;
 import com.timease.backend.repository.EventRepository;
 import com.timease.backend.repository.MeetingRepository;
 import com.timease.backend.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class MeetingService {
 
-    @Autowired
-    private  MeetingRepository meetingRepository;
+    private final EventRepository eventRepository;
+    private final MeetingRepository meetingRepository;
+    private final AvailabilityRepository availabilityRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private EventRepository eventRepository;
+    @Transactional
+    public List<Meeting> getAvailableMeetings(UUID eventId) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new RuntimeException("Event not found"));
 
-    public Meeting scheduleMeeting(MeetingDTO meeting) {
-        Optional<User> user = userRepository.findById(meeting.getInvitee());
-        Optional<Event> event = eventRepository.findById(meeting.getEvent_id());
-        if (user.isEmpty()) {
-            throw new NotFoundException("User Not Found");
+        LocalDate startDate = LocalDate.now();
+        LocalDate endDate = startDate.plusDays(event.getSchedulingRange());
+
+        List<Meeting> existingMeetings = meetingRepository.findByEventAndDateBetween(event, startDate, endDate);
+        Set<LocalDate> generatedMeetingDates = existingMeetings.stream()
+                .map(Meeting::getDate)
+                .collect(Collectors.toSet());
+
+        List<Meeting> meetings = new ArrayList<>(existingMeetings);
+
+        // Get all availabilities for this event
+        List<Availability> availabilities = availabilityRepository.findByEventId(event.getId());
+
+        for (Availability availability : availabilities) {
+            for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
+                if (date.getDayOfWeek() == availability.getDayOfWeek() && !generatedMeetingDates.contains(date)) {
+                    generateMeetingsForDate(meetings, event, availability, date);
+                }
+            }
         }
-        if (event.isEmpty()) {
-            throw new NotFoundException("Event Not Found");
+
+        // Save new meetings and return available ones
+        meetingRepository.saveAll(meetings);
+        return meetings.stream()
+                .filter(Meeting::isAvailable)
+                .collect(Collectors.toList());
+    }
+
+    private void generateMeetingsForDate(List<Meeting> meetings, Event event, Availability availability, LocalDate date) {
+        LocalTime startTime = availability.getStartTime();
+        LocalTime endTime = availability.getEndTime();
+        int duration = event.getLength();
+
+        while (startTime.plusMinutes(duration).isBefore(endTime) || startTime.plusMinutes(duration).equals(endTime)) {
+            Meeting meeting = new Meeting();
+            meeting.setEvent(event);
+            meeting.setDate(date);
+            meeting.setStartTime(startTime);
+            meeting.setEndTime(startTime.plusMinutes(duration));
+            meetings.add(meeting);
+
+            startTime = startTime.plusMinutes(duration);
         }
-        Meeting newMeeting = new Meeting();
-        newMeeting.setEvent(event.get());
-        newMeeting.setInvitee(user.get());
-        newMeeting.setScheduledTime(meeting.getScheduledTime());
-        return meetingRepository.save(newMeeting);
-    }
-    public List<Meeting> getAllMeetings() {
-        return meetingRepository.findAll();
     }
 
-    public Meeting getMeetingById(UUID id) {
-        return meetingRepository.findById(id).orElseThrow(() -> new RuntimeException("Meeting not found"));
-    }
+    @Transactional
+    public Meeting bookMeeting(UUID meetingId, UUID userId) {
+        Meeting meeting = meetingRepository.findById(meetingId)
+                .orElseThrow(() -> new RuntimeException("Meeting not found"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-    public void cancelMeeting(UUID id) {
-        meetingRepository.deleteById(id);
+        if (!meeting.isAvailable()) {
+            throw new RuntimeException("Meeting is full");
+        }
+
+        meeting.getAttendees().add(user);
+        return meetingRepository.save(meeting);
     }
 }
