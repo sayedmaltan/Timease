@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/events")
+@RequestMapping("/api/v1/event")
 public class EventController {
 
     @Autowired
@@ -27,8 +27,13 @@ public class EventController {
         return ResponseEntity.ok(eventService.getAllEvents());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Event> getEventById(@PathVariable UUID id) {
-        return ResponseEntity.ok(eventService.getEventById(id));
+    @GetMapping("/{evenId}")
+    public ResponseEntity<Event> getEventById(@PathVariable UUID evenId) {
+        return ResponseEntity.ok(eventService.getEventById(evenId));
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Event>> getUserEvents(@PathVariable UUID userId) {
+        return ResponseEntity.ok(eventService.getEventsForUser(userId));
     }
 }

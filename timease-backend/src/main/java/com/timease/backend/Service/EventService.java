@@ -64,4 +64,8 @@ public class EventService {
         return eventRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Event not found"));
     }
+
+    public List<Event> getEventsForUser(UUID userId) {
+        return eventRepository.findByUserId(userId);
+    }
 }
