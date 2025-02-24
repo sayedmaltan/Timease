@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -56,8 +58,13 @@ public class EventService {
         return savedEvent;
     }
 
-    public List<Event> getAllEvents() {
-        return eventRepository.findAll();
+    public  Map<String,Object> getAllEvents() {
+
+        List<Event> events = eventRepository.findAll();;
+        Map<String,Object> response = new HashMap<>();
+        response.put("eventsNo",events.size());
+        response.put("events", events);
+        return response;
     }
 
     public Event getEventById(UUID id) {
@@ -65,7 +72,11 @@ public class EventService {
                 .orElseThrow(() -> new RuntimeException("Event not found"));
     }
 
-    public List<Event> getEventsForUser(UUID userId) {
-        return eventRepository.findByUserId(userId);
+    public  Map<String,Object> getEventsForUser(UUID userId) {
+        List<Event> events = eventRepository.findByUserId(userId);;
+        Map<String,Object> response = new HashMap<>();
+        response.put("eventsNo",events.size());
+        response.put("events", events);
+        return response;
     }
 }
