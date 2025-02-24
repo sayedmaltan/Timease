@@ -23,7 +23,7 @@ public class EventController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Event>> getAllEvents() {
+    public ResponseEntity<?> getAllEvents() {
         return ResponseEntity.ok(eventService.getAllEvents());
     }
 
@@ -33,7 +33,7 @@ public class EventController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Event>> getUserEvents(@PathVariable UUID userId) {
+    public ResponseEntity<?> getUserEvents(@PathVariable UUID userId) {
         return ResponseEntity.ok(eventService.getEventsForUser(userId));
     }
 }
