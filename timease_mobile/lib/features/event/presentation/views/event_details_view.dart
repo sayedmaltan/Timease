@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:timease_mobile/features/event/data/models/event_model.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/custom_3layer_container.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/custom_available_time.dart';
