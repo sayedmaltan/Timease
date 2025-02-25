@@ -149,8 +149,10 @@ class _LoginScreenViewBodyState extends State<LoginScreenViewBody> {
         if (state is LoginSuccess) {
           CashHelper.setData('refreshToken', state.loginModel.refreshToken!);
           CashHelper.setData('accessToken', state.loginModel.accessToken!);
+          CashHelper.setData('userId', state.loginModel.id!);
           accessToken=state.loginModel.accessToken!;
           refreshToken=state.loginModel.refreshToken!;
+          userId=state.loginModel.id!;
           context.go(AppRouter.homeScreen);
         } else if (state is LoginFailure) {
           customAwesomeDialog(context,message: state.errMessage);

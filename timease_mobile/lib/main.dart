@@ -11,23 +11,21 @@ Future<void> main() async {
   changeStatusBarColor();
   setupServiceLocator();
   await CashHelper.init();
-  accessToken=CashHelper.getData('accessToken')??'';
-  refreshToken=CashHelper.getData('refreshToken')??'';
+  accessToken = CashHelper.getData('accessToken') ?? '';
+  refreshToken = CashHelper.getData('refreshToken') ?? '';
+  userId = CashHelper.getData('userId') ?? '';
   runApp(const MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp.router(
-     debugShowCheckedModeBanner: false,
-     theme: buildThemeData(),
-     routerConfig: AppRouter.router,
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      theme: buildThemeData(),
+      routerConfig: AppRouter.router,
     );
   }
-
 }
-
