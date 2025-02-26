@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:timease_mobile/constants.dart';
 
 class ApiService {
   final Dio dio;
@@ -7,6 +8,7 @@ class ApiService {
   ApiService({required this.dio});
 
   Future<Map<String, dynamic>> get({required String endPoint}) async {
+    dio.options.headers["Authorization"] = "Bearer $refreshToken";
     var response = await dio.get(
       _baseUrl + endPoint,
     );
@@ -14,6 +16,7 @@ class ApiService {
   }
 
   Future<Map<String, dynamic>> post({required String endPoint,required body}) async {
+    dio.options.headers["Authorization"] = "Bearer $refreshToken";
     var response = await dio.post(
       _baseUrl + endPoint,
       options: Options(

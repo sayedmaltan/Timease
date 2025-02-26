@@ -1,11 +1,12 @@
 class LoginModel {
   LoginModel({
-      this.accessToken, 
-      this.refreshToken, 
-      this.type, 
-      this.id, 
-      this.email, 
-      this.roles,});
+    this.accessToken,
+    this.refreshToken,
+    this.type,
+    this.id,
+    this.email,
+    this.roles,
+  });
 
   LoginModel.fromJson(dynamic json) {
     accessToken = json['accessToken'];
@@ -15,6 +16,7 @@ class LoginModel {
     email = json['email'];
     roles = json['roles'] != null ? json['roles'].cast<String>() : [];
   }
+
   String? accessToken;
   String? refreshToken;
   String? type;
@@ -32,5 +34,4 @@ class LoginModel {
     map['roles'] = roles;
     return map;
   }
-
 }

@@ -19,6 +19,12 @@ abstract class Styles {
     fontWeight: FontWeight.w500,
   );
 
+  static const textStyle14 = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: Colors.black54
+  );
+
   static const textStyleFullButton = TextStyle(
     color: Colors.white,
     fontSize: 18,
