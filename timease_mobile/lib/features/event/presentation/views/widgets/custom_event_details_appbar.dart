@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:timease_mobile/core/utils/function/custom_box_decoration.dart';
 import '../../../../../constants.dart';
 import '../../../../../core/utils/styles.dart';
 
@@ -11,7 +10,29 @@ class CustomEventDetailsAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 60,
-      decoration: customBoxDecoration(),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(
+          color: kSecPrimaryColor.shade400
+        )),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            offset: Offset(0, 0),
+            blurRadius: 20.0,
+            spreadRadius: -7.0,
+          ),
+          BoxShadow(
+            color: Colors.white,
+            offset: Offset(0, 0),
+            blurRadius: 20.0,
+            spreadRadius: 0.0,
+          ),
+          BoxShadow(
+            color: Colors.white,
+          ),
+        ],
+        borderRadius: BorderRadius.circular(5),
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: Row(

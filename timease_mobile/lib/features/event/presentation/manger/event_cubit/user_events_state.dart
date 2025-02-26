@@ -12,8 +12,16 @@ class UserEventsSuccess extends UserEventsState{
   UserEventsSuccess({required this.eventsListModel});
 }
 
-class UserEventsFailure extends UserEventsState{
+class UserEventsFailure extends UserEventsState {
   final String errMessage;
+
   UserEventsFailure({required this.errMessage});
 }
+  class SearchEventsLoading extends UserEventsState{}
+
+  class SearchEventsSuccess extends UserEventsState{
+  List<EventModel> eventsListModel;
+  SearchEventsSuccess({required this.eventsListModel});
+  }
+
 

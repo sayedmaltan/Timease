@@ -18,7 +18,8 @@ class EventsScreenViewBody extends StatefulWidget {
 
 class _EventsScreenViewBodyState extends State<EventsScreenViewBody> {
   var controller = TextEditingController();
-
+  late UserEventsSuccess userEventsSuccess;
+  bool passFirstTime=false;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -26,37 +27,46 @@ class _EventsScreenViewBodyState extends State<EventsScreenViewBody> {
         ..getUserEventsList(userId: userId),
       child: BlocConsumer<UserEventsCubit, UserEventsState>(
         builder: (context, state) {
-          return state is UserEventsSuccess
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 7,
-                    ),
-                    CustomSearch(
-                      controller: controller,
-                      text: 'Search event Types...',
-                    ),
-                    SizedBox(
-                      height: 7,
-                    ),
-                    Divider(
-                      color: kSecPrimaryColor.shade400,
-                    ),
-                    CustomYourText(
-                      text: 'YOUR EVENT TYPES',
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: EventsList(
-                          eventsList: state.eventsListModel,
-                        ),
+          if(state is UserEventsSuccess)
+            {
+              if(!passFirstTime) {
+                userEventsSuccess=state;
+                passFirstTime=true;
+              }
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 7,
+                  ),
+                  CustomSearch(
+                    eventListModel: userEventsSuccess.eventsListModel,
+                    controller: controller,
+                    text: 'Search event Types...',
+                  ),
+                  SizedBox(
+                    height: 7,
+                  ),
+                  Divider(
+                    color: kSecPrimaryColor.shade400,
+                  ),
+                  CustomYourText(
+                    text: 'YOUR EVENT TYPES',
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: EventsList(
+                        eventsList: state.eventsListModel,
                       ),
-                    )
-                  ],
-                )
-              : Center(child: CircularProgressIndicator());
+                    ),
+                  )
+                ],
+              );
+            }
+          else {
+            return Center(child: CircularProgressIndicator());
+          }
         },
         listener: (context, state) {
           if (state is UserEventsSuccess) {

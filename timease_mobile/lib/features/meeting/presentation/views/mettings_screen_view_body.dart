@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../../constants.dart';
 import 'widgets/custom_filter_bottom_sheet.dart';
 import 'widgets/custom_filter_row.dart';
-import 'widgets/custom_row_search_and_account.dart';
 
 class MeetingsScreenViewBody extends StatefulWidget {
   const MeetingsScreenViewBody({super.key});
@@ -23,7 +22,7 @@ class _MeetingsScreenViewBodyState extends State<MeetingsScreenViewBody> {
         SizedBox(
           height: 10,
         ),
-        CustomRowSearchAndAccount(controller: controller),
+        // CustomRowSearchAndAccount(controller: controller),
         SizedBox(
           height: 7,
         ),

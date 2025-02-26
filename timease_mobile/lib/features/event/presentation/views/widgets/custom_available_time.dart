@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:timease_mobile/constants.dart';
-import 'package:timease_mobile/features/event/presentation/views/widgets/custom_available_time_row.dart';
-
+import 'package:timease_mobile/features/event/data/models/event_model.dart';
+import '../../../../../constants.dart';
 import '../../../../../core/utils/function/custom_box_decoration.dart';
 import '../../../../../core/utils/styles.dart';
+import 'custom_days_table.dart';
 
 class CustomAvailableTime extends StatelessWidget {
   const CustomAvailableTime({
     super.key,
     required this.icon,
     required this.superTitle,
+    required this.availabilitiesListModel,
   });
 
+  final List<Availabilities> availabilitiesListModel;
   final IconData icon;
   final String superTitle;
 
@@ -49,27 +51,15 @@ class CustomAvailableTime extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: Text('WEEKLY HOURS'),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: Container(
-              height: 200,
-              decoration: BoxDecoration(
-                border: Border.all(color: kSecPrimaryColor.shade400),
-              ),
-              child: Column(
-                children: [
-                  CustomAvailableTimeRow(day: 'Mondays', time: '9:00AM-5:00PM'),
-                  CustomAvailableTimeRow(day: 'Mondays', time: '9:00AM-5:00PM'),
-                  CustomAvailableTimeRow(day: 'Mondays', time: '9:00AM-5:00PM'),
-                ],
-              ),
+            child: Text(
+              'WEEKLY HOURS',
+              style: Styles.textStyle14.copyWith(
+                  fontWeight: FontWeight.w500, color: kSecPrimaryColor),
             ),
-          )
+          ),
+          CustomDaysTable(
+            availabilitiesList: availabilitiesListModel,
+          ),
         ],
       ),
     );
