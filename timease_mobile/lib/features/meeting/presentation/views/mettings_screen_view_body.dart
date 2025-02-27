@@ -1,8 +1,12 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
-
+import 'package:timease_mobile/core/utils/styles.dart';
+import 'package:timease_mobile/features/event/data/models/event_model.dart';
+import 'package:timease_mobile/features/event/presentation/views/widgets/events_list.dart';
 import '../../../../constants.dart';
 import 'widgets/custom_filter_bottom_sheet.dart';
 import 'widgets/custom_filter_row.dart';
+import 'widgets/custom_meeting_box.dart';
 
 class MeetingsScreenViewBody extends StatefulWidget {
   const MeetingsScreenViewBody({super.key});
@@ -48,18 +52,11 @@ class _MeetingsScreenViewBodyState extends State<MeetingsScreenViewBody> {
           ),
         ),
         Expanded(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'No meetings are scheduled for',
-                ),
-                Text('Sunday, February 2')
-              ],
-            ),
+          child: ListView.builder(
+            itemCount: 10,
+            itemBuilder: (context, index) => CustomMeetingBox(),
           ),
-        )
+        ),
       ],
     );
   }
