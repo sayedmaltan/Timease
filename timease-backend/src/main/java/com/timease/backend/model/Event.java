@@ -28,12 +28,13 @@ public class Event {
     private String location;
 
     @Column(nullable = false)
-    private int length; // Duration of the meeting minutes
+    private int duration; // Duration of the meeting minutes
 
     private int maxAttendees; // Maximum number of attendees
 
     private int schedulingRange;
 
+    private boolean isPeriodic; // Is the event periodic
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Availability> availabilities; // Linked availability slots
 }

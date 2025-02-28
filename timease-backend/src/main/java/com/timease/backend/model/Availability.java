@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
 
@@ -29,6 +30,7 @@ public class Availability {
     @Enumerated(EnumType.STRING)
     private DayOfWeek dayOfWeek; // Example: MONDAY, TUESDAY, etc.
 
+    private LocalDate date;
     private LocalTime startTime; // Available from
     private LocalTime endTime;   // Available until
 }
