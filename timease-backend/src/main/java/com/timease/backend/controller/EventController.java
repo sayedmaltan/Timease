@@ -2,16 +2,13 @@ package com.timease.backend.controller;
 
 import com.timease.backend.Service.EventService;
 import com.timease.backend.model.DTO.EventDTO;
-import com.timease.backend.model.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/event")
+@RequestMapping("/api/event")
 public class EventController {
 
     @Autowired
@@ -22,18 +19,25 @@ public class EventController {
         return ResponseEntity.ok(eventService.createEvent(event));
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<?> getAllEvents() {
         return ResponseEntity.ok(eventService.getAllEvents());
     }
 
-    @GetMapping("/{evenId}")
-    public ResponseEntity<Event> getEventById(@PathVariable UUID evenId) {
-        return ResponseEntity.ok(eventService.getEventById(evenId));
+
+    @GetMapping
+    public ResponseEntity<?> getUserEvents() {
+        return ResponseEntity.ok(eventService.getUserEvents());
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<?> getUserEvents(@PathVariable UUID userId) {
-        return ResponseEntity.ok(eventService.getEventsForUser(userId));
+    @PutMapping("/{eventId}")
+    public ResponseEntity<?> updateEvent(@PathVariable UUID eventId, @RequestBody EventDTO request) {
+        return ResponseEntity.ok(eventService.updateEvent(eventId, request));
+    }
+
+    @DeleteMapping("/{eventId}")
+    public ResponseEntity<Void> deleteEvent(@PathVariable UUID eventId) {
+        eventService.deleteEvent(eventId);
+        return ResponseEntity.noContent().build();
     }
 }

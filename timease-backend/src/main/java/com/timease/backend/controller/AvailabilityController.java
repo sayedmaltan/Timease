@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/availabilities")
+@RequestMapping("/api/availabilities")
 public class AvailabilityController {
 
     @Autowired
