@@ -1,8 +1,4 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:timease_mobile/core/utils/styles.dart';
-import 'package:timease_mobile/features/event/data/models/event_model.dart';
-import 'package:timease_mobile/features/event/presentation/views/widgets/events_list.dart';
 import '../../../../constants.dart';
 import 'widgets/custom_filter_bottom_sheet.dart';
 import 'widgets/custom_filter_row.dart';
