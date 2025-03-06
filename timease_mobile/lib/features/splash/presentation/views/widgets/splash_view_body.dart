@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:timease_mobile/constants.dart';
 import '../../../../../core/utils/app_router.dart';
 import '../../../../../core/utils/asstes.dart';
+import '../../../../../core/utils/cash_helper.dart';
 
 class SplashViewBody extends StatefulWidget {
   const SplashViewBody({super.key});
@@ -38,7 +38,7 @@ void navigateToAuthOrHome() {
       seconds: 2,
     ),
     () {
-      accessToken==''?
+      CashHelper.getData('accessToken')==null?
       context.go(AppRouter.authScreen):
       context.go(AppRouter.homeScreen);
     }

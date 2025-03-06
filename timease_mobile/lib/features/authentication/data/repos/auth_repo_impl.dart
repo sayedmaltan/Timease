@@ -1,13 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 import 'package:timease_mobile/core/errors/failure.dart';
 import 'package:timease_mobile/core/utils/api_service.dart';
 import 'package:timease_mobile/features/authentication/data/models/login_model.dart';
 import 'package:timease_mobile/features/authentication/data/models/register_model.dart';
 import 'package:timease_mobile/features/authentication/data/repos/auth_repo.dart';
+import '../../../../core/utils/app_router.dart';
+import '../../../../core/utils/cash_helper.dart';
 
 class AuthRepoImpl implements AuthRepo {
-   ApiService apiService;
+  ApiService apiService;
 
   AuthRepoImpl({required this.apiService});
 
@@ -19,12 +23,9 @@ class AuthRepoImpl implements AuthRepo {
     try {
       var json = await apiService.post(
         endPoint: 'auth/login',
-        body: {
-          'email': email,
-          'password': password
-        },
+        body: {'email': email, 'password': password},
       );
-    LoginModel loginModel= LoginModel.fromJson(json);
+      LoginModel loginModel = LoginModel.fromJson(json);
       return right(loginModel);
     } catch (e) {
       if (e is DioException) {
@@ -50,7 +51,7 @@ class AuthRepoImpl implements AuthRepo {
           'password': password
         },
       );
-      RegisterModel registerModel= RegisterModel.fromJson(json);
+      RegisterModel registerModel = RegisterModel.fromJson(json);
       return Right(registerModel);
     } catch (e) {
       if (e is DioException) {
@@ -60,24 +61,10 @@ class AuthRepoImpl implements AuthRepo {
     }
   }
 
-
-
-   Future<Either<Failure, String>> logout({
-     required String refreshToken,
-   }) async {
-     try {
-       var json = await apiService.post(
-         endPoint: 'auth/logout',
-         body: {
-           'refreshToken': refreshToken
-         },
-       );
-       return right(json['message']);
-     } catch (e) {
-       if (e is DioException) {
-         return left(ServerFailure.fromDioError(dioError: e));
-       }
-       return left(ServerFailure(errMessage: e.toString()));
-     }
-   }
+  void logout({required BuildContext context}) {
+    CashHelper.removeData('refreshToken');
+    CashHelper.removeData('accessToken');
+    CashHelper.removeData('userId');
+    context.go(AppRouter.authScreen);
+  }
 }

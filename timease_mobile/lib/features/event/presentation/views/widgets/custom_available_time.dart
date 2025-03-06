@@ -20,7 +20,7 @@ class CustomAvailableTime extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: customBoxDecoration(),
+      decoration: buildBoxDecoration(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

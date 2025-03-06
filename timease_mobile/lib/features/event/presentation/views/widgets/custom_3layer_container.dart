@@ -24,7 +24,7 @@ class Custom3LayerContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 210,
-      decoration: customBoxDecoration(),
+      decoration: buildBoxDecoration(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -87,10 +87,15 @@ class Custom3LayerContainer extends StatelessWidget {
                     title2,
                     style: Styles.textStyle14,
                   ),
-                  Text(
-                    description2,
-                    style: Styles.textStyle15
-                        .copyWith(fontWeight: FontWeight.w600),
+                  Expanded(
+                    child: Text(
+                      description2,
+                      style: Styles.textStyle15.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),

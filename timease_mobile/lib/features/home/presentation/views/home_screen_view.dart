@@ -17,7 +17,7 @@ class HomeScreenView extends StatefulWidget {
 class _HomeScreenViewState extends State<HomeScreenView> {
   int selectBottomNavBar = 0;
   Color logoColor = Colors.green;
-  List<Widget> homeScreensBody=[
+  List<Widget> homeScreensBody = [
     HomeScreenViewBody(),
     EventsScreenViewBody(),
     MeetingsScreenViewBody(),
@@ -32,16 +32,17 @@ class _HomeScreenViewState extends State<HomeScreenView> {
         body: SafeArea(child: homeScreensBody[selectBottomNavBar]),
         bottomNavigationBar: CustomBottomNavBar(
           onTap: (int value) {
-              selectBottomNavBar = value;
-              value == 0
-                  ? logoColor = kPrimaryColor
-                  : logoColor = kSecPrimaryColor;
-              setState(() {});
+            selectBottomNavBar = value;
+            value == 0
+                ? logoColor = kPrimaryColor
+                : logoColor = kSecPrimaryColor;
+            setState(() {});
           },
           selectBottomNavBar: selectBottomNavBar,
           logoColor: logoColor,
         ),
-        floatingActionButton: selectBottomNavBar==1 ? CustomFloatingActionButton() : null,
+        floatingActionButton:
+            selectBottomNavBar == 1 ? CustomFloatingActionButton() : null,
       ),
     );
   }
