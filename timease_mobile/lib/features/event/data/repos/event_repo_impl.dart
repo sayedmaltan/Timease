@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:timease_mobile/core/errors/failure.dart';
 import 'package:timease_mobile/core/utils/api_service.dart';
 import 'package:timease_mobile/features/event/data/models/event_model.dart';
@@ -39,7 +38,6 @@ class EventRepoImpl implements EventRepo {
       );
       return right(true);
     } catch (e) {
-      debugPrint("999999999999999999999999999999");
       if (e is DioException) {
         return left(ServerFailure.fromDioError(dioError: e));
       }

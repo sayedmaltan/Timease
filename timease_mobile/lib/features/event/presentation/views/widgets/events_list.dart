@@ -3,7 +3,6 @@ import 'package:timease_mobile/constants.dart';
 import 'package:timease_mobile/core/utils/cash_helper.dart';
 import 'package:timease_mobile/features/event/data/models/event_model.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/custom_event_container.dart';
-
 import '../../manger/event_cubit/user_events_cubit.dart';
 
 class EventsList extends StatelessWidget {

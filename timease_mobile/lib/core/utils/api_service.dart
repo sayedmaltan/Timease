@@ -25,20 +25,27 @@ class ApiService {
   void interceptorsWrapper() {
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
-        dio.options.headers["Authorization"] =
-        "Bearer ${CashHelper.getData('accessToken')}";
+        if (options.path.compareTo('https://timease.up.railway.app/api/auth/login')==0||
+            options.path.compareTo('https://timease.up.railway.app/api/auth/signup')==0 ||
+            options.path.compareTo('https://timease.up.railway.app/api/auth/logout')==0||
+            options.path.compareTo('https://timease.up.railway.app/api/auth/refresh-token')==0){
+         options.headers["Authorization"] = "";
+        } else {
+          dio.options.headers["Authorization"] =
+          "Bearer ${CashHelper.getData('accessToken')}";
+        }
         return handler.next(options);
       },
       onError: (error, handler) async {
-        if (error.response?.statusCode == 403) {
+        if (error.response?.statusCode == 401) {
           try {
+            dio.options.headers["Authorization"] = "";
             String? newAccessToken = await refreshToken();
             if (newAccessToken != null) {
-              error.requestOptions.headers["Authorization"] = "Bearer $newAccessToken";
+              error.requestOptions.headers["Authorization"] =
+                  "Bearer $newAccessToken";
               final retryResponse = await dio.fetch(error.requestOptions);
               return handler.resolve(retryResponse);
-            }
-            else{
             }
           } catch (refreshError) {
             return handler.next(error);
@@ -53,10 +60,8 @@ class ApiService {
         }
         return handler.next(error);
       },
-
     ));
   }
-
 
   Future<Map<String, dynamic>> get({required String endPoint}) async {
     var response = await dio.get(
@@ -83,10 +88,10 @@ class ApiService {
     return response.data;
   }
 
-  Future<Map<String, dynamic>> delete({required String endPoint}) async {
-    var response = await dio.delete(
+  Future<void> delete({required String endPoint}) async {
+    await dio.delete(
       _baseUrl + endPoint,
     );
-    return response.data;
+    // return response.data;
   }
 }

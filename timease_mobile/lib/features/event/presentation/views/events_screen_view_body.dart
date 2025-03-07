@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timease_mobile/core/utils/function/logout.dart';
 import 'package:timease_mobile/core/utils/service_locator.dart';
 import 'package:timease_mobile/core/widgets/custom_shimmer_loading.dart';
 import 'package:timease_mobile/features/event/data/repos/event_repo_impl.dart';
@@ -92,6 +93,10 @@ class _EventsScreenViewBodyState extends State<EventsScreenViewBody> {
         listener: (context, state) {
           if (state is GetUserEventsSuccess) {
           } else if (state is GetUserEventsFailure) {
+            if(state.errMessage=='JWT token has expired')
+              {
+                logout(context: context);
+              }
           } else if (state is GetUserEventsLoading) {}
         },
       ),

@@ -14,7 +14,7 @@ void setupServiceLocator() {
       PrettyDioLogger(
         requestHeader: true,
         requestBody: true,
-        filter: (options, args) => true, // Ensure logging everything
+        filter: (options, args) => true,
       ),
     )
     ..options.headers["Authorization"] =

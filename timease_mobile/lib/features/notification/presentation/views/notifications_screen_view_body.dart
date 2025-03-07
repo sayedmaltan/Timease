@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timease_mobile/core/utils/api_service.dart';
-import 'package:timease_mobile/features/authentication/data/repos/auth_repo_impl.dart';
-
-import '../../../../core/utils/service_locator.dart';
+import '../../../../core/utils/function/logout.dart';
 
 class NotificationsScreenViewBody extends StatelessWidget {
   const NotificationsScreenViewBody({super.key});
@@ -12,9 +9,7 @@ class NotificationsScreenViewBody extends StatelessWidget {
     return Center(
       child: TextButton(
         onPressed: () async {
-          AuthRepoImpl authRepoImpl =
-              AuthRepoImpl(apiService: getIt.get<ApiService>());
-          authRepoImpl.logout(context: context);
+          logout(context: context);
         },
         child: Text('LOGOUT'),
       ),

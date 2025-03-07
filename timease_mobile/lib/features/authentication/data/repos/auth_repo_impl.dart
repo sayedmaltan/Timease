@@ -1,14 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:go_router/go_router.dart';
 import 'package:timease_mobile/core/errors/failure.dart';
 import 'package:timease_mobile/core/utils/api_service.dart';
 import 'package:timease_mobile/features/authentication/data/models/login_model.dart';
 import 'package:timease_mobile/features/authentication/data/models/register_model.dart';
 import 'package:timease_mobile/features/authentication/data/repos/auth_repo.dart';
-import '../../../../core/utils/app_router.dart';
-import '../../../../core/utils/cash_helper.dart';
 
 class AuthRepoImpl implements AuthRepo {
   ApiService apiService;
@@ -61,10 +57,5 @@ class AuthRepoImpl implements AuthRepo {
     }
   }
 
-  void logout({required BuildContext context}) {
-    CashHelper.removeData('refreshToken');
-    CashHelper.removeData('accessToken');
-    CashHelper.removeData('userId');
-    context.go(AppRouter.authScreen);
-  }
+
 }

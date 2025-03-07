@@ -43,7 +43,13 @@ class ServerFailure extends Failure {
         errMessage='Unexpected Error, Please try later!';
       }
       else {
-        errMessage= statusBadResponse['message'];
+        if(statusBadResponse is String)
+          {
+            errMessage= statusBadResponse;
+          }
+        else {
+          errMessage= statusBadResponse['message'];
+        }
       }
       return ServerFailure(errMessage: errMessage);
     } else if (statusCode == 404) {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:timease_mobile/constants.dart';
-import 'package:timease_mobile/core/utils/app_router.dart';
+import '../../../../../core/utils/app_router.dart';
+
 
 class CustomFloatingActionButton extends StatelessWidget {
   const CustomFloatingActionButton({
@@ -13,6 +14,7 @@ class CustomFloatingActionButton extends StatelessWidget {
     return FloatingActionButton(
       backgroundColor: kPrimaryColor,
       shape: CircleBorder(),
+
       onPressed: () {
         context.push(AppRouter.createNewEventScreen);
       },
