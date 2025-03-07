@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:timease_mobile/constants.dart';
 import 'package:timease_mobile/core/utils/app_router.dart';
 import 'package:timease_mobile/core/utils/cash_helper.dart';
 import 'package:timease_mobile/core/utils/function/custom_awesome_dialog.dart';
@@ -150,12 +149,13 @@ class _LoginScreenViewBodyState extends State<LoginScreenViewBody> {
           CashHelper.setData('refreshToken', state.loginModel.refreshToken!);
           CashHelper.setData('accessToken', state.loginModel.accessToken!);
           CashHelper.setData('userId', state.loginModel.id!);
-          accessToken=state.loginModel.accessToken!;
-          refreshToken=state.loginModel.refreshToken!;
-          userId=state.loginModel.id!;
           context.go(AppRouter.homeScreen);
         } else if (state is LoginFailure) {
+          debugPrint(state.errMessage);
           customAwesomeDialog(context,message: state.errMessage);
+        }
+        else{
+
         }
       },
     );

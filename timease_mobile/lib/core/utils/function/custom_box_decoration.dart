@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 import '../../../constants.dart';
 
-BoxDecoration customBoxDecoration() {
+BoxDecoration buildBoxDecorationCrEvent() {
+  return BoxDecoration(
+    border: Border.all(
+      color: Color(0XFFA1B89D),
+      width: 1,
+    ),
+    borderRadius: BorderRadius.circular(10),
+  );
+}
+
+BoxDecoration buildBoxDecoration() {
   return BoxDecoration(
     border: Border.all(color: kSecPrimaryColor.shade400),
     boxShadow: [

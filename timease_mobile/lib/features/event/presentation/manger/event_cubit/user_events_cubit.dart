@@ -14,14 +14,14 @@ class UserEventsCubit extends Cubit<UserEventsState> {
   Future<void> getUserEventsList({
     required String userId,
   }) async {
-    emit(UserEventsLoading());
-    var response = await eventRepo.getUserEvents(userId: userId);
+    emit(GetUserEventsLoading());
+    var response = await eventRepo.getUserEvents();
     response.fold(
       (failure) {
-        emit(UserEventsFailure(errMessage: failure.errMessage));
+        emit(GetUserEventsFailure(errMessage: failure.errMessage));
       },
       (userEventsList) {
-        emit(UserEventsSuccess(eventsListModel: userEventsList));
+        emit(GetUserEventsSuccess(eventsListModel: userEventsList));
       },
     );
   }
@@ -37,10 +37,27 @@ class UserEventsCubit extends Cubit<UserEventsState> {
         newList.add(eventModelList[i]);
       }
     }
-    emit(UserEventsSuccess(eventsListModel: newList));
+    emit(GetUserEventsSuccess(eventsListModel: newList));
   }
 
   void reStartSearch({required List<EventModel> eventModelList}) {
-    emit(UserEventsSuccess(eventsListModel: eventModelList));
+    emit(GetUserEventsSuccess(eventsListModel: eventModelList));
+  }
+
+  Future<void> deleteUserEventsItem({
+    required String eventId,
+    required String userId,
+  }) async {
+    emit(DeleteUserEventsLoading());
+    var response = await eventRepo.deleteUserEventsItem(eventId: eventId);
+    response.fold(
+      (failure) {
+        emit(DeleteUserEventsFailure(errMessage: failure.errMessage));
+      },
+      (deleted) {
+        emit(DeleteUserEventsSuccess(isDeleted: deleted));
+        getUserEventsList(userId: userId);
+      },
+    );
   }
 }

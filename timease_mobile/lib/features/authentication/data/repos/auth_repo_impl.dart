@@ -7,7 +7,7 @@ import 'package:timease_mobile/features/authentication/data/models/register_mode
 import 'package:timease_mobile/features/authentication/data/repos/auth_repo.dart';
 
 class AuthRepoImpl implements AuthRepo {
-   ApiService apiService;
+  ApiService apiService;
 
   AuthRepoImpl({required this.apiService});
 
@@ -19,12 +19,9 @@ class AuthRepoImpl implements AuthRepo {
     try {
       var json = await apiService.post(
         endPoint: 'auth/login',
-        body: {
-          'email': email,
-          'password': password
-        },
+        body: {'email': email, 'password': password},
       );
-    LoginModel loginModel= LoginModel.fromJson(json);
+      LoginModel loginModel = LoginModel.fromJson(json);
       return right(loginModel);
     } catch (e) {
       if (e is DioException) {
@@ -50,7 +47,7 @@ class AuthRepoImpl implements AuthRepo {
           'password': password
         },
       );
-      RegisterModel registerModel= RegisterModel.fromJson(json);
+      RegisterModel registerModel = RegisterModel.fromJson(json);
       return Right(registerModel);
     } catch (e) {
       if (e is DioException) {
@@ -61,23 +58,4 @@ class AuthRepoImpl implements AuthRepo {
   }
 
 
-
-   Future<Either<Failure, String>> logout({
-     required String refreshToken,
-   }) async {
-     try {
-       var json = await apiService.post(
-         endPoint: 'auth/logout',
-         body: {
-           'refreshToken': refreshToken
-         },
-       );
-       return right(json['message']);
-     } catch (e) {
-       if (e is DioException) {
-         return left(ServerFailure.fromDioError(dioError: e));
-       }
-       return left(ServerFailure(errMessage: e.toString()));
-     }
-   }
 }

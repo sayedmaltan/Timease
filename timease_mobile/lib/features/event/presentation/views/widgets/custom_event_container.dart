@@ -7,20 +7,22 @@ import '../../../../../core/utils/styles.dart';
 
 class CustomEventContainer extends StatelessWidget {
   final EventModel eventModel;
+  final Color color;
 
   const CustomEventContainer({
     super.key,
     required this.eventModel,
+    required this.color,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-       context.push(AppRouter.eventDetailsScreen,extra: eventModel);
+        context.push(AppRouter.eventDetailsScreen, extra: eventModel);
       },
       child: Container(
-        height: 80,
+        height: 74,
         decoration: BoxDecoration(
             border: Border(
               right: BorderSide(color: kSecPrimaryColor.shade300, width: 1),
@@ -58,9 +60,9 @@ class CustomEventContainer extends StatelessWidget {
           children: [
             Container(
               height: double.infinity,
-              width: 10,
+              width: 8,
               decoration: BoxDecoration(
-                color: kPrimaryColor,
+                color: color,
                 borderRadius: BorderRadiusDirectional.only(
                     bottomStart: Radius.circular(10),
                     topStart: Radius.circular(10)),
@@ -84,9 +86,8 @@ class CustomEventContainer extends StatelessWidget {
                     eventModel.description.toString(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Styles.textStyle12.copyWith(
-                      color: Colors.grey.shade700
-                    ),
+                    style: Styles.textStyle12
+                        .copyWith(color: Colors.grey.shade600),
                   ),
                 ],
               ),

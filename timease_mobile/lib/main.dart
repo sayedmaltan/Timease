@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:timease_mobile/constants.dart';
 import 'package:timease_mobile/core/utils/app_router.dart';
 import 'package:timease_mobile/core/utils/service_locator.dart';
 import 'core/utils/cash_helper.dart';
@@ -8,12 +7,9 @@ import 'core/utils/function/change_status_bar_color.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await CashHelper.init();
   changeStatusBarColor();
   setupServiceLocator();
-  await CashHelper.init();
-  accessToken = CashHelper.getData('accessToken') ?? '';
-  refreshToken = CashHelper.getData('refreshToken') ?? '';
-  userId = CashHelper.getData('userId') ?? '';
   runApp(const MyApp());
 }
 

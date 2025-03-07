@@ -11,17 +11,32 @@ class EventRepoImpl implements EventRepo {
   EventRepoImpl({required this.apiService});
 
   @override
-  Future<Either<Failure, List<EventModel>>> getUserEvents(
-      {required String userId}) async {
+  Future<Either<Failure, List<EventModel>>> getUserEvents() async {
     try {
       var json = await apiService.get(
-        endPoint: 'event/user/$userId',
+        endPoint: 'event',
       );
       List<EventModel> userEventsList = [];
       for (var element in json['events']) {
         userEventsList.add(EventModel.fromJson(element));
       }
       return right(userEventsList);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioError(dioError: e));
+      }
+      return left(ServerFailure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> deleteUserEventsItem(
+      {required String eventId}) async {
+    try {
+      await apiService.delete(
+        endPoint: 'event/$eventId',
+      );
+      return right(true);
     } catch (e) {
       if (e is DioException) {
         return left(ServerFailure.fromDioError(dioError: e));
