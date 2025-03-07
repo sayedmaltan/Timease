@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/test")
 public class TestController {
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<?> check() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

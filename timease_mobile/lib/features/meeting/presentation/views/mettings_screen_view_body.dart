@@ -3,6 +3,7 @@ import 'package:timease_mobile/features/meeting/presentation/views/widgets/custo
 import '../../../../constants.dart';
 import 'widgets/custom_filter_bottom_sheet.dart';
 import 'widgets/custom_filter_row.dart';
+import 'widgets/custom_meeting_box.dart';
 
 class MeetingsScreenViewBody extends StatefulWidget {
   const MeetingsScreenViewBody({super.key});

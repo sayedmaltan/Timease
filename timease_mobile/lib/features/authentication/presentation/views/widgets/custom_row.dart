@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/utils/asstes.dart';
-import '../../../../../core/utils/styles.dart';
+
 
 class CustomRow extends StatelessWidget {
   const CustomRow({
