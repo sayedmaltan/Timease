@@ -43,7 +43,9 @@ class CustomCreateEventAvailabilityRow extends StatelessWidget {
               : Row(
                   children: [
                     CustomCreateEventFormField(
-                        endTimeController: startTimeController),
+                      controller: startTimeController,
+                      width: 70,
+                    ),
                     const SizedBox(width: 10),
                     Text('-',
                         style: TextStyle(
@@ -51,25 +53,26 @@ class CustomCreateEventAvailabilityRow extends StatelessWidget {
                         )),
                     const SizedBox(width: 10),
                     CustomCreateEventFormField(
-                      endTimeController: endTimeController,
+                      controller: endTimeController,
+                      width: 70,
                     ),
                   ],
                 ),
           const SizedBox(width: 10),
           if (!isUnavailable)
             IconButton(
-                icon: Icon(
-                  Icons.close,
-                  size: 21,
-                ),
-                onPressed: onRemove),
-          IconButton(
-            icon: Icon(
-              Icons.add_circle_outline,
-              size: 22,
+              icon: Icon(
+                Icons.close,
+                size: 21,
+              ),
+              onPressed: onRemove,
             ),
-            onPressed: onAdd
-          ),
+          IconButton(
+              icon: Icon(
+                Icons.add_circle_outline,
+                size: 22,
+              ),
+              onPressed: onAdd),
         ],
       ),
     );

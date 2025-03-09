@@ -119,7 +119,7 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
                     : CustomFullButton(
                         text: 'Register',
                         height: 52,
-                        response: () {
+                        onPressed: () {
                           if (formKey.currentState!.validate()) {
                             List<String> nameList =
                                 nameController.text.split(' ');

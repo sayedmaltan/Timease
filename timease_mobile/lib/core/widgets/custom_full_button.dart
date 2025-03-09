@@ -4,14 +4,14 @@ import 'package:timease_mobile/core/utils/styles.dart';
 
 class CustomFullButton extends StatelessWidget {
   final String text;
-  final VoidCallback response;
+  final VoidCallback onPressed;
   final double height;
   final double ?radios;
 
   const CustomFullButton({
     super.key,
     required this.text,
-    required this.response,
+    required this.onPressed,
     this.height = 56,
      this.radios,
   });
@@ -25,7 +25,7 @@ class CustomFullButton extends StatelessWidget {
       ),
       minWidth: double.infinity,
       color: kPrimaryColor,
-      onPressed: response,
+      onPressed: onPressed,
       child: Text(text, style: Styles.textStyleFullButton),
     );
   }

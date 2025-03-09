@@ -105,7 +105,7 @@ class _LoginScreenViewBodyState extends State<LoginScreenViewBody> {
                     : CustomFullButton(
                         text: 'Login',
                         height: 52,
-                        response: () {
+                        onPressed: () {
                           if (formKey.currentState!.validate()) {
                             loginCubit.login(
                                 email: emailController.text,
