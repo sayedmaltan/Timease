@@ -55,4 +55,10 @@ abstract class Styles {
     fontWeight: FontWeight.w800,
   );
 
+  static const textFormField=TextStyle(
+      fontSize: 28,
+      fontWeight: FontWeight.w600,
+      color: Colors.black54
+  );
+
 }

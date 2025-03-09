@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_availabilty_row.dart';
-
 import '../../../../constants.dart';
 
 class CustomCreateEventAvailability extends StatefulWidget {
   const CustomCreateEventAvailability({
     super.key,
     required this.days,
+    required this.isUnavailable,
+    required this.startTimeList,
+    required this.endTimeList,
   });
 
+  final List<bool> isUnavailable;
+  final List<TextEditingController> startTimeList;
+  final List<TextEditingController> endTimeList;
   final List<String> days;
 
   @override
-  State<CustomCreateEventAvailability> createState() => _CustomCreateEventAvailabilityState();
+  State<CustomCreateEventAvailability> createState() =>
+      _CustomCreateEventAvailabilityState();
 }
 
-class _CustomCreateEventAvailabilityState extends State<CustomCreateEventAvailability> {
- List<bool> isUnavailable=List.filled(7, false);
+class _CustomCreateEventAvailabilityState
+    extends State<CustomCreateEventAvailability> {
   @override
   Widget build(BuildContext context) {
     return Theme(
@@ -40,19 +46,19 @@ class _CustomCreateEventAvailabilityState extends State<CustomCreateEventAvailab
               itemBuilder: (context, index) {
                 return CustomCreateEventAvailabilityRow(
                   day: widget.days[index],
-                  startTimeController: TextEditingController(),
-                  endTimeController: TextEditingController(),
-                  isUnavailable:isUnavailable[index] ,
+                  startTimeController: widget.startTimeList[index],
+                  endTimeController: widget.endTimeList[index],
+                  isUnavailable: widget.isUnavailable[index],
                   onRemove: () {
                     setState(() {
-                      isUnavailable[index]=true;
+                      widget.isUnavailable[index] = true;
                     });
                   },
-                  onAdd:() {
+                  onAdd: () {
                     setState(() {
-                      isUnavailable[index]=false;
+                      widget.isUnavailable[index] = false;
                     });
-                  } ,
+                  },
                 );
               },
             ),

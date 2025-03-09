@@ -1,30 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:timease_mobile/constants.dart';
+
+import '../../../../../core/utils/styles.dart';
 
 class CustomCreateEventFormField extends StatelessWidget {
   const CustomCreateEventFormField({
     super.key,
-    required this.endTimeController,
+    required this.controller,
+    this.width,
+    this.hintText = '',
   });
 
-  final TextEditingController endTimeController;
+  final TextEditingController controller;
+  final double? width;
+  final String hintText;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 39,
-      width: 70,
+      width: width,
       child: TextFormField(
-        controller: endTimeController,
+        style: width!=70?Styles.textFormField.copyWith(
+          color: Colors.black87
+        ):null,
+        controller: controller,
         decoration: InputDecoration(
+          prefixStyle: TextStyle(letterSpacing: 0),
+          prefixIcon: width != 70
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 9),
+                  child: CircleAvatar(
+                    radius: 10,
+                    backgroundColor: Colors.red,
+                  ),
+                )
+              : null,
+          hintStyle: Styles.textFormField,
           filled: true,
-          fillColor: Color(0xFFF8FBF6),
+          focusedBorder: width != 70
+              ? OutlineInputBorder(
+                  borderSide: BorderSide(color: kPrimaryColor),
+                  borderRadius: BorderRadius.circular(15))
+              : null,
+          fillColor: width == 70 ? Color(0xFFF8FBF6) : Colors.transparent,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.0),
-            borderSide: BorderSide.none, // Optional: Remove border
+            borderSide: BorderSide.none,
           ),
+          hintText: hintText,
           contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         ),
-        textAlign: TextAlign.center,
+        textAlign: width == 70 ? TextAlign.center : TextAlign.left,
       ),
     );
   }

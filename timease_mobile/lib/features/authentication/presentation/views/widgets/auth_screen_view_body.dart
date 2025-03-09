@@ -35,7 +35,7 @@ class AuthScreenViewBody extends StatelessWidget {
           Spacer(),
           CustomFullButton(
             text: 'Create an Account',
-            response: () => context.push(AppRouter.registerScreen),
+            onPressed: () => context.push(AppRouter.registerScreen),
           ),
           SizedBox(
             height: 18,
