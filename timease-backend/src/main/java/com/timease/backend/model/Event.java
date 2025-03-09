@@ -1,15 +1,18 @@
 package com.timease.backend.model;
 
-import com.timease.backend.model.Enum.EventType;
 import jakarta.persistence.*;
 import lombok.*;
+import java.time.Duration;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Event {
 
     @Id
@@ -17,20 +20,21 @@ public class Event {
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "host_id", nullable = false)
-    private User host;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     private String title;
-
     private String description;
+    private String location;
 
-    private Integer isEnabled;
+    @Column(nullable = false)
+    private int duration; // Duration of the meeting minutes
 
-    private String location; // fix
+    private int maxAttendees; // Maximum number of attendees
 
-    @Enumerated(EnumType.STRING)
-    private EventType type; // ONLINE or OFFLINE
+    private int schedulingRange;
 
+    private boolean isPeriodic; // Is the event periodic
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Availability> availability;
+    private List<Availability> availabilities; // Linked availability slots
 }

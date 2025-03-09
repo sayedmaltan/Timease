@@ -1,51 +1,139 @@
 package com.timease.backend.Service;
 
-import com.timease.backend.model.DTO.EventDTO;
 import com.timease.backend.model.Event;
 import com.timease.backend.model.User;
+import com.timease.backend.model.DTO.EventDTO;
+import com.timease.backend.model.Availability;
 import com.timease.backend.repository.EventRepository;
 import com.timease.backend.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.timease.backend.repository.AvailabilityRepository;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
-
+import org.springframework.transaction.annotation.Transactional;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class EventService {
 
-    @Autowired
-    private  EventRepository eventRepository;
-    @Autowired
-    private UserRepository userRepository;
 
-    public Event createEvent(EventDTO event) {
-        Optional<User> user = userRepository.findById(event.getUser_id());
-        if (user.isEmpty()) {
-            throw new NotFoundException("User not found");
+    private final EventRepository eventRepository;
+    private final UserRepository userRepository;
+    private final AvailabilityRepository availabilityRepository;
+    private final AuthService authService;
+
+
+    public  Map<String,Object> getAllEvents() {
+
+        List<Event> events = eventRepository.findAll();;
+        Map<String,Object> response = new HashMap<>();
+        response.put("eventsNo",events.size());
+        response.put("events", events);
+        return response;
+    }
+
+    public  Map<String,Object> getUserEvents() {
+        UUID userId = authService.getCurrentUserId();
+        if (userId==null){
+            throw new EntityNotFoundException("User not found");
         }
-        Event e=new Event();
-        e.setAvailability(event.getAvailability());
-        e.setDescription(event.getDescription());
-        e.setTitle(event.getTitle());
-        e.setIsEnabled(event.getIsEnabled());
-        e.setHost(user.get());
-        e.setLocation(event.getLocation());
-        e.setType(event.getType());
-        return eventRepository.save(e);
+        List<Event> events = eventRepository.findByUserId(userId);
+        Map<String,Object> response = new HashMap<>();
+        response.put("eventsNo",events.size());
+        response.put("events", events);
+        return response;
     }
 
-    public List<Event> getAllEvents() {
-        return eventRepository.findAll();
+
+    @Transactional
+    public Event createEvent(EventDTO eventDTO) {
+        UUID userId = authService.getCurrentUserId();
+        if (userId==null){
+            throw new EntityNotFoundException("User not found");
+        }
+        User user = userRepository.findById(userId).orElseThrow();
+
+        Event event = new Event();
+        event.setUser(user);
+        event.setTitle(eventDTO.getTitle());
+        event.setDescription(eventDTO.getDescription());
+        event.setLocation(eventDTO.getLocation());
+        event.setDuration(eventDTO.getDuration());
+        event.setMaxAttendees(eventDTO.getMaxAttendees());
+        event.setSchedulingRange(eventDTO.getSchedulingRange());
+        event.setPeriodic(eventDTO.isPeriodic());
+        Event savedEvent = eventRepository.save(event);
+
+        // Save availability records linked to this event
+        List<Availability> availabilityList = eventDTO.getAvailabilities().stream()
+                .map(a -> {
+                    Availability availability = new Availability();
+                    availability.setEvent(savedEvent);
+                    availability.setDate(a.getDate());
+                    availability.setDayOfWeek(a.getDayOfWeek());
+                    availability.setStartTime(a.getStartTime());
+                    availability.setEndTime(a.getEndTime());
+                    return availability;
+                })
+                .collect(Collectors.toList());
+
+        availabilityRepository.saveAll(availabilityList);
+
+        return savedEvent;
     }
 
-    public Event getEventById(UUID id) {
-        return eventRepository.findById(id).orElseThrow(() -> new RuntimeException("Event not found"));
+
+
+    @Transactional
+    public Event updateEvent(UUID eventId, EventDTO request) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new EntityNotFoundException("Event not found"));
+
+        UUID userId = authService.getCurrentUserId();
+        if (!event.getUser().getId().equals(userId)) {
+            throw new SecurityException("Unauthorized to update this event");
+        }
+
+        event.setTitle(request.getTitle());
+        event.setDescription(request.getDescription());
+        event.setLocation(request.getLocation());
+        event.setDuration(request.getDuration());
+        event.setMaxAttendees(request.getMaxAttendees());
+        event.setSchedulingRange(request.getSchedulingRange());
+        event.setPeriodic(request.isPeriodic());
+
+        // Clear the existing availabilities and add the new ones
+        event.getAvailabilities().clear();
+        if (request.getAvailabilities() != null) {
+            request.getAvailabilities().forEach(a -> {
+                Availability availability = new Availability();
+                availability.setEvent(event);
+                availability.setDate(a.getDate());
+                availability.setDayOfWeek(a.getDayOfWeek());
+                availability.setStartTime(a.getStartTime());
+                availability.setEndTime(a.getEndTime());
+                event.getAvailabilities().add(availability);
+            });
+        }
+
+        return eventRepository.save(event);
     }
 
-    public void deleteEvent(UUID id) {
-        eventRepository.deleteById(id);
+    public void deleteEvent(UUID eventId) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new EntityNotFoundException("Event not found"));
+
+        UUID userId = authService.getCurrentUserId();
+        if (!event.getUser().getId().equals(userId)) {
+            throw new SecurityException("Unauthorized to delete this event");
+        }
+        // TO DO -> delete meetings
+        eventRepository.delete(event);
     }
+
 }

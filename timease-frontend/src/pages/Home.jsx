@@ -1,15 +1,16 @@
-import React from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import TimeaseNav from "../Components/Navbar.jsx"; 
 import welcomeImage from "../assets/welcome.jpg"; 
 import GetStartedButton from "../Components/GetStartedButton.jsx";
+
+
 function Home() {
   return (
     <>
       <TimeaseNav />
       <Container className="d-flex align-items-center justify-content-center vh-100">
         <Row className="w-100">
-          {/* Left Section: Text */}
+          
           <Col md={6} className="d-flex flex-column justify-content-center">
             <h1 className="fw-bold">Welcome to Timease</h1>
             <p className="lead">
@@ -17,14 +18,16 @@ function Home() {
               professionals and businesses to manage their time efficiently.
               Get started today and never miss an appointment again!
             </p>
-            <GetStartedButton size="lg"/>
+            <GetStartedButton l="lg"/>
           </Col>
 
-          {/* Right Section: Image */}
+         
           <Col md={6} className="d-flex justify-content-center">
             <img src={welcomeImage} alt="Timease Scheduling" className="img-fluid" />
           </Col>
+          
         </Row>
+        
       </Container>
     </>
   );
