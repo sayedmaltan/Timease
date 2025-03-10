@@ -11,6 +11,7 @@ import 'package:timease_mobile/features/authentication/presentation/views/regist
 import 'package:timease_mobile/features/event/data/models/event_model.dart';
 import 'package:timease_mobile/features/event/presentation/views/create_new_event_screen.dart';
 import 'package:timease_mobile/features/event/presentation/views/event_details_view.dart';
+import 'package:timease_mobile/features/event/presentation/views/widgets/add_date_specific_hour_full_screen.dart';
 import 'package:timease_mobile/features/home/presentation/views/home_screen_view.dart';
 import 'package:timease_mobile/features/splash/presentation/views/splash_view.dart';
 
@@ -21,6 +22,7 @@ abstract class AppRouter {
   static const homeScreen = '/homeScreenView';
   static const eventDetailsScreen = '/eventDetailsScreen';
   static const createNewEventScreen = '/createNewEventScreen';
+  static const addDateSpecificHourFullScreen = '/addDateSpecificHourFullScreen';
   static late EventModel eventModel;
   static final router = GoRouter(
     routes: <RouteBase>[
@@ -75,6 +77,12 @@ abstract class AppRouter {
           return CreateNewEventScreen();
         },
       ),
+      GoRoute(
+        path: addDateSpecificHourFullScreen,
+        builder: (BuildContext context, GoRouterState state) {
+          return AddDateSpecificHourFullScreen();
+        },
+      )
     ],
   );
 }

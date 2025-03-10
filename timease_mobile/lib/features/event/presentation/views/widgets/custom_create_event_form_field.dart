@@ -21,9 +21,9 @@ class CustomCreateEventFormField extends StatelessWidget {
       height: 39,
       width: width,
       child: TextFormField(
-        style: width!=70?Styles.textFormField.copyWith(
-          color: Colors.black87
-        ):null,
+        style: width != 70
+            ? Styles.textFormField.copyWith(color: Colors.black87)
+            : null,
         controller: controller,
         decoration: InputDecoration(
           prefixStyle: TextStyle(letterSpacing: 0),

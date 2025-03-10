@@ -22,59 +22,56 @@ class CustomCreateEventAvailabilityRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 4.0),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 12,
-            backgroundColor: kPrimaryColor.shade700,
-            child: Text(
-              day,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold),
-            ),
+    return Row(
+      children: [
+        CircleAvatar(
+          radius: 12,
+          backgroundColor: kPrimaryColor.shade700,
+          child: Text(
+            day,
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+                fontWeight: FontWeight.bold),
           ),
-          const SizedBox(width: 10),
-          isUnavailable
-              ? Text('Unavailable')
-              : Row(
-                  children: [
-                    CustomCreateEventFormField(
-                      controller: startTimeController,
-                      width: 70,
-                    ),
-                    const SizedBox(width: 10),
-                    Text('-',
-                        style: TextStyle(
-                          fontSize: 17,
-                        )),
-                    const SizedBox(width: 10),
-                    CustomCreateEventFormField(
-                      controller: endTimeController,
-                      width: 70,
-                    ),
-                  ],
-                ),
-          const SizedBox(width: 10),
-          if (!isUnavailable)
-            IconButton(
-              icon: Icon(
-                Icons.close,
-                size: 21,
+        ),
+        const SizedBox(width: 10),
+        isUnavailable
+            ? Text('Unavailable')
+            : Row(
+                children: [
+                  CustomCreateEventFormField(
+                    controller: startTimeController,
+                    width: 70,
+                  ),
+                  const SizedBox(width: 10),
+                  Text('-',
+                      style: TextStyle(
+                        fontSize: 17,
+                      )),
+                  const SizedBox(width: 10),
+                  CustomCreateEventFormField(
+                    controller: endTimeController,
+                    width: 70,
+                  ),
+                ],
               ),
-              onPressed: onRemove,
-            ),
+        const SizedBox(width: 10),
+        if (!isUnavailable)
           IconButton(
-              icon: Icon(
-                Icons.add_circle_outline,
-                size: 22,
-              ),
-              onPressed: onAdd),
-        ],
-      ),
+            icon: Icon(
+              Icons.close,
+              size: 21,
+            ),
+            onPressed: onRemove,
+          ),
+        IconButton(
+            icon: Icon(
+              Icons.add_circle_outline,
+              size: 22,
+            ),
+            onPressed: onAdd),
+      ],
     );
   }
 }

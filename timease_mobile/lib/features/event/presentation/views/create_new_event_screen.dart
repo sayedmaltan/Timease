@@ -11,6 +11,7 @@ import 'package:timease_mobile/features/event/presentation/views/widgets/custom_
 import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_duration.dart';
 
 import '../../../../core/utils/styles.dart';
+import '../../data/models/availabilities_item_model.dart';
 
 class CreateNewEventScreen extends StatefulWidget {
   const CreateNewEventScreen({super.key});
@@ -20,11 +21,14 @@ class CreateNewEventScreen extends StatefulWidget {
 }
 
 class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
+  List<AvailabilitiesItemModel> availabilitiesItemModelList = [];
   List<TextEditingController> startTimeList =
       List.generate(7, (_) => TextEditingController(text: '10:30'));
   List<TextEditingController> endTimeList =
       List.generate(7, (_) => TextEditingController(text: '14:40'));
+  TextEditingController schedulingRangeController=TextEditingController(text: '30');
   List<bool> isUnavailable = List.filled(7, false);
+  bool isPeriodic=false;
   bool isOpenDuration = false;
   bool isInviteeOpen = false;
   bool isDescriptionOpen = false;
@@ -79,7 +83,7 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 22.0,bottom: 2),
+                  padding: const EdgeInsets.only(left: 22.0, bottom: 2),
                   child: Text(
                     'EVENT TYPE',
                     style: Styles.textStyle12.copyWith(
@@ -90,14 +94,18 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 8.0,right: 22,),
+                  padding: const EdgeInsets.only(
+                    left: 8.0,
+                    right: 22,
+                  ),
                   child: CustomCreateEventFormField(
                     controller: titleController,
                     hintText: 'Name your event',
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 22.0,top: 2,bottom: 14),
+                  padding:
+                      const EdgeInsets.only(left: 22.0, top: 2, bottom: 14),
                   child: Text(
                     'Group',
                     style: Styles.textStyle14.copyWith(
@@ -139,10 +147,18 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
                 ),
                 CustomCreateEventDivider(),
                 CustomCreateEventAvailability(
+                  availabilitiesItemModelList: availabilitiesItemModelList,
                   days: days,
                   isUnavailable: isUnavailable,
                   startTimeList: startTimeList,
                   endTimeList: endTimeList,
+                  isPeriodic: isPeriodic,
+                  schedulingRangeController: schedulingRangeController,
+                  isPeriodicChanged: (bool value) {
+                setState(() {
+                  isPeriodic = value;
+                });
+                  },
                 ),
                 CustomCreateEventDivider(),
                 CustomCreateEventInvitee(
@@ -181,16 +197,23 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
                     height: 45,
                     text: 'Save changes',
                     onPressed: () {
-                      debugPrint("title is ${titleController.text}");
-                      debugPrint("description is ${descriptionController.text}");
-                      debugPrint("duration is $selectedDuration");
-                      debugPrint(
-                          "maxAttendees is ${inviteeLimitController.text}");
-                      debugPrint("days is ${days[0]}");
-                      debugPrint(isUnavailable[1].toString());
-                      debugPrint(isUnavailable[0].toString());
-                      debugPrint("S is ${startTimeList[0].text}");
-                      debugPrint("S is ${endTimeList[0].text}");
+                      // debugPrint("title is ${titleController.text}");
+                      // debugPrint(
+                      //     "description is ${descriptionController.text}");
+                      // debugPrint("duration is ${getDuration(customController: customController, selectedDuration: selectedDuration, selectedTimeType: selectedTimeType)}");
+                      // debugPrint(
+                      //     "maxAttendees is ${inviteeLimitController.text}");
+                      // debugPrint("days is ${days[0]}");
+                      // debugPrint(isUnavailable[1].toString());
+                      // debugPrint(isUnavailable[0].toString());
+                      // debugPrint("S is ${startTimeList[0].text}");
+                      // debugPrint("S is ${endTimeList[0].text}");
+                      // debugPrint("isPeriodic $isPeriodic");
+                      // debugPrint("days is $schedulingRangeController");
+                      debugPrint("${availabilitiesItemModelList[0].dayOfWeek}");
+                      debugPrint("${availabilitiesItemModelList[0].date}");
+                      debugPrint("${availabilitiesItemModelList[0].startTime}");
+                      debugPrint("${availabilitiesItemModelList[0].endTime}");
                     },
                   ),
                 )
