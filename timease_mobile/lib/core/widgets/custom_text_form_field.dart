@@ -19,6 +19,7 @@ class CustomTextFormField extends StatelessWidget {
   final Color suffixIconColor;
   final bool isPasswordShown;
   final ValueChanged? onChanged;
+  final ValueChanged? onSaved;
 
   const CustomTextFormField({
     super.key,
@@ -39,6 +40,7 @@ class CustomTextFormField extends StatelessWidget {
     this.onTap,
     this.enabledBorderColor,
     this.suffixIconSize,
+    this.onSaved,
   });
 
   @override
@@ -49,6 +51,7 @@ class CustomTextFormField extends StatelessWidget {
       controller: controller,
       validator: validator,
       onChanged: onChanged,
+      onSaved: onSaved,
       decoration: InputDecoration(
         prefixIconColor: kSecPrimaryColor.shade600,
         suffixIconColor: kSecPrimaryColor,
@@ -71,8 +74,7 @@ class CustomTextFormField extends StatelessWidget {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadiusSize),
-          borderSide:
-              BorderSide(color: enabledBorderColor ?? kSecPrimaryColor),
+          borderSide: BorderSide(color: enabledBorderColor ?? kSecPrimaryColor),
         ),
         hintText: hintText,
         hintStyle: TextStyle(

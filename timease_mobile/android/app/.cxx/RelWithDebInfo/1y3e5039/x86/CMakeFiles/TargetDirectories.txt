@@ -1,0 +1,2 @@
+D:/androidStudio/androidStudioProject/Timease/timease_mobile/android/app/.cxx/RelWithDebInfo/1y3e5039/x86/CMakeFiles/edit_cache.dir
+D:/androidStudio/androidStudioProject/Timease/timease_mobile/android/app/.cxx/RelWithDebInfo/1y3e5039/x86/CMakeFiles/rebuild_cache.dir

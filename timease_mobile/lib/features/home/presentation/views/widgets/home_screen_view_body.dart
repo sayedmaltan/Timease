@@ -18,7 +18,6 @@ class _HomeScreenViewBodyState extends State<HomeScreenViewBody> {
     return Column(
       children: [
         TableCalendar(
-
           firstDay: DateTime.now(),
           lastDay: DateTime.utc(
             DateTime.now().year + 1,
