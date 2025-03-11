@@ -19,39 +19,40 @@ class _AddDateSpecificHourFullScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Column(
-        children: [
-          TableCalendar(
-            firstDay: DateTime.now(),
-            lastDay: DateTime.utc(
-              DateTime.now().year + 1,
-              DateTime.now().month,
-              DateTime.now().day,
-            ),
-            focusedDay: focusedDay,
-            selectedDayPredicate: (day) {
-              return isSameDay(selectedDay, day);
-            },
-            onDaySelected: (selectedDay, focusedDay) {
-              if (!isSameDay(this.selectedDay, selectedDay)) {
+        child: Column(
+          children: [
+            TableCalendar(
+              firstDay: DateTime.now(),
+              lastDay: DateTime.utc(
+                DateTime.now().year + 1,
+                DateTime.now().month,
+                DateTime.now().day,
+              ),
+              focusedDay: focusedDay,
+              selectedDayPredicate: (day) {
+                return isSameDay(selectedDay, day);
+              },
+              onDaySelected: (selectedDay, focusedDay) {
+                if (!isSameDay(this.selectedDay, selectedDay)) {
+                  setState(() {
+                    this.selectedDay = selectedDay;
+                    this.focusedDay = focusedDay;
+                  });
+                }
+              },
+              calendarFormat: calendarFormat,
+              onFormatChanged: (format) {
                 setState(() {
-                  this.selectedDay = selectedDay;
-                  this.focusedDay = focusedDay;
+                  calendarFormat = format;
                 });
-              }
-            },
-            calendarFormat: calendarFormat,
-            onFormatChanged: (format) {
-              setState(() {
-                calendarFormat = format;
-              });
-            },
-            onPageChanged: (focusedDay) {
-              this.focusedDay = focusedDay;
-            },
-          ),
-        ],
-      )),
+              },
+              onPageChanged: (focusedDay) {
+                this.focusedDay = focusedDay;
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
