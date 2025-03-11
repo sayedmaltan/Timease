@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:timease_mobile/constants.dart';
-import 'package:timease_mobile/features/event/data/models/availabilities_item_model.dart';
+import 'package:timease_mobile/features/event/data/models/create_event_model.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/date_time_entry.dart';
 import '../../../../../core/utils/styles.dart';
 
@@ -121,13 +121,13 @@ Future<Map<String, String?>?> pickDateTimeRange(context) async {
   if (pickedToTime == null) return null;
 
   List<String> dayNames = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
+    'SUNDAY',
+    'MONDAY',
+    'TUESDAY',
+    'WEDNESDAY',
+    'THURSDAY',
+    'FRIDAY',
+    'SATURDAY'
   ];
   return {
     'dayOfWeek': dayNames[pickedDate.weekday],

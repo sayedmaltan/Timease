@@ -18,7 +18,11 @@ class EventsList extends StatelessWidget {
     UserEventsCubit userEventsCubit=UserEventsCubit.get(context);
     int counter=0;
     return ListView.builder(
-      itemBuilder: (context, index) => Padding(
+      itemBuilder: (context, index) {
+       if( counter>=colorsList.length) {
+         counter=0;
+       }
+        return Padding(
         padding: const EdgeInsets.only(bottom: 15.0),
         child: Dismissible(
           background: Container(
@@ -32,10 +36,11 @@ class EventsList extends StatelessWidget {
           },
           child: CustomEventContainer(
             eventModel: eventsList[index],
-            color: eventsList.length>=index? colorsList[index]:colorsList[counter++],
+            color: colorsList[counter++],
           ),
         ),
-      ),
+      );
+      },
       itemCount: eventsList.length,
     );
   }

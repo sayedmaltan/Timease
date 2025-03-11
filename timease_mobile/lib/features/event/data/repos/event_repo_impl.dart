@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
 import 'package:timease_mobile/core/errors/failure.dart';
 import 'package:timease_mobile/core/utils/api_service.dart';
+import 'package:timease_mobile/features/event/data/models/create_event_model.dart';
+import 'package:timease_mobile/features/event/data/models/create_event_response.dart';
 import 'package:timease_mobile/features/event/data/models/event_model.dart';
 import 'package:timease_mobile/features/event/data/repos/event_repo.dart';
 
@@ -37,6 +39,23 @@ class EventRepoImpl implements EventRepo {
         endPoint: 'event/$eventId',
       );
       return right(true);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioError(dioError: e));
+      }
+      return left(ServerFailure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, CreateEventResponseModel>> createEvent({required CreateEventModel createEventModel}) async {
+    try {
+      var json = await apiService.post(
+        endPoint: 'event',
+        body: createEventModel.toJson()
+      );
+      CreateEventResponseModel createEventResponseModel=CreateEventResponseModel.fromJson(json);
+      return right(createEventResponseModel);
     } catch (e) {
       if (e is DioException) {
         return left(ServerFailure.fromDioError(dioError: e));

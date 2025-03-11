@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:timease_mobile/core/widgets/custom_text_form_field.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_availabilty_row.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/date_specific_hours.dart';
-import '../../../../constants.dart';
-import '../../data/models/availabilities_item_model.dart';
+import '../../../../../constants.dart';
+import '../../../data/models/create_event_model.dart';
 
 class CustomCreateEventAvailability extends StatefulWidget {
   const CustomCreateEventAvailability({
