@@ -7,15 +7,17 @@ import 'package:timease_mobile/features/home/presentation/views/widgets/home_scr
 import 'package:timease_mobile/features/meeting/presentation/views/mettings_screen_view_body.dart';
 import 'package:timease_mobile/features/notification/presentation/views/notifications_screen_view_body.dart';
 
-class HomeScreenView extends StatefulWidget {
-  const HomeScreenView({super.key});
 
+
+class HomeScreenView extends StatefulWidget {
+  const HomeScreenView({super.key,  this.bodyIndex=0});
+  final int bodyIndex;
   @override
   State<HomeScreenView> createState() => _HomeScreenViewState();
 }
 
 class _HomeScreenViewState extends State<HomeScreenView> {
-  int selectBottomNavBar = 0;
+  late int selectBottomNavBar;
   Color logoColor = Colors.green;
   List<Widget> homeScreensBody = [
     HomeScreenViewBody(),
@@ -24,6 +26,12 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     NotificationsScreenViewBody(),
   ];
 
+
+  @override
+  void initState() {
+    super.initState();
+    selectBottomNavBar=widget.bodyIndex;
+  }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

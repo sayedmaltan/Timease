@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_cubit.dart';
 
 import '../../../../../constants.dart';
 import '../../../../../core/utils/styles.dart';
 import '../../../../../core/widgets/custom_text_form_field.dart';
-import '../create_new_event_screen.dart';
 import 'custom_drop_down_button.dart';
 
 class CustomCreateEventDuration extends StatelessWidget {
@@ -34,6 +34,7 @@ class CustomCreateEventDuration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserEventsCubit userEventsCubit=UserEventsCubit.get(context);
     return Theme(
       data: Theme.of(context).copyWith(
         dividerColor: kSecPrimaryColor.shade100,
@@ -66,7 +67,7 @@ class CustomCreateEventDuration extends StatelessWidget {
                     width: 5,
                   ),
                   Text(
-                    '${getDuration(customController: customController, selectedDuration: selectedDuration, selectedTimeType: selectedTimeType).values.first} ${getDuration(customController: customController, selectedDuration: selectedDuration, selectedTimeType: selectedTimeType).keys.first}',
+                    '${userEventsCubit.getDuration(customController: customController, selectedDuration: selectedDuration, selectedTimeType: selectedTimeType).values.first} ${userEventsCubit.getDuration(customController: customController, selectedDuration: selectedDuration, selectedTimeType: selectedTimeType).keys.first}',
                     style: Styles.textStyle12
                         .copyWith(color: kSecPrimaryColor, fontSize: 13),
                   )
@@ -100,7 +101,7 @@ class CustomCreateEventDuration extends StatelessWidget {
                       controller: customController,
                       validator: (value) {
                         if (value.toString().isEmpty) {
-                          return "This field is required";
+                          return 'ddd';
                         }
                         return null;
                       },

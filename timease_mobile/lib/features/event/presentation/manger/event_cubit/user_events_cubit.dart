@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timease_mobile/features/event/data/models/event_model.dart';
 import 'package:timease_mobile/features/event/data/repos/event_repo.dart';
 import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_state.dart';
+
+import '../../../data/models/create_event_model.dart';
 
 class UserEventsCubit extends Cubit<UserEventsState> {
   UserEventsCubit(this.eventRepo) : super(UserEventInitial());
@@ -53,11 +56,101 @@ class UserEventsCubit extends Cubit<UserEventsState> {
     response.fold(
       (failure) {
         emit(DeleteUserEventsFailure(errMessage: failure.errMessage));
+        getUserEventsList(userId: userId);
       },
       (deleted) {
         emit(DeleteUserEventsSuccess(isDeleted: deleted));
         getUserEventsList(userId: userId);
       },
     );
+  }
+
+  Future<void> createNewEvent({
+    required CreateEventModel createEventModel,
+  }) async {
+    emit(CreateEventsLoading());
+    var response =
+        await eventRepo.createEvent(createEventModel: createEventModel);
+    response.fold(
+      (failure) {
+        emit(CreateEventsFailure(errMessage: failure.errMessage));
+      },
+      (createEventResponse) {
+        emit(
+            CreateEventsSuccess(createEventResponseModel: createEventResponse));
+      },
+    );
+  }
+
+  Map<String, String> getDuration(
+      {required TextEditingController customController,
+      required String selectedDuration,
+      required String selectedTimeType}) {
+    if (customController.text.isNotEmpty) {
+      return {selectedTimeType: customController.text};
+    } else if (selectedDuration.compareTo('Custom') == 0) {
+      return {'min': '15'};
+    }
+    return {selectedDuration.split(' ')[1]: selectedDuration.split(' ')[0]};
+  }
+
+  int getDurationByMinutes(
+      {required TextEditingController customController,
+      required String selectedDuration,
+      required String selectedTimeType}) {
+    int duration;
+    if (customController.text.isNotEmpty) {
+      duration = selectedTimeType == 'hr'
+          ? int.parse(customController.text) * 60
+          : int.parse(customController.text);
+      return duration;
+    } else if (selectedDuration.compareTo('Custom') == 0) {
+      return 15;
+    }
+    duration = selectedDuration.split(' ')[1] == 'hr'
+        ? int.parse(selectedDuration.split(' ')[0]) * 60
+        : int.parse(selectedDuration.split(' ')[0]);
+    return duration;
+  }
+
+  List<Map<String, dynamic>> getAvailabilitiesList({
+    required bool isPeriodic,
+    required List<Map<String, dynamic>> availabilitiesItemModelList,
+    required List<bool> isUnavailable,
+    required List<TextEditingController> startTimeList,
+    required List<TextEditingController> endTimeList,
+  }) {
+    if (isPeriodic) {
+      List<Map<String, dynamic>> list = [];
+      List<String> days = [
+        'SUNDAY',
+        'MONDAY',
+        'TUESDAY',
+        'WEDNESDAY',
+        'THURSDAY',
+        'FRIDAY',
+        'SATURDAY'
+      ];
+      for (int i = 0; i < 7; i++) {
+        if (!isUnavailable[i]) {
+          list.add({
+            "dayOfWeek": days[i],
+            "date": null,
+            "startTime": startTimeList[i].text,
+            "endTime": endTimeList[i].text
+          });
+        }
+      }
+      return list;
+    } else {
+      return availabilitiesItemModelList;
+    }
+  }
+
+  int getInviteeLimit({required TextEditingController controller,}) {
+    if (controller.text.isNotEmpty) {
+      return int.parse(controller.text);
+    }
+    return 2;
   }
 }

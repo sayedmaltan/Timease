@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_cubit.dart';
 import '../../../../../constants.dart';
 import '../../../../../core/utils/styles.dart';
 import '../../../../../core/widgets/custom_text_form_field.dart';
@@ -17,6 +18,7 @@ class CustomCreateEventInvitee extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserEventsCubit userEventsCubit=UserEventsCubit.get(context);
     return Theme(
       data: Theme.of(context).copyWith(dividerColor: kSecPrimaryColor.shade100),
       child: ExpansionTile(
@@ -32,7 +34,7 @@ class CustomCreateEventInvitee extends StatelessWidget {
             ),
             if (!isOpen)
               Text(
-                "Group event with ${inviteeLimitController.text} invitees",
+                "Group event with ${userEventsCubit.getInviteeLimit(controller: inviteeLimitController)} invitees",
                 style: Styles.textStyle12.copyWith(
                   color: kSecPrimaryColor,
                   fontSize: 13,
@@ -53,14 +55,20 @@ class CustomCreateEventInvitee extends StatelessWidget {
           Align(
             alignment: AlignmentDirectional.centerStart,
             child: SizedBox(
-              width: 100,
+              width: 104,
               child: CustomTextFormField(
                 hintText: '',
                 keyboardType: TextInputType.number,
                 isPassword: false,
                 controller: inviteeLimitController,
                 validator: (value) {
-                  return 'please enter max invitees in a spot';
+                  if (value.toString().isEmpty) {
+                    return "Can't be blank";
+                  }
+                  else if(int.parse(value)<=1) {
+                    return "Invitees should be greater that one";
+                  }
+                  return null;
                 },
               ),
             ),

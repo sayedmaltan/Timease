@@ -9,11 +9,13 @@ class CustomCreateEventFormField extends StatelessWidget {
     required this.controller,
     this.width,
     this.hintText = '',
+    this.validator,
   });
 
   final TextEditingController controller;
   final double? width;
   final String hintText;
+  final FormFieldValidator<String>? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class CustomCreateEventFormField extends StatelessWidget {
       height: 39,
       width: width,
       child: TextFormField(
+        validator: validator,
         style: width != 70
             ? Styles.textFormField.copyWith(color: Colors.black87)
             : null,
@@ -38,10 +41,11 @@ class CustomCreateEventFormField extends StatelessWidget {
               : null,
           hintStyle: Styles.textFormField,
           filled: true,
-          focusedBorder: width != 70
+          focusedBorder: width != 70 || validator.toString().isNotEmpty
               ? OutlineInputBorder(
                   borderSide: BorderSide(color: kPrimaryColor),
-                  borderRadius: BorderRadius.circular(15))
+                  borderRadius: BorderRadius.circular(15),
+                )
               : null,
           fillColor: width == 70 ? Color(0xFFF8FBF6) : Colors.transparent,
           border: OutlineInputBorder(

@@ -15,6 +15,7 @@ import 'package:timease_mobile/features/event/presentation/views/widgets/add_dat
 import 'package:timease_mobile/features/home/presentation/views/home_screen_view.dart';
 import 'package:timease_mobile/features/splash/presentation/views/splash_view.dart';
 
+
 abstract class AppRouter {
   static const authScreen = '/authScreenView';
   static const loginScreen = '/LoginScreenView';
@@ -62,7 +63,9 @@ abstract class AppRouter {
       GoRoute(
         path: homeScreen,
         builder: (BuildContext context, GoRouterState state) {
-          return const HomeScreenView();
+          return HomeScreenView(
+            bodyIndex: state.extra as int,
+            );
         },
       ),
       GoRoute(

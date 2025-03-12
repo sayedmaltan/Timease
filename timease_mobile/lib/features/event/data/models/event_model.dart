@@ -4,10 +4,11 @@ class EventModel {
   String? title;
   String? description;
   String? location;
-  int? length;
+  int? duration;
   int? maxAttendees;
   int? schedulingRange;
   List<Availabilities>? availabilities;
+  bool ?isPeriodic;
 
   EventModel(
       {this.id,
@@ -15,10 +16,12 @@ class EventModel {
         this.title,
         this.description,
         this.location,
-        this.length,
+        this.duration,
         this.maxAttendees,
         this.schedulingRange,
-        this.availabilities});
+        this.availabilities,
+      this.isPeriodic
+      });
 
   EventModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -26,9 +29,10 @@ class EventModel {
     title = json['title'];
     description = json['description'];
     location = json['location'];
-    length = json['length'];
+    duration = json['duration'];
     maxAttendees = json['maxAttendees'];
     schedulingRange = json['schedulingRange'];
+    isPeriodic = json['periodic'];
     if (json['availabilities'] != null) {
       availabilities = <Availabilities>[];
       json['availabilities'].forEach((v) {
@@ -46,9 +50,10 @@ class EventModel {
     data['title'] = title;
     data['description'] = description;
     data['location'] = location;
-    data['length'] = length;
+    data['duration'] = duration;
     data['maxAttendees'] = maxAttendees;
     data['schedulingRange'] = schedulingRange;
+    data['periodic']=isPeriodic;
     if (availabilities != null) {
       data['availabilities'] =
           availabilities!.map((v) => v.toJson()).toList();
@@ -102,15 +107,17 @@ class Availabilities {
   String? id;
   String? dayOfWeek;
   String? startTime;
+  String? date;
   String? endTime;
 
-  Availabilities({this.id, this.dayOfWeek, this.startTime, this.endTime});
+  Availabilities({this.id, this.dayOfWeek, this.startTime, this.endTime,this.date});
 
   Availabilities.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     dayOfWeek = json['dayOfWeek'];
     startTime = json['startTime'];
     endTime = json['endTime'];
+    date = json['date'];
   }
 
   Map<String, dynamic> toJson() {
@@ -119,6 +126,7 @@ class Availabilities {
     data['dayOfWeek'] = dayOfWeek;
     data['startTime'] = startTime;
     data['endTime'] = endTime;
+    data['date'] = date;
     return data;
   }
 }
