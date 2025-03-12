@@ -7,8 +7,6 @@ import 'package:timease_mobile/features/home/presentation/views/widgets/home_scr
 import 'package:timease_mobile/features/meeting/presentation/views/mettings_screen_view_body.dart';
 import 'package:timease_mobile/features/notification/presentation/views/notifications_screen_view_body.dart';
 
-import '../../../../core/utils/cash_helper.dart';
-import '../../../event/presentation/manger/event_cubit/user_events_cubit.dart';
 
 class HomeScreenView extends StatefulWidget {
   const HomeScreenView({super.key,  this.bodyIndex=0});
