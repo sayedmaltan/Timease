@@ -40,7 +40,7 @@ void navigateToAuthOrHome() {
     () {
       CashHelper.getData('accessToken')==null?
       context.go(AppRouter.authScreen):
-      context.go(AppRouter.homeScreen);
+      context.go(AppRouter.homeScreen,extra: 0);
     }
   );
 }

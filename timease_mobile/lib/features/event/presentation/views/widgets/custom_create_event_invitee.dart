@@ -60,7 +60,10 @@ class CustomCreateEventInvitee extends StatelessWidget {
                 isPassword: false,
                 controller: inviteeLimitController,
                 validator: (value) {
-                  return 'please enter max invitees in a spot';
+                  if(int.parse(value)<=1) {
+                    return 'invalid no of invitees';
+                  }
+                  return null;
                 },
               ),
             ),

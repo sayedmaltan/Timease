@@ -100,7 +100,7 @@ class CustomCreateEventDuration extends StatelessWidget {
                       controller: customController,
                       validator: (value) {
                         if (value.toString().isEmpty) {
-                          return "This field is required";
+                          return 'ddd';
                         }
                         return null;
                       },

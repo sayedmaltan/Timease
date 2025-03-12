@@ -15,6 +15,6 @@ class CustomNameDuration extends StatelessWidget {
         title1: eventModel.title.toString(),
         description1: eventModel.description.toString(),
         title2: 'Duration',
-        description2: '${eventModel.length} Min');
+        description2: '${eventModel.duration} Min');
   }
 }

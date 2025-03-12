@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timease_mobile/core/utils/function/custom_toast.dart';
 import 'package:timease_mobile/core/utils/function/logout.dart';
-import 'package:timease_mobile/core/utils/service_locator.dart';
 import 'package:timease_mobile/core/widgets/custom_shimmer_loading.dart';
-import 'package:timease_mobile/features/event/data/repos/event_repo_impl.dart';
 import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_cubit.dart';
 import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_state.dart';
 import '../../../../constants.dart';
@@ -26,10 +25,11 @@ class _EventsScreenViewBodyState extends State<EventsScreenViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) {
-        return UserEventsCubit(getIt.get<EventRepoImpl>())
-        ..getUserEventsList(userId: CashHelper.getData('userId'));
+    return RefreshIndicator(
+      onRefresh: () {
+        UserEventsCubit userEventsCubit=UserEventsCubit.get(context);
+        userEventsCubit.getUserEventsList(userId: CashHelper.getData('userId'));
+        return Future.delayed(Duration(seconds: 2));
       },
       child: BlocConsumer<UserEventsCubit, UserEventsState>(
         builder: (context, state) {
@@ -68,7 +68,8 @@ class _EventsScreenViewBodyState extends State<EventsScreenViewBody> {
                 )
               ],
             );
-          } else {
+          }
+          else {
             return Column(
               children: [
                 SizedBox(
@@ -90,14 +91,21 @@ class _EventsScreenViewBodyState extends State<EventsScreenViewBody> {
             );
           }
         },
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is GetUserEventsSuccess) {
           } else if (state is GetUserEventsFailure) {
-            if(state.errMessage=='JWT token has expired')
-              {
-                logout(context: context);
-              }
-          } else if (state is GetUserEventsLoading) {}
+            if (state.errMessage == 'JWT token has expired') {
+              logout(context: context);
+            }
+          } else if (state is GetUserEventsLoading) {
+          } else if (state is DeleteUserEventsFailure) {
+            await Future.delayed(Duration(seconds: 2));
+            customShowToast(
+                msg: 'Failed to delete the event. Please try again later.');
+          } else if (state is DeleteUserEventsSuccess) {
+            await Future.delayed(Duration(seconds: 2));
+            customShowToast(msg: 'Event deleted successfully');
+          }
         },
       ),
     );

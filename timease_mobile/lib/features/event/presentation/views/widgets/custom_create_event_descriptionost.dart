@@ -47,6 +47,10 @@ class CustomCreateEventDescription extends StatelessWidget {
             isPassword: false,
             controller: descriptionController,
             validator: (value) {
+              if(value.toString().isEmpty)
+                {
+                  return 'this field is required';
+                }
               return null;
             },
           )

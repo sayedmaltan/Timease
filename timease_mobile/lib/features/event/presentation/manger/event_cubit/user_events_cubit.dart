@@ -53,6 +53,7 @@ class UserEventsCubit extends Cubit<UserEventsState> {
     response.fold(
       (failure) {
         emit(DeleteUserEventsFailure(errMessage: failure.errMessage));
+        getUserEventsList(userId: userId);
       },
       (deleted) {
         emit(DeleteUserEventsSuccess(isDeleted: deleted));

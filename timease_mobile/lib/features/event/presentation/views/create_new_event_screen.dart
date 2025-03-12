@@ -14,7 +14,6 @@ import 'package:timease_mobile/features/event/presentation/views/widgets/custom_
 import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_invitee.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_location.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_duration.dart';
-
 import '../../../../core/utils/service_locator.dart';
 import '../../../../core/utils/styles.dart';
 import '../../data/models/create_event_model.dart';
@@ -213,33 +212,37 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
                                 height: 45,
                                 text: 'Save changes',
                                 onPressed: () {
-                                  CreateEventModel createEventModel =
-                                      CreateEventModel.fromJson({
-                                    "title": titleController.text,
-                                    "description": descriptionController.text,
-                                    "location": "Conference Room A",
-                                    "duration": getDurationByMinutes(
-                                        customController: customController,
-                                        selectedDuration: selectedDuration,
-                                        selectedTimeType: selectedTimeType),
-                                    "maxAttendees": inviteeLimitController.text,
-                                    "schedulingRange": isPeriodic
-                                        ? schedulingRangeController.text
-                                        : null,
-                                    "availabilities": getAvailabilitiesList(
-                                      isPeriodic: isPeriodic,
-                                      availabilitiesItemModelList:
-                                          availabilitiesItemModelList
-                                              .map((e) => e.toJson())
-                                              .toList(),
-                                      isUnavailable: isUnavailable,
-                                      startTimeList: startTimeList,
-                                      endTimeList: endTimeList,
-                                    ),
-                                    "periodic": isPeriodic
-                                  });
-                                  createEventsCubit.createNewEvent(
-                                      createEventModel: createEventModel);
+                                if(formKey.currentState!.validate())  {
+                                    CreateEventModel createEventModel =
+                                        CreateEventModel.fromJson({
+                                      "title": titleController.text,
+                                      "description": descriptionController.text,
+                                      "location": "Conference Room A",
+                                      "duration": getDurationByMinutes(
+                                          customController: customController,
+                                          selectedDuration: selectedDuration,
+                                          selectedTimeType: selectedTimeType),
+                                      "maxAttendees":
+                                          inviteeLimitController.text,
+                                      "schedulingRange": isPeriodic
+                                          ? schedulingRangeController.text
+                                          : null,
+                                      "availabilities": getAvailabilitiesList(
+                                        isPeriodic: isPeriodic,
+                                        availabilitiesItemModelList:
+                                            availabilitiesItemModelList
+                                                .map((e) => e.toJson())
+                                                .toList(),
+                                        isUnavailable: isUnavailable,
+                                        startTimeList: startTimeList,
+                                        endTimeList: endTimeList,
+                                      ),
+                                      "periodic": isPeriodic
+                                    });
+                                    createEventsCubit.createNewEvent(
+                                      createEventModel: createEventModel,
+                                    );
+                                  }
                                 },
                               ),
                       )
@@ -252,8 +255,8 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
         },
         listener: (context, state) {
           if (state is CreateEventsSuccess) {
-            context.pop();
             customShowToast(msg: 'Event created successfully');
+            context.pop();
           }
         },
       ),

@@ -15,6 +15,10 @@ import 'package:timease_mobile/features/event/presentation/views/widgets/add_dat
 import 'package:timease_mobile/features/home/presentation/views/home_screen_view.dart';
 import 'package:timease_mobile/features/splash/presentation/views/splash_view.dart';
 
+import '../../features/event/data/repos/event_repo_impl.dart';
+import '../../features/event/presentation/manger/event_cubit/user_events_cubit.dart';
+import 'cash_helper.dart';
+
 abstract class AppRouter {
   static const authScreen = '/authScreenView';
   static const loginScreen = '/LoginScreenView';
@@ -62,7 +66,15 @@ abstract class AppRouter {
       GoRoute(
         path: homeScreen,
         builder: (BuildContext context, GoRouterState state) {
-          return const HomeScreenView();
+          return BlocProvider(
+            create: (context) {
+              return UserEventsCubit(getIt.get<EventRepoImpl>())
+                ..getUserEventsList(userId: CashHelper.getData('userId'));
+            },
+            child: HomeScreenView(
+              bodyIndex: state.extra as int,
+              ),
+          );
         },
       ),
       GoRoute(
