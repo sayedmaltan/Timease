@@ -66,15 +66,9 @@ abstract class AppRouter {
       GoRoute(
         path: homeScreen,
         builder: (BuildContext context, GoRouterState state) {
-          return BlocProvider(
-            create: (context) {
-              return UserEventsCubit(getIt.get<EventRepoImpl>())
-                ..getUserEventsList(userId: CashHelper.getData('userId'));
-            },
-            child: HomeScreenView(
-              bodyIndex: state.extra as int,
-              ),
-          );
+          return HomeScreenView(
+            bodyIndex: state.extra as int,
+            );
         },
       ),
       GoRoute(

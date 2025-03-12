@@ -43,7 +43,7 @@ class _CustomCreateEventAvailabilityState
         dividerColor: kSecPrimaryColor.shade100,
       ),
       child: ExpansionTile(
-        initiallyExpanded: true,
+        initiallyExpanded: false,
         title: Text(
           "Availability",
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -58,25 +58,24 @@ class _CustomCreateEventAvailabilityState
                 "Periodic",
                 style: TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.w500), // Smaller but readable
+                    fontWeight: FontWeight.w500),
               ),
               subtitle: Text(
                 "Enable Weekly Days",
                 style: TextStyle(
-                    fontSize: 13, color: Colors.grey[600]), // Reduced font size
+                    fontSize: 13, color: Colors.grey[600]),
               ),
               value: widget.isPeriodic,
               onChanged: widget.isPeriodicChanged,
               contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               secondary:
                   Icon(Icons.notifications, size: 24, color: kPrimaryColor),
-              // Smaller icon
               activeColor: kPrimaryColor,
               // Switch color when active
               tileColor: Color(0xFFF8FBF6),
               // Light background
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8), // Smaller border radius
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
           ),
