@@ -8,10 +8,10 @@ import 'package:timease_mobile/core/widgets/custom_full_button.dart';
 import 'package:timease_mobile/core/widgets/custom_loading_button.dart';
 import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_cubit.dart';
 import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_state.dart';
-import 'package:timease_mobile/features/event/presentation/views/widgets/custom_creare_event_name.dart';
-import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_availabilty.dart';
+import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_name.dart';
+import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_availability.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_close.dart';
-import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_descriptionost.dart';
+import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_description.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_divider.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_host.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_invitee.dart';
@@ -28,10 +28,15 @@ class CreateNewEventScreen extends StatefulWidget {
 
 class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
   List<AvailabilitiesItemModel> availabilitiesItemModelList = [];
+  TextEditingController titleController = TextEditingController();
+  TextEditingController customController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
   List<TextEditingController> startTimeList =
-      List.generate(7, (_) => TextEditingController(text: '10:30'));
+  List.generate(7, (_) => TextEditingController(text: '10:30'));
   List<TextEditingController> endTimeList =
-      List.generate(7, (_) => TextEditingController(text: '14:40'));
+  List.generate(7, (_) => TextEditingController(text: '14:40'));
+  TextEditingController inviteeLimitController =
+  TextEditingController(text: '2');
   TextEditingController schedulingRangeController =
       TextEditingController(text: '30');
   List<bool> isUnavailable = List.filled(7, false);
@@ -53,11 +58,6 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
     "min",
     "hr",
   ];
-  TextEditingController titleController = TextEditingController();
-  TextEditingController customController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
-  TextEditingController inviteeLimitController =
-      TextEditingController(text: '2');
   var formKey = GlobalKey<FormState>();
   List<String> days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
   bool isDayUnavailable = false;
@@ -193,7 +193,8 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
                                               selectedDuration:
                                                   selectedDuration,
                                               selectedTimeType:
-                                                  selectedTimeType),
+                                                  selectedTimeType,
+                                          ),
                                       "maxAttendees": userEventsCubit
                                           .getInviteeLimit(
                                               controller:

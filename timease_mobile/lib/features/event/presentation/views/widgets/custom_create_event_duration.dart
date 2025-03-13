@@ -101,7 +101,13 @@ class CustomCreateEventDuration extends StatelessWidget {
                       controller: customController,
                       validator: (value) {
                         if (value.toString().isEmpty) {
-                          return 'ddd';
+                          return "Field can't be blank";
+                        }
+                        else if(selectedTimeType=='hr'&&int.parse(value)>6) {
+                          return 'enter a valid value';
+                        }
+                        else if(selectedTimeType=='min'&&int.parse(value)>360) {
+                          return 'enter a valid value';
                         }
                         return null;
                       },
