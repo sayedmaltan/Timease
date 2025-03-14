@@ -9,8 +9,6 @@ import 'custom_drop_down_button.dart';
 class CustomCreateEventDuration extends StatelessWidget {
   const CustomCreateEventDuration({
     super.key,
-    required this.isOpen,
-    required this.formKey,
     required this.customController,
     required this.selectedDuration,
     required this.selectedTimeType,
@@ -19,10 +17,10 @@ class CustomCreateEventDuration extends StatelessWidget {
     required this.onExpansionChanged,
     required this.dropDown1Changed,
     required this.dropdown2Changed,
+    required this.isOpen,
   });
 
   final bool isOpen;
-  final GlobalKey<FormState> formKey;
   final TextEditingController customController;
   final String selectedDuration;
   final String selectedTimeType;

@@ -80,7 +80,7 @@ class _DateSpecificHoursState extends State<DateSpecificHours> {
           physics: NeverScrollableScrollPhysics(),
           itemCount: widget.availabilitiesList.length,
           itemBuilder: (context, index) => DateTimeEntry(
-            date: DateFormat('MMMM dd, yyyy').format(DateTime.parse(widget.availabilitiesList[index].date!)),
+            date: DateFormat('MMMM dd, yyyy').format(DateTime.parse(widget.availabilitiesList[index].date.toString())),
             timeRange: "${widget.availabilitiesList[index].startTime} - ${widget.availabilitiesList[index].endTime}",
             onRemove: () {
               widget.availabilitiesList.removeAt(index);

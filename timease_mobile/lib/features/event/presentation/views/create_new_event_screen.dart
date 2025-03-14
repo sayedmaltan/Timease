@@ -20,32 +20,46 @@ import 'package:timease_mobile/features/event/presentation/views/widgets/custom_
 import '../../data/models/create_event_model.dart';
 
 class CreateNewEventScreen extends StatefulWidget {
-  const CreateNewEventScreen({super.key});
+   CreateNewEventScreen({
+    super.key,
+    this.isPeriodic = true,
+    required this.startTimeList,
+    required this.endTimeList,
+    required this.schedulingRangeController,
+    required this.availabilitiesItemModelList,
+     this.selectedTimeType='min',
+     this.selectedDuration= "15 min",
+     required this.customController,
+     required this.titleController,
+     required this.inviteeLimitController,
+     required this.descriptionController,
+  });
+
+  late String selectedTimeType;
+  late  bool isPeriodic;
+  late List<TextEditingController> startTimeList;
+  late TextEditingController schedulingRangeController;
+  late String selectedDuration ;
+  late List<TextEditingController> endTimeList;
+  late List<AvailabilitiesItemModel> availabilitiesItemModelList;
+  late TextEditingController customController;
+  late TextEditingController titleController;
+  late TextEditingController inviteeLimitController;
+  late TextEditingController descriptionController;
+
+
 
   @override
   State<CreateNewEventScreen> createState() => _CreateNewEventScreenState();
 }
 
 class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
-  List<AvailabilitiesItemModel> availabilitiesItemModelList = [];
-  TextEditingController titleController = TextEditingController();
-  TextEditingController customController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
-  List<TextEditingController> startTimeList =
-  List.generate(7, (_) => TextEditingController(text: '10:30'));
-  List<TextEditingController> endTimeList =
-  List.generate(7, (_) => TextEditingController(text: '14:40'));
-  TextEditingController inviteeLimitController =
-  TextEditingController(text: '2');
-  TextEditingController schedulingRangeController =
-      TextEditingController(text: '30');
+
   List<bool> isUnavailable = List.filled(7, false);
-  bool isPeriodic = true;
   bool isOpenDuration = false;
   bool isInviteeOpen = false;
   bool isDescriptionOpen = false;
   bool isHostOpen = false;
-  String selectedDuration = "15 min";
   final List<String> durations = [
     "15 min",
     "30 min",
@@ -53,7 +67,6 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
     "60 min",
     "Custom"
   ];
-  String selectedTimeType = "min";
   final List<String> timeType = [
     "min",
     "hr",
@@ -76,14 +89,13 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomCreateEventClose(),
-                    CustomCreateEventName(titleController: titleController),
+                    CustomCreateEventName(titleController: widget.titleController),
                     CustomCreateEventDivider(),
                     CustomCreateEventDuration(
                       isOpen: isOpenDuration,
-                      formKey: formKey,
-                      customController: customController,
-                      selectedDuration: selectedDuration,
-                      selectedTimeType: selectedTimeType,
+                      customController: widget.customController,
+                      selectedDuration: widget.selectedDuration,
+                      selectedTimeType: widget.selectedTimeType,
                       durations: durations,
                       timeType: timeType,
                       onExpansionChanged: (value) {
@@ -92,14 +104,14 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
                         setState(() {});
                       },
                       dropDown1Changed: (newValue) {
-                        customController.text = '';
+                       widget. customController.text = '';
                         setState(() {
-                          selectedDuration = newValue!;
+                          widget. selectedDuration = newValue!;
                         });
                       },
                       dropdown2Changed: (newValue) {
                         setState(() {
-                          selectedTimeType = newValue!;
+                          widget.selectedTimeType = newValue!;
                         });
                       },
                     ),
@@ -109,22 +121,22 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
                     ),
                     CustomCreateEventDivider(),
                     CustomCreateEventAvailability(
-                      availabilitiesItemModelList: availabilitiesItemModelList,
+                      availabilitiesItemModelList: widget.availabilitiesItemModelList,
                       days: days,
                       isUnavailable: isUnavailable,
-                      startTimeList: startTimeList,
-                      endTimeList: endTimeList,
-                      isPeriodic: isPeriodic,
-                      schedulingRangeController: schedulingRangeController,
+                      startTimeList: widget.startTimeList,
+                      endTimeList:widget.endTimeList,
+                      isPeriodic:widget.isPeriodic,
+                      schedulingRangeController: widget.schedulingRangeController,
                       isPeriodicChanged: (bool value) {
                         setState(() {
-                          isPeriodic = value;
+                          widget.isPeriodic = value;
                         });
                       },
                     ),
                     CustomCreateEventDivider(),
                     CustomCreateEventInvitee(
-                      inviteeLimitController: inviteeLimitController,
+                      inviteeLimitController: widget.inviteeLimitController,
                       isOpen: isInviteeOpen,
                       onExpansionChanged: (value) {
                         isInviteeOpen = value;
@@ -142,7 +154,7 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
                     ),
                     CustomCreateEventDivider(),
                     CustomCreateEventDescription(
-                      descriptionController: descriptionController,
+                      descriptionController: widget.descriptionController,
                       isOpen: isDescriptionOpen,
                       onExpansionChanged: (value) {
                         isDescriptionOpen = value;
@@ -161,58 +173,61 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
                               height: 45,
                               text: 'Save changes',
                               onPressed: () {
-                                var availability=userEventsCubit.getAvailabilitiesList(
-                                  isPeriodic: isPeriodic,
+                                var availability =
+                                    userEventsCubit.getAvailabilitiesList(
+                                  isPeriodic: widget.isPeriodic,
                                   availabilitiesItemModelList:
-                                  availabilitiesItemModelList
-                                      .map((e) => e.toJson())
-                                      .toList(),
+                                  widget.availabilitiesItemModelList
+                                          .map((e) => e.toJson())
+                                          .toList(),
                                   isUnavailable: isUnavailable,
-                                  startTimeList: startTimeList,
-                                  endTimeList: endTimeList,
+                                  startTimeList: widget.startTimeList,
+                                  endTimeList: widget.endTimeList,
                                 );
                                 if (formKey.currentState!.validate()) {
-                                  if(availability.isEmpty)
-                                  {
-                                    showError(context: context,msg: 'Availability is required. Please enter your available time.');
-                                  }
-                                 else if(descriptionController.text.isEmpty)
-                                  {
-                                    showError(context: context,msg: 'Event description is required.Provide details about the event.');
-                                  }
-                                 else {
+                                  if (availability.isEmpty) {
+                                    showError(
+                                        context: context,
+                                        msg:
+                                            'Availability is required. Please enter your available time.');
+                                  } else if (widget.descriptionController
+                                      .text.isEmpty) {
+                                    showError(
+                                        context: context,
+                                        msg:
+                                            'Event description is required.Provide details about the event.');
+                                  } else {
                                     CreateEventModel createEventModel =
                                         CreateEventModel.fromJson({
-                                      "title": titleController.text,
-                                      "description": descriptionController.text,
+                                      "title": widget.titleController.text,
+                                      "description": widget.descriptionController.text,
                                       "location": "Conference Room A",
                                       "duration":
                                           userEventsCubit.getDurationByMinutes(
-                                              customController:
-                                                  customController,
-                                              selectedDuration:
-                                                  selectedDuration,
-                                              selectedTimeType:
-                                                  selectedTimeType,
-                                          ),
+                                        customController: widget.customController,
+                                        selectedDuration: widget.selectedDuration,
+                                        selectedTimeType: widget.selectedTimeType,
+                                      ),
                                       "maxAttendees": userEventsCubit
                                           .getInviteeLimit(
                                               controller:
-                                                  inviteeLimitController)
+                                              widget.inviteeLimitController)
                                           .toString(),
-                                      "schedulingRange": isPeriodic
-                                          ? schedulingRangeController.text
+                                      "schedulingRange": widget.isPeriodic
+                                          ? widget.schedulingRangeController.text
                                           : null,
-                                      "availabilities":availability,
-                                      "periodic": isPeriodic
+                                      "availabilities": availability,
+                                      "periodic": widget.isPeriodic
                                     });
                                     userEventsCubit.createNewEvent(
                                       createEventModel: createEventModel,
                                     );
                                   }
-                                }
-                                else {
-                                  showError(msg: '"Please fill all required fields before proceeding."',context: context);
+                                } else {
+                                  showError(
+                                      msg:
+                                          '"Please fill all required fields before proceeding."',
+                                      context: context);
                                 }
                               },
                             ),
