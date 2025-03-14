@@ -8,11 +8,11 @@ import '../../../data/models/create_event_model.dart';
 class CustomCreateEventAvailability extends StatefulWidget {
   const CustomCreateEventAvailability({
     super.key,
-    required this.days,
-    required this.isUnavailable,
+    required this.isPeriodic,
     required this.startTimeList,
     required this.endTimeList,
-    required this.isPeriodic,
+    required this.days,
+    required this.isUnavailable,
     required this.schedulingRangeController,
     required this.isPeriodicChanged,
     required this.availabilitiesItemModelList,

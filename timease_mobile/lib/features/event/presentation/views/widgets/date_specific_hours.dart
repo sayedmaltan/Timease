@@ -98,8 +98,8 @@ Future<Map<String, String?>?> pickDateTimeRange(context) async {
   DateTime? pickedDate = await showDatePicker(
     context: context,
     initialDate: DateTime.now(),
-    firstDate: DateTime(2000),
-    lastDate: DateTime(2100),
+    firstDate: DateTime.now(),
+    lastDate: DateTime(DateTime.now().year+1),
   );
 
   if (pickedDate == null) return null;

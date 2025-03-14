@@ -20,82 +20,38 @@ class CustomDaysTable extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(color: kSecPrimaryColor.shade400),
         ),
-        child: Column(
-          children: [
-            Expanded(
-              child: CustomAvailableTimeRow(
-                  day: availabilitiesList[0].dayOfWeek!,
-                  time: availabilitiesList[0]
-                              .startTime!
-                              .compareTo('Unavailable') ==
-                          0
-                      ? 'Unavailable'
-                      : '${availabilitiesList[0].startTime!.substring(0, 5)}-${availabilitiesList[0].endTime!.substring(0, 5)}'),
-            ),
-            Divider(),
-            Expanded(
+        child: ListView.separated(
+          physics: NeverScrollableScrollPhysics(),
+          separatorBuilder: (context, index) => Divider(),
+          itemCount: 7,
+          itemBuilder: (context, index) {
+            return SizedBox(
+              height: 41,
+              child: Center(
                 child: CustomAvailableTimeRow(
-                    day: availabilitiesList[1].dayOfWeek!,
-                    time: availabilitiesList[1]
-                                .startTime!
-                                .compareTo('Unavailable') ==
-                            0
+                    day: availabilitiesList[index].dayOfWeek!,
+                    time: availabilitiesList[index]
+                        .startTime!
+                        .compareTo('Unavailable') ==
+                        0
                         ? 'Unavailable'
-                        : '${availabilitiesList[1].startTime!.substring(0, 5)}-${availabilitiesList[1].endTime!.substring(0, 5)}')),
-            Divider(),
-            Expanded(
-                child: CustomAvailableTimeRow(
-                    day: availabilitiesList[2].dayOfWeek!,
-                    time: availabilitiesList[2]
-                                .startTime!
-                                .compareTo('Unavailable') ==
-                            0
-                        ? 'Unavailable'
-                        : '${availabilitiesList[2].startTime!.substring(0, 5)}-${availabilitiesList[2].endTime!.substring(0, 5)}')),
-            Divider(),
-            Expanded(
-                child: CustomAvailableTimeRow(
-                    day: availabilitiesList[3].dayOfWeek!,
-                    time: availabilitiesList[3]
-                                .startTime!
-                                .compareTo('Unavailable') ==
-                            0
-                        ? 'Unavailable'
-                        : '${availabilitiesList[3].startTime!.substring(0, 5)}-${availabilitiesList[3].endTime!.substring(0, 5)}')),
-            Divider(),
-            Expanded(
-                child: CustomAvailableTimeRow(
-                    day: availabilitiesList[4].dayOfWeek!,
-                    time: availabilitiesList[4]
-                                .startTime!
-                                .compareTo('Unavailable') ==
-                            0
-                        ? 'Unavailable'
-                        : '${availabilitiesList[4].startTime!.substring(0, 5)}-${availabilitiesList[4].endTime!.substring(0, 5)}')),
-            Divider(),
-            Expanded(
-                child: CustomAvailableTimeRow(
-                    day: availabilitiesList[5].dayOfWeek!,
-                    time: availabilitiesList[5]
-                                .startTime!
-                                .compareTo('Unavailable') ==
-                            0
-                        ? 'Unavailable'
-                        : '${availabilitiesList[5].startTime!.substring(0, 5)}-${availabilitiesList[5].endTime!.substring(0, 5)}')),
-            Divider(),
-            Expanded(
-              child: CustomAvailableTimeRow(
-                  day: availabilitiesList[6].dayOfWeek!,
-                  time: availabilitiesList[6]
-                              .startTime!
-                              .compareTo('Unavailable') ==
-                          0
-                      ? 'Unavailable'
-                      : '${availabilitiesList[6].startTime!.substring(0, 5)}-${availabilitiesList[6].endTime!.substring(0, 5)}'),
-            ),
-          ],
+                        : '${convertTo12HourFormat(availabilitiesList[index].startTime!.substring(0, 5))}-${convertTo12HourFormat(availabilitiesList[index].endTime!.substring(0, 5))}'),
+              ),
+            );
+          },
         ),
       ),
     );
   }
+  String convertTo12HourFormat(String time24) {
+    List<String> parts = time24.split(':');
+    int hour = int.parse(parts[0]);
+    String minute = parts[1];
+
+    String period = (hour >= 12) ? 'PM' : 'AM';
+    int hour12 = (hour == 0) ? 12 : (hour > 12 ? hour - 12 : hour);
+
+    return '$hour12:$minute $period';
+  }
+  
 }

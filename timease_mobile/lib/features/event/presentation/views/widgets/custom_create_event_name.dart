@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../../../core/utils/styles.dart';
 import 'custom_create_event_form_field.dart';
 
