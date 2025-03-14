@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../constants.dart';
+import '../../../../core/widgets/custom_search.dart';
 import 'widgets/custom_filter_bottom_sheet.dart';
 import 'widgets/custom_filter_row.dart';
 import 'widgets/custom_meeting_box.dart';
@@ -22,7 +23,11 @@ class _MeetingsScreenViewBodyState extends State<MeetingsScreenViewBody> {
         SizedBox(
           height: 10,
         ),
-        // CustomRowSearchAndAccount(controller: controller),
+        CustomSearch(
+          eventListModel:[],
+          controller: controller,
+          text: 'Search event Types...',
+        ),
         SizedBox(
           height: 7,
         ),

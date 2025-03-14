@@ -43,6 +43,12 @@ class CustomCreateEventAvailabilityRow extends StatelessWidget {
                   CustomCreateEventFormField(
                     controller: startTimeController,
                     width: 70,
+                    validator: (value) {
+                      if(startTimeController.text.isEmpty&&isUnavailable==false) {
+                        return 'required';
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(width: 10),
                   Text('-',
@@ -53,6 +59,12 @@ class CustomCreateEventAvailabilityRow extends StatelessWidget {
                   CustomCreateEventFormField(
                     controller: endTimeController,
                     width: 70,
+                    validator: (value) {
+                      if(endTimeController.text.isEmpty&&isUnavailable==false) {
+                        return 'required';
+                      }
+                      return null;
+                    },
                   ),
                 ],
               ),

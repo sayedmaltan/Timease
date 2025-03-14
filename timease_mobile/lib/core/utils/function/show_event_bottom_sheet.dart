@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:timease_mobile/core/utils/app_router.dart';
+import 'package:timease_mobile/core/utils/cash_helper.dart';
+import 'package:timease_mobile/features/event/data/models/event_model.dart';
+import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_cubit.dart';
 
 import '../../../constants.dart';
 
-void showEventModelSheet(context,eventModel){
+void showEventModelSheet(context, EventModel eventModel) {
   showModalBottomSheet(
     backgroundColor: Colors.white,
     context: context,
@@ -35,8 +38,8 @@ void showEventModelSheet(context,eventModel){
               leading: Icon(Icons.edit_note_rounded, color: kPrimaryColor),
               title: Text('Edit event type'),
               onTap: () {
-                AppRouter.eventModel=eventModel;
-                context.push(AppRouter.updateEventScreen);
+                context.pop();
+                context.push(AppRouter.updateEventScreen, extra: eventModel);
               },
             ),
             ListTile(
@@ -48,7 +51,8 @@ void showEventModelSheet(context,eventModel){
               leading: Icon(Icons.settings, color: kPrimaryColor),
               title: Text('View event type details'),
               onTap: () {
-                context.push(AppRouter.eventDetailsScreen,extra: eventModel);
+                context.pop();
+                context.push(AppRouter.eventDetailsScreen, extra: eventModel);
               },
             ),
             ListTile(
@@ -59,7 +63,13 @@ void showEventModelSheet(context,eventModel){
             ListTile(
               leading: Icon(Icons.delete, color: Colors.red),
               title: Text('Delete Event Type'),
-              onTap: () {},
+              onTap: () {
+                context.pop();
+                UserEventsCubit user = UserEventsCubit.get(context);
+                user.deleteUserEventsItem(
+                    eventId: eventModel.id!,
+                    userId: CashHelper.getData('userId'));
+              },
             ),
           ],
         ),

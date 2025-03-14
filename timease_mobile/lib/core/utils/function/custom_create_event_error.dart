@@ -27,8 +27,8 @@ OverlayEntry _createOverlayEntry({required String msg,double ?top}) {
   return OverlayEntry(
     builder: (context) => Positioned(
       top: top??100,
-      right: 44,
-      left: 44,
+      right: 42,
+      left: 42,
       child: Material(
         color: Colors.transparent,
         child: Container(
