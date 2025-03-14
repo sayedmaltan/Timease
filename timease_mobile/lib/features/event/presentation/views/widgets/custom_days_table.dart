@@ -29,13 +29,14 @@ class CustomDaysTable extends StatelessWidget {
               height: 41,
               child: Center(
                 child: CustomAvailableTimeRow(
-                    day: availabilitiesList[index].dayOfWeek!,
-                    time: availabilitiesList[index]
-                        .startTime!
-                        .compareTo('Unavailable') ==
-                        0
-                        ? 'Unavailable'
-                        : '${convertTo12HourFormat(availabilitiesList[index].startTime!.substring(0, 5))}-${convertTo12HourFormat(availabilitiesList[index].endTime!.substring(0, 5))}'),
+                  day: availabilitiesList[index].dayOfWeek!,
+                  time: availabilitiesList[index]
+                              .startTime!
+                              .compareTo('Unavailable') ==
+                          0
+                      ? 'Unavailable'
+                      : '${convertTo12HourFormat(availabilitiesList[index].startTime!.substring(0, 5))}-${convertTo12HourFormat(availabilitiesList[index].endTime!.substring(0, 5))}',
+                ),
               ),
             );
           },
@@ -43,6 +44,7 @@ class CustomDaysTable extends StatelessWidget {
       ),
     );
   }
+
   String convertTo12HourFormat(String time24) {
     List<String> parts = time24.split(':');
     int hour = int.parse(parts[0]);
@@ -53,5 +55,4 @@ class CustomDaysTable extends StatelessWidget {
 
     return '$hour12:$minute $period';
   }
-  
 }
