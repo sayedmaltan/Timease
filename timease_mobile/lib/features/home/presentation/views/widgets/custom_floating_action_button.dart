@@ -16,7 +16,7 @@ class CustomFloatingActionButton extends StatelessWidget {
       shape: CircleBorder(),
 
       onPressed: () {
-        context.push(AppRouter.createNewEventScreen);
+        context.push(AppRouter.createNewEventScreen,);
       },
       child: Icon(
         color: Colors.white,

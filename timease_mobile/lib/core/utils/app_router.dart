@@ -9,12 +9,15 @@ import 'package:timease_mobile/features/authentication/presentation/views/auth_s
 import 'package:timease_mobile/features/authentication/presentation/views/login_screen_view.dart';
 import 'package:timease_mobile/features/authentication/presentation/views/register_screen_view.dart';
 import 'package:timease_mobile/features/event/data/models/event_model.dart';
+import 'package:timease_mobile/features/event/data/repos/event_repo_impl.dart';
+import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_cubit.dart';
 import 'package:timease_mobile/features/event/presentation/views/create_new_event_screen.dart';
 import 'package:timease_mobile/features/event/presentation/views/event_details_view.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/add_date_specific_hour_full_screen.dart';
 import 'package:timease_mobile/features/home/presentation/views/home_screen_view.dart';
 import 'package:timease_mobile/features/splash/presentation/views/splash_view.dart';
 
+import '../../features/event/data/models/create_event_model.dart';
 
 abstract class AppRouter {
   static const authScreen = '/authScreenView';
@@ -23,6 +26,7 @@ abstract class AppRouter {
   static const homeScreen = '/homeScreenView';
   static const eventDetailsScreen = '/eventDetailsScreen';
   static const createNewEventScreen = '/createNewEventScreen';
+  static const updateEventScreen = '/updateEventScreen';
   static const addDateSpecificHourFullScreen = '/addDateSpecificHourFullScreen';
   static late EventModel eventModel;
   static final router = GoRouter(
@@ -65,7 +69,7 @@ abstract class AppRouter {
         builder: (BuildContext context, GoRouterState state) {
           return HomeScreenView(
             bodyIndex: state.extra as int,
-            );
+          );
         },
       ),
       GoRoute(
@@ -77,7 +81,49 @@ abstract class AppRouter {
       GoRoute(
         path: createNewEventScreen,
         builder: (BuildContext context, GoRouterState state) {
-          return CreateNewEventScreen();
+          return CreateNewEventScreen(
+            startTimeList: List.generate(
+                7, (_) => TextEditingController(text: '12:40')),
+            endTimeList: List.generate(
+                7, (_) => TextEditingController(text: '14:40')),
+            schedulingRangeController: TextEditingController(text: '30'),
+            availabilitiesItemModelList: [],
+            customController: TextEditingController(),
+            titleController: TextEditingController(),
+            descriptionController: TextEditingController(),
+            inviteeLimitController: TextEditingController(text: '2'),
+          );
+        },
+      ),
+      GoRoute(
+        path: updateEventScreen,
+        builder: (BuildContext context, GoRouterState state) {
+          List<AvailabilitiesItemModel> ava=[];
+          if(!eventModel.isPeriodic!) {
+            for (int i = 0; i < eventModel.availabilities!.length; i++) {
+              ava.add(AvailabilitiesItemModel.fromJson(
+                  eventModel.availabilities![i].toJson()));
+            }
+          }
+          return CreateNewEventScreen(
+            availabilitiesItemModelList: ava,
+            startTimeList
+            :UserEventsCubit(getIt.get<EventRepoImpl>()).getStartAndEndTime(availabilitiesItemModelList: eventModel.availabilities!, isPeriodic: eventModel.isPeriodic!)[0],
+            endTimeList
+            :UserEventsCubit(getIt.get<EventRepoImpl>()).getStartAndEndTime(availabilitiesItemModelList: eventModel.availabilities!, isPeriodic: eventModel.isPeriodic!)[1],
+            selectedDuration: 'Custom',
+            selectedTimeType: 'min',
+            customController: TextEditingController(
+                text: eventModel.duration.toString()),
+            schedulingRangeController: TextEditingController(
+                text: eventModel.schedulingRange.toString()),
+            isPeriodic: eventModel.isPeriodic!,
+            titleController: TextEditingController(text: eventModel.title),
+            inviteeLimitController: TextEditingController(
+                text: eventModel.maxAttendees.toString()),
+            descriptionController: TextEditingController(
+                text: eventModel.description),
+          );
         },
       ),
       GoRoute(
@@ -89,3 +135,4 @@ abstract class AppRouter {
     ],
   );
 }
+

@@ -1,5 +1,9 @@
 
+import 'event_model.dart';
+
 class CreateEventModel {
+  String? id;
+  User? user;
   String? title;
   String? description;
   String? location;
@@ -10,7 +14,8 @@ class CreateEventModel {
   bool? periodic;
 
   CreateEventModel(
-      {this.title,
+      {this.id,this.title,
+        this.user,
         this.description,
         this.location,
         this.duration,
@@ -20,7 +25,9 @@ class CreateEventModel {
         this.periodic});
 
   CreateEventModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     title = json['title'];
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
     description = json['description'];
     location = json['location'];
     duration = json['duration'];
@@ -37,6 +44,10 @@ class CreateEventModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    if (user != null) {
+      data['user'] = user!.toJson();
+    }
     data['title'] = title;
     data['description'] = description;
     data['location'] = location;
@@ -53,6 +64,7 @@ class CreateEventModel {
 }
 
 class AvailabilitiesItemModel {
+  String? id;
   String? dayOfWeek;
   String? date;
   String? startTime;
@@ -61,6 +73,7 @@ class AvailabilitiesItemModel {
   AvailabilitiesItemModel({this.dayOfWeek, this.date, this.startTime, this.endTime});
 
   AvailabilitiesItemModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     dayOfWeek = json['dayOfWeek'];
     date = json['date'];
     startTime = json['startTime'];
@@ -69,6 +82,7 @@ class AvailabilitiesItemModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     data['dayOfWeek'] = dayOfWeek;
     data['date'] = date;
     data['startTime'] = startTime;

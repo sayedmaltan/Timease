@@ -82,6 +82,24 @@ class UserEventsCubit extends Cubit<UserEventsState> {
     );
   }
 
+  Future<void> updateNewEvent({
+    required CreateEventModel createEventModel,
+    required String eventId
+  }) async {
+    emit(UpdateEventsLoading());
+    var response =
+    await eventRepo.updateEvent(createEventModel: createEventModel,eventId: eventId);
+    response.fold(
+          (failure) {
+        emit(UpdateEventsFailure(errMessage: failure.errMessage));
+      },
+          (updateEventResponse) {
+        emit(
+            UpdateEventsSuccess(updateEventResponseModel: updateEventResponse));
+      },
+    );
+  }
+
   Map<String, String> getDuration(
       {required TextEditingController customController,
       required String selectedDuration,
@@ -152,5 +170,20 @@ class UserEventsCubit extends Cubit<UserEventsState> {
       return int.parse(controller.text);
     }
     return 2;
+  }
+
+  List<List<TextEditingController>> getStartAndEndTime({required List <
+      Availabilities> availabilitiesItemModelList, required bool isPeriodic,}) {
+    List<TextEditingController> startTimeList=List.generate(
+        7, (_) => TextEditingController());
+    List<TextEditingController> endTimeList=List.generate(
+        7, (_) => TextEditingController());
+    if(isPeriodic) {
+      for (int i = 0; i < availabilitiesItemModelList.length; i++) {
+        startTimeList[i]=(TextEditingController(text:availabilitiesItemModelList[i].startTime ));
+        endTimeList[i]=(TextEditingController(text:availabilitiesItemModelList[i].endTime ));
+      }
+    }
+    return [startTimeList,endTimeList];
   }
 }

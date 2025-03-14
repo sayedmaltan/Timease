@@ -1,4 +1,3 @@
-import '../../../data/models/create_event_response.dart';
 import '../../../data/models/event_model.dart';
 
 abstract class UserEventsState {}
@@ -44,7 +43,7 @@ class DeleteUserEventsFailure extends UserEventsState {
 class CreateEventsLoading extends UserEventsState {}
 
 class CreateEventsSuccess extends UserEventsState {
-  CreateEventResponseModel createEventResponseModel;
+  EventModel createEventResponseModel;
 
   CreateEventsSuccess({required this.createEventResponseModel});
 }
@@ -53,4 +52,18 @@ class CreateEventsFailure extends UserEventsState {
   final String errMessage;
 
   CreateEventsFailure({required this.errMessage});
+}
+
+class UpdateEventsLoading extends UserEventsState {}
+
+class UpdateEventsSuccess extends UserEventsState {
+  EventModel updateEventResponseModel;
+
+  UpdateEventsSuccess({required this.updateEventResponseModel});
+}
+
+class UpdateEventsFailure extends UserEventsState {
+  final String errMessage;
+
+  UpdateEventsFailure({required this.errMessage});
 }

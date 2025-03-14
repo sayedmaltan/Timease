@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:timease_mobile/constants.dart';
-import 'package:timease_mobile/core/utils/app_router.dart';
 import 'package:timease_mobile/features/event/data/models/event_model.dart';
+import '../../../../../core/utils/function/show_event_bottom_sheet.dart';
 import '../../../../../core/utils/styles.dart';
 
 class CustomEventContainer extends StatelessWidget {
@@ -19,7 +18,7 @@ class CustomEventContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push(AppRouter.eventDetailsScreen, extra: eventModel);
+        showEventModelSheet(context,eventModel);
       },
       child: Container(
         height: 74,
