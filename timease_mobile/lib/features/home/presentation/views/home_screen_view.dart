@@ -4,7 +4,7 @@ import 'package:timease_mobile/features/event/presentation/views/events_screen_v
 import 'package:timease_mobile/features/home/presentation/views/widgets/custom_bottom_nav_bar.dart';
 import 'package:timease_mobile/features/home/presentation/views/widgets/custom_floating_action_button.dart';
 import 'package:timease_mobile/features/home/presentation/views/widgets/home_screen_view_body.dart';
-import 'package:timease_mobile/features/meeting/presentation/views/mettings_screen_view_body.dart';
+import 'package:timease_mobile/features/meeting/presentation/views/meetings_screen_view_body.dart';
 import 'package:timease_mobile/features/notification/presentation/views/notifications_screen_view_body.dart';
 
 
