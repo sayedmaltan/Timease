@@ -5,7 +5,6 @@ import 'package:timease_mobile/core/utils/app_router.dart';
 import 'package:timease_mobile/core/utils/cash_helper.dart';
 import 'package:timease_mobile/core/utils/function/custom_awesome_dialog.dart';
 import 'package:timease_mobile/core/utils/function/email_check.dart';
-import 'package:timease_mobile/core/utils/function/password_check.dart';
 import 'package:timease_mobile/core/utils/styles.dart';
 import 'package:timease_mobile/core/widgets/custom_full_button.dart';
 import 'package:timease_mobile/core/widgets/custom_loading_button.dart';
@@ -83,8 +82,8 @@ class _LoginScreenViewBodyState extends State<LoginScreenViewBody> {
                   isPasswordShown: isPasswordShown,
                   isPassword: true,
                   validator: (value) {
-                    if (!isStrongPassword(value)) {
-                      return validatePassword(value);
+                    if(value.toString().isEmpty) {
+                      return "Password can't be empty";
                     }
                     return null;
                   },
@@ -108,8 +107,9 @@ class _LoginScreenViewBodyState extends State<LoginScreenViewBody> {
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
                             loginCubit.login(
-                                email: emailController.text,
-                                password: passwordController.text);
+                              email: emailController.text,
+                              password: passwordController.text,
+                            );
                           }
                         },
                       ),
@@ -149,14 +149,11 @@ class _LoginScreenViewBodyState extends State<LoginScreenViewBody> {
           CashHelper.setData('refreshToken', state.loginModel.refreshToken!);
           CashHelper.setData('accessToken', state.loginModel.accessToken!);
           CashHelper.setData('userId', state.loginModel.id!);
-          context.go(AppRouter.homeScreen,extra: 0);
+          context.go(AppRouter.homeScreen, extra: 0);
         } else if (state is LoginFailure) {
           debugPrint(state.errMessage);
-          customAwesomeDialog(context,message: state.errMessage);
-        }
-        else{
-
-        }
+          customAwesomeDialog(context, message: state.errMessage);
+        } else {}
       },
     );
   }

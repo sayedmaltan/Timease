@@ -27,7 +27,7 @@ class _EventsScreenViewBodyState extends State<EventsScreenViewBody> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () {
-        UserEventsCubit userEventsCubit=UserEventsCubit.get(context);
+        UserEventsCubit userEventsCubit = UserEventsCubit.get(context);
         userEventsCubit.getUserEventsList(userId: CashHelper.getData('userId'));
         return Future.delayed(Duration(seconds: 2));
       },
@@ -49,27 +49,40 @@ class _EventsScreenViewBodyState extends State<EventsScreenViewBody> {
                   controller: controller,
                   text: 'Search event Types...',
                 ),
-                SizedBox(
-                  height: 7,
-                ),
-                Divider(
-                  color: kSecPrimaryColor.shade400,
-                ),
-                CustomYourText(
-                  text: 'YOUR EVENT TYPES',
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: EventsList(
-                      eventsList: state.eventsListModel,
+                userEventsSuccess.eventsListModel.isNotEmpty
+                    ? Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 7,
+                            ),
+                            Divider(
+                              color: kSecPrimaryColor.shade400,
+                            ),
+                            CustomYourText(
+                              text: 'YOUR EVENT TYPES',
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10.0),
+                                child: EventsList(
+                                  eventsList: state.eventsListModel,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                    )
+                    : Expanded(
+                      child: Center(
+                          child: CustomYourText(text: 'No Events Created Yet !'),
+                        ),
                     ),
-                  ),
-                )
               ],
             );
-          }
-          else {
+          } else {
             return Column(
               children: [
                 SizedBox(
@@ -92,6 +105,9 @@ class _EventsScreenViewBodyState extends State<EventsScreenViewBody> {
           }
         },
         listener: (context, state) async {
+          if (state is CreateEventsSuccess || state is UpdateEventsSuccess ||state is DeleteUserEventsSuccess) {
+            passFirstTime = false;
+          }
           if (state is GetUserEventsSuccess) {
           } else if (state is GetUserEventsFailure) {
             if (state.errMessage == 'JWT token has expired') {
