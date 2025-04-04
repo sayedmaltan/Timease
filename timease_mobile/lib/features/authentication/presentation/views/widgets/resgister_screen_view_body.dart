@@ -61,17 +61,6 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
                 SizedBox(
                   height: 24,
                 ),
-                CustomFieldColumn(
-                  controller: emailController,
-                  hintText: 'hello@example.com',
-                  aboveHintText: 'Email Address',
-                  validator: (value) {
-                    if (!isValidEmail(value)) {
-                      return validateEmail(value);
-                    }
-                    return null;
-                  },
-                ),
                 CustomNameFieldColumn(
                   firstNameController: firstNameController,
                   hintText: 'John Doe',
@@ -95,6 +84,17 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
                     return null;
                   },
                   lastNameController: lastNameController,
+                ),
+                CustomFieldColumn(
+                  controller: emailController,
+                  hintText: 'hello@example.com',
+                  aboveHintText: 'Email Address',
+                  validator: (value) {
+                    if (!isValidEmail(value)) {
+                      return validateEmail(value);
+                    }
+                    return null;
+                  },
                 ),
                 CustomPasswordRow(
                   isRegister: true,
