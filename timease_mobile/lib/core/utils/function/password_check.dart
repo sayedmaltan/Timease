@@ -1,7 +1,7 @@
 
 bool isStrongPassword(String password) {
   final String passwordPattern =
-      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[\s\S]{8,}$';
+      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[\s\S]{8,}$';
 
   return RegExp(passwordPattern).hasMatch(password);
 }
@@ -18,8 +18,8 @@ String validatePassword(String password) {
   if (!RegExp(r'(?=.*\d)').hasMatch(password)) {
     return 'Password must include at least one digit.';
   }
-  if (!RegExp(r'(?=.*[@$!%*?&])').hasMatch(password)) {
-    return 'Password needs at least one special char @\$!%*?&.';
+  if (!RegExp(r'(?=.*[@$!%*?&_])').hasMatch(password)) {
+    return 'Password needs at least one special char @\$!%*?&_.';
   }
 
   return 'Invalid Password';

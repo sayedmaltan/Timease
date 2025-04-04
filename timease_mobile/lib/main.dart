@@ -23,8 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        return UserEventsCubit(getIt.get<EventRepoImpl>())
-          ..getUserEventsList(userId: CashHelper.getData('userId'));
+        return UserEventsCubit(getIt.get<EventRepoImpl>());
       },
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

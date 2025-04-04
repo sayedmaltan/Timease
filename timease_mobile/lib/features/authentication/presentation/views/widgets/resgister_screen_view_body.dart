@@ -14,6 +14,7 @@ import 'package:timease_mobile/features/authentication/presentation/manger/regis
 import 'package:timease_mobile/features/authentication/presentation/views/widgets/custom_password_row.dart';
 import 'custom_divider_with_Text.dart';
 import 'custom_field_column.dart';
+import 'custom_name_field_column.dart';
 import 'custom_sign_with_google.dart';
 import 'custom_text_opacity.dart';
 
@@ -27,7 +28,8 @@ class RegisterScreenViewBody extends StatefulWidget {
 class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
   var formKey = GlobalKey<FormState>();
   late TextEditingController emailController = TextEditingController();
-  late TextEditingController nameController = TextEditingController();
+  late TextEditingController firstNameController = TextEditingController();
+  late TextEditingController lastNameController = TextEditingController();
   late TextEditingController passwordController = TextEditingController();
   bool isPasswordShown = false;
   IconData suffixIcon = Icons.remove_red_eye_sharp;
@@ -59,6 +61,30 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
                 SizedBox(
                   height: 24,
                 ),
+                CustomNameFieldColumn(
+                  firstNameController: firstNameController,
+                  hintText: 'John Doe',
+                  aboveHintText: 'Full Name',
+                  firstNameValidator: (value) {
+                    if (value.toString().isEmpty) {
+                      return 'Please enter first name';
+                    }
+                    if (value.toString().length < 2) {
+                      return 'Invalid name';
+                    }
+                    return null;
+                  },
+                  lastNameValidator:(value) {
+                    if (value.toString().isEmpty) {
+                      return 'Please enter last name';
+                    }
+                    if (value.toString().length < 2) {
+                      return 'Invalid name';
+                    }
+                    return null;
+                  },
+                  lastNameController: lastNameController,
+                ),
                 CustomFieldColumn(
                   controller: emailController,
                   hintText: 'hello@example.com',
@@ -66,20 +92,6 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
                   validator: (value) {
                     if (!isValidEmail(value)) {
                       return validateEmail(value);
-                    }
-                    return null;
-                  },
-                ),
-                CustomFieldColumn(
-                  controller: nameController,
-                  hintText: 'John Doe',
-                  aboveHintText: 'Full Name',
-                  validator: (value) {
-                    if (value.toString().isEmpty) {
-                      return 'Please enter your name';
-                    }
-                    if (value.toString().length < 2) {
-                      return 'Invalid name';
                     }
                     return null;
                   },
@@ -121,19 +133,11 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
                         height: 52,
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
-                            List<String> nameList =
-                                nameController.text.split(' ');
-                            String firstName = nameList[0];
-                            String secondName;
-                            (nameList.length > 1)
-                                ? secondName = nameList[1]
-                                : secondName = '';
-
                             registerCubit.register(
                               email: emailController.text,
                               password: passwordController.text,
-                              firstName: firstName,
-                              lastName: secondName,
+                              firstName: firstNameController.toString(),
+                              lastName: lastNameController.toString(),
                             );
                           }
                         },
@@ -169,8 +173,8 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
           ),
         );
       },
-      listener: (BuildContext context, RegisterState state)  async {
-        if (state is RegisterSuccess)  {
+      listener: (BuildContext context, RegisterState state) async {
+        if (state is RegisterSuccess) {
           await customAwesomeDialog(
             context,
             message: state.registerModel.message.toString(),

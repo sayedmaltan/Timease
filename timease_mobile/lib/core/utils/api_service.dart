@@ -31,7 +31,8 @@ class ApiService {
             options.path.compareTo('https://timease.up.railway.app/api/auth/refresh-token')==0){
          options.headers["Authorization"] = "";
         } else {
-          dio.options.headers["Authorization"] =
+          //HERE IS dio.options
+          options.headers["Authorization"] =
           "Bearer ${CashHelper.getData('accessToken')}";
         }
         return handler.next(options);
