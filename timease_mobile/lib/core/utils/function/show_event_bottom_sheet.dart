@@ -32,7 +32,9 @@ void showEventModelSheet(context, EventModel eventModel) {
             ListTile(
               leading: Icon(Icons.event, color: kPrimaryColor),
               title: Text('Book meeting'),
-              onTap: () {},
+              onTap: () {
+                context.push(AppRouter.createMeetingScreenView,extra: eventModel);
+              },
             ),
             ListTile(
               leading: Icon(Icons.edit_note_rounded, color: kPrimaryColor),
