@@ -26,17 +26,17 @@ public class MeetingController {
         return ResponseEntity.ok(meetingService.createOrUpdateMeeting(meetingRequest));
     }
     @GetMapping("/eventMeetings")
-    public ResponseEntity<List<Meeting>> getEventMeetings(@RequestParam UUID eventId) {
+    public ResponseEntity<?> getEventMeetings(@RequestParam UUID eventId) {
         return ResponseEntity.ok(meetingService.getEventMeetings(eventId));
     }
 
     @GetMapping("/userBookings")
-    public ResponseEntity<List<Meeting>> getUserBookings() {
+    public ResponseEntity<?> getUserBookings() {
         return ResponseEntity.ok(meetingService.getUserBookings());
     }
 
     @GetMapping("/userMeetings")
-    public ResponseEntity<List<Meeting>> getUserMeetings() {
+    public ResponseEntity<?> getUserMeetings() {
         return ResponseEntity.ok(meetingService.getUserMeetings());
     }
 
