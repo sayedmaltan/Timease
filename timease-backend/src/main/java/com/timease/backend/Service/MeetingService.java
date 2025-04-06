@@ -64,18 +64,30 @@ public class MeetingService {
         return meetingRepository.save(newMeeting);
     }
 
-    public List<Meeting> getEventMeetings(UUID eventId) {
-        return meetingRepository.findByAvailability_Event_Id(eventId);
+    public HashMap<String,Object> getEventMeetings(UUID eventId) {
+        List<Meeting> meetings =  meetingRepository.findByAvailability_Event_Id(eventId);
+        HashMap<String,Object> res = new HashMap<>();
+        res.put("meetingsNo", meetings.size());
+        res.put("meetings", meetings);
+        return res;
     }
 
-    public List<Meeting> getUserBookings() {
+    public HashMap<String,Object> getUserBookings() {
         UUID userId = authService.getCurrentUserId();
-        return meetingRepository.findByAttendees_Id(userId);
+        List<Meeting> meetings = meetingRepository.findByAttendees_Id(userId);
+        HashMap<String,Object> res = new HashMap<>();
+        res.put("meetingsNo", meetings.size());
+        res.put("meetings", meetings);
+        return res;
     }
 
-    public List<Meeting> getUserMeetings() {
+    public HashMap<String,Object> getUserMeetings() {
         UUID userId = authService.getCurrentUserId();
-        return meetingRepository.findByAvailability_Event_User_IdOrAttendees_Id(userId, userId);
+        List<Meeting> meetings = meetingRepository.findByAvailability_Event_User_IdOrAttendees_Id(userId, userId);
+        HashMap<String,Object> res = new HashMap<>();
+        res.put("meetingsNo", meetings.size());
+        res.put("meetings", meetings);
+        return res;
     }
 
     public Map<String,Object> getFullMeetings(UUID availabilityId, LocalDate date) {
