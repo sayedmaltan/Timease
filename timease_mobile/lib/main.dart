@@ -7,6 +7,7 @@ import 'core/utils/function/build_theme_data.dart';
 import 'core/utils/function/change_status_bar_color.dart';
 import 'features/event/data/repos/event_repo_impl.dart';
 import 'features/event/presentation/manger/event_cubit/user_events_cubit.dart';
+import 'features/meeting/presentation/manger/meeting_cubit/meeting_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,10 +22,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) {
-        return UserEventsCubit(getIt.get<EventRepoImpl>());
-      },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) {
+            return UserEventsCubit(getIt.get<EventRepoImpl>());
+          },
+        ),
+        BlocProvider(
+          create: (context) => MeetingCubit(),
+        ),
+      ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         theme: buildThemeData(),

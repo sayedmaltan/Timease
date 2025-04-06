@@ -115,6 +115,7 @@ Future<Map<String, String?>?> pickDateTimeRange(context) async {
   TimeOfDay(hour: pickedFromTime.hour, minute: pickedFromTime.minute + 30);
   TimeOfDay? pickedToTime = await showTimePicker(
     hourLabelText: ' Choose the ending time',
+    helpText: ' Choose the ending time',
     context: context,
     initialTime: initialTime,
   );

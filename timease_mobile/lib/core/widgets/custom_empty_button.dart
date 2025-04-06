@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:timease_mobile/constants.dart';
 import 'package:timease_mobile/core/utils/styles.dart';
 
-
 class CustomEmptyButton extends StatelessWidget {
   final String text;
   final double height;
   final VoidCallback response;
+  final TextStyle? textStyle;
+  final double? borderSide;
 
   const CustomEmptyButton({
     super.key,
     required this.text,
     required this.response,
-     this.height=57,
+    this.height = 57,
+    this.textStyle,
+    this.borderSide,
   });
 
   @override
@@ -22,7 +25,7 @@ class CustomEmptyButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
         side: BorderSide(
           color: kPrimaryColor,
-          width: 2,
+          width: borderSide?? 2,
         ),
         borderRadius: BorderRadius.circular(30),
       ),
@@ -30,7 +33,7 @@ class CustomEmptyButton extends StatelessWidget {
       onPressed: response,
       child: Text(
         text,
-        style: Styles.textStyleSpaceButton,
+        style: textStyle ?? Styles.textStyleSpaceButton,
       ),
     );
   }
