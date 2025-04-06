@@ -6,6 +6,8 @@ import 'package:timease_mobile/features/event/data/models/event_model.dart';
 import 'package:timease_mobile/features/meeting/data/models/confirm_meeting_args_model.dart';
 import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_cubit.dart';
 import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_state.dart';
+import '../../../../../core/utils/function/custom_toast.dart';
+import '../../../../../core/widgets/custom_shimmer_loading.dart';
 import 'custom_meeting_table_calender.dart';
 import 'custom_time_empty_button.dart';
 
@@ -39,7 +41,8 @@ class CreateMeetingViewBody extends StatelessWidget {
                               AppRouter.confirmMeetingScreenView,
                               extra: ConfirmMeetingArgsModel(
                                   eventModel: eventModel,
-                                  startTime: meetingCubit.availableTimeList[index]),
+                                  startTime:
+                                      meetingCubit.availableTimeList[index]),
                             );
                           },
                         ),
@@ -47,10 +50,16 @@ class CreateMeetingViewBody extends StatelessWidget {
                     },
                     itemCount: meetingCubit.availableTimeList.length),
               ),
+            if ((state is CheckFullyBookedLoadingState) && meetingCubit.availableTimeList.isEmpty)
+              Expanded(child: CustomShimmerLoading())
           ],
         );
       },
-      listener: (context, state) {},
+      listener: (context, state) {
+         if (state is CheckFullyBookedFailureState) {
+        customShowToast(msg: state.errMessage);
+        }
+      },
     );
   }
 }

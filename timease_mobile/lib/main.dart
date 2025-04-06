@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timease_mobile/core/utils/app_router.dart';
 import 'package:timease_mobile/core/utils/service_locator.dart';
+import 'package:timease_mobile/features/meeting/data/repos/meeting_repo_impl.dart';
 import 'core/utils/cash_helper.dart';
 import 'core/utils/function/build_theme_data.dart';
 import 'core/utils/function/change_status_bar_color.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
           },
         ),
         BlocProvider(
-          create: (context) => MeetingCubit(),
+          create: (context) => MeetingCubit(getIt.get<MeetingRepoImpl>()),
         ),
       ],
       child: MaterialApp.router(
