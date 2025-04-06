@@ -33,7 +33,7 @@ class CustomMeetingTableCalender extends StatelessWidget {
       },
       onDaySelected: (selectedDay, focusedDay) => meetingCubit.onDaySelected(selectedDay, focusedDay, eventModel),
       calendarFormat: meetingCubit.calendarFormat,
-      onFormatChanged: meetingCubit.onFormatChanged,
+      onFormatChanged: (format) => meetingCubit.onFormatChanged(format),
       onPageChanged: meetingCubit.onPageChanged,
       calendarStyle: CalendarStyle(
         weekendTextStyle: TextStyle(color: Colors.black),
