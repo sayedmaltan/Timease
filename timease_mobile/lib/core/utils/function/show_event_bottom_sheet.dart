@@ -4,6 +4,7 @@ import 'package:timease_mobile/core/utils/app_router.dart';
 import 'package:timease_mobile/core/utils/cash_helper.dart';
 import 'package:timease_mobile/features/event/data/models/event_model.dart';
 import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_cubit.dart';
+import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_cubit.dart';
 
 import '../../../constants.dart';
 
@@ -32,7 +33,14 @@ void showEventModelSheet(context, EventModel eventModel) {
             ListTile(
               leading: Icon(Icons.event, color: kPrimaryColor),
               title: Text('Book meeting'),
-              onTap: () {},
+              onTap: () {
+                context.pop();
+                MeetingCubit meetingCubit=MeetingCubit.get(context);
+                meetingCubit.selectedDay=null;
+                meetingCubit.availabilityId=null;
+                meetingCubit.availableTimeList=[];
+                context.push(AppRouter.createMeetingScreenView,extra: eventModel);
+              },
             ),
             ListTile(
               leading: Icon(Icons.edit_note_rounded, color: kPrimaryColor),

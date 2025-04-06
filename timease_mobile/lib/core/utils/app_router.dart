@@ -13,6 +13,9 @@ import 'package:timease_mobile/features/event/presentation/views/create_new_even
 import 'package:timease_mobile/features/event/presentation/views/event_details_view.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/add_date_specific_hour_full_screen.dart';
 import 'package:timease_mobile/features/home/presentation/views/home_screen_view.dart';
+import 'package:timease_mobile/features/meeting/data/models/confirm_meeting_args_model.dart';
+import 'package:timease_mobile/features/meeting/presentation/views/create_meeting_screen_view.dart';
+import 'package:timease_mobile/features/meeting/presentation/views/widgets/confirm_meeting_screen_view.dart';
 import 'package:timease_mobile/features/splash/presentation/views/splash_view.dart';
 
 abstract class AppRouter {
@@ -24,6 +27,9 @@ abstract class AppRouter {
   static const createNewEventScreen = '/createNewEventScreen';
   static const updateEventScreen = '/updateEventScreen';
   static const addDateSpecificHourFullScreen = '/addDateSpecificHourFullScreen';
+  static const createMeetingScreenView = '/CreateMeetingView';
+  static const confirmMeetingScreenView = '/ConfirmMeetingScreenView';
+
   static late EventModel eventModel;
   static final router = GoRouter(
     routes: <RouteBase>[
@@ -83,9 +89,8 @@ abstract class AppRouter {
       GoRoute(
         path: updateEventScreen,
         builder: (BuildContext context, GoRouterState state) {
-
           return CreateNewEventScreen(
-           eventModel: state.extra as EventModel,
+            eventModel: state.extra as EventModel,
           );
         },
       ),
@@ -93,6 +98,22 @@ abstract class AppRouter {
         path: addDateSpecificHourFullScreen,
         builder: (BuildContext context, GoRouterState state) {
           return AddDateSpecificHourFullScreen();
+        },
+      ),
+      GoRoute(
+        path: createMeetingScreenView,
+        builder: (BuildContext context, GoRouterState state) {
+          return CreateMeetingScreenView(
+            eventModel: state.extra as EventModel,
+          );
+        },
+      ),
+      GoRoute(
+        path: confirmMeetingScreenView,
+        builder: (BuildContext context, GoRouterState state) {
+          return ConfirmMeetingScreenView(
+            confirmMeetingArgsModel: state.extra as ConfirmMeetingArgsModel,
+          );
         },
       )
     ],

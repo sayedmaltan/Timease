@@ -109,7 +109,8 @@ class _EventsScreenViewBodyState extends State<EventsScreenViewBody> {
             passFirstTime = false;
           }
           if (state is GetUserEventsSuccess) {
-          } else if (state is GetUserEventsFailure) {
+          }
+          else if (state is GetUserEventsFailure) {
             if (state.errMessage == 'JWT token has expired') {
               logout(context: context);
             }
