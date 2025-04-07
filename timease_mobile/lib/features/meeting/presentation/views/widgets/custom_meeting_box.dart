@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomMeetingBox extends StatelessWidget {
-  const CustomMeetingBox({super.key});
+  const CustomMeetingBox({super.key, required this.userId});
+  final String userId;
 
   @override
   Widget build(BuildContext context) {
@@ -39,35 +40,41 @@ class CustomMeetingBox extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15)),
             ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 5,
-            children: [
-              Text(
-                '...',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: const Color.fromARGB(255, 113, 113, 113),
-                  fontWeight: FontWeight.bold,
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 5,
+              children: [
+                Expanded(
+                  child: Text(
+                    userId,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: const Color.fromARGB(255, 113, 113, 113),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
-              Text(
-                '...',
-                style: TextStyle(
+                Text(
+                  '...',
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: const Color.fromARGB(255, 113, 113, 113),
+                      fontWeight: FontWeight.normal),
+                ),
+                Text(
+                  '...',
+                  style: TextStyle(
                     fontSize: 16,
                     color: const Color.fromARGB(255, 113, 113, 113),
-                    fontWeight: FontWeight.normal),
-              ),
-              Text(
-                '...',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: const Color.fromARGB(255, 113, 113, 113),
-                  fontWeight: FontWeight.normal,
-                ),
-              )
-            ],
+                    fontWeight: FontWeight.normal,
+                  ),
+                )
+              ],
+            ),
           )
         ],
       ),

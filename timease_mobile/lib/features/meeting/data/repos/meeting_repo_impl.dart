@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:timease_mobile/core/errors/failure.dart';
 import 'package:timease_mobile/core/utils/api_service.dart';
 import 'package:timease_mobile/features/meeting/data/models/check_fully_booked_model.dart';
+import 'package:timease_mobile/features/meeting/data/models/get_user_meetings_model.dart';
 import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_state.dart';
 import 'meeting_repo.dart';
 
@@ -44,6 +45,21 @@ class MeetingRepoImpl implements MeetingRepo {
         endPoint: 'meeting/fullMeeting?availabilityId=$availabilityId&date=$date',
       );
       return right(CheckFullyBookedModel.fromJson(json));
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioError(dioError: e));
+      }
+      return left(ServerFailure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GetUserMeetingsModel>> getUserMeetings() async {
+    try {
+      var json=await apiService.get(
+        endPoint: 'meeting/userMeetings',
+      );
+      return right(GetUserMeetingsModel.fromJson(json));
     } catch (e) {
       if (e is DioException) {
         return left(ServerFailure.fromDioError(dioError: e));
