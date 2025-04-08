@@ -20,4 +20,7 @@ abstract class MeetingRepo {
   });
 
   Future<Either<Failure, GetUserMeetingsModel>> getUserMeetings();
+
+  Future<Either<Failure, bool>> deleteUserMeetingItem({required String meetingId});
+
 }

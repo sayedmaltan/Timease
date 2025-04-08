@@ -42,3 +42,17 @@ class GetUserMeetingsFailureState extends MeetingStates{
   GetUserMeetingsFailureState(this.errMessage);
   final String errMessage;
 }
+
+class DeleteUserMeetingLoading extends MeetingStates {}
+
+class DeleteUserMeetingSuccess extends MeetingStates {
+  final bool isDeleted;
+
+  DeleteUserMeetingSuccess({required this.isDeleted});
+}
+
+class DeleteUserMeetingFailure extends MeetingStates {
+  final String errMessage;
+
+  DeleteUserMeetingFailure({required this.errMessage});
+}

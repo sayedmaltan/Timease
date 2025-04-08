@@ -4,6 +4,7 @@ import 'package:timease_mobile/core/widgets/custom_shimmer_loading.dart';
 import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_cubit.dart';
 import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_state.dart';
 import '../../../../constants.dart';
+import '../../../../core/utils/function/custom_toast.dart';
 import '../../../../core/widgets/custom_search.dart';
 import 'widgets/custom_filter_bottom_sheet.dart';
 import 'widgets/custom_filter_row.dart';
@@ -24,8 +25,16 @@ class MeetingsScreenViewBody extends StatelessWidget {
         return Future.delayed(Duration(seconds: 2));
       },
       child: BlocConsumer<MeetingCubit, MeetingStates>(
-        listener: (context, state) {
-
+        listener: (context, state) async {
+          if (state is DeleteUserMeetingFailure) {
+            await Future.delayed(Duration(seconds: 2));
+            customShowToast(
+              msg: 'Failed to delete the meeting. Please try again later.',
+            );
+          } else if (state is DeleteUserMeetingSuccess) {
+            await Future.delayed(Duration(seconds: 2));
+            customShowToast(msg: 'Meeting deleted successfully');
+          }
         },
         builder: (context, state) {
           if (state is GetUserMeetingsSuccessState) {
@@ -64,21 +73,22 @@ class MeetingsScreenViewBody extends StatelessWidget {
                     ),
                   ),
                 ),
+                SizedBox(height: 8,),
                 Expanded(
                   child: ListView.builder(
                     itemCount: state.getUserMeetingsModel.meetingsNo,
                     itemBuilder: (context, index) => CustomMeetingBox(
-                      userId: state.getUserMeetingsModel.meetings![index].id!,
+                      meetingId:
+                          state.getUserMeetingsModel.meetings![index].id!,
+                      meetingModel: state.getUserMeetingsModel.meetings![index],
                     ),
                   ),
                 ),
               ],
             );
-          }
-          else {
-            if(state is! GetUserMeetingsLoadingState)
-            {
-              MeetingCubit meetingCubit=MeetingCubit.get(context);
+          } else {
+            if (state is! GetUserMeetingsLoadingState && state is! GetUserMeetingsFailureState) {
+              MeetingCubit meetingCubit = MeetingCubit.get(context);
               meetingCubit.getUserMeetingsList();
             }
             return Column(

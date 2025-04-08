@@ -25,39 +25,43 @@ class CreateMeetingViewBody extends StatelessWidget {
           spacing: 20,
           children: [
             CustomMeetingTableCalender(
-                eventModel: eventModel, meetingCubit: meetingCubit),
+              eventModel: eventModel,
+              meetingCubit: meetingCubit,
+            ),
             if (meetingCubit
                 .getAvailableTimeList(eventModel: eventModel)
                 .isNotEmpty)
               Expanded(
                 child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CustomTimeEmptyButton(
-                          text: meetingCubit.availableTimeList[index],
-                          response: () {
-                            context.push(
-                              AppRouter.confirmMeetingScreenView,
-                              extra: ConfirmMeetingArgsModel(
-                                  eventModel: eventModel,
-                                  startTime:
-                                      meetingCubit.availableTimeList[index]),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                    itemCount: meetingCubit.availableTimeList.length),
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CustomTimeEmptyButton(
+                        text: meetingCubit.availableTimeList[index],
+                        response: () {
+                          context.push(
+                            AppRouter.confirmMeetingScreenView,
+                            extra: ConfirmMeetingArgsModel(
+                                eventModel: eventModel,
+                                startTime:
+                                    meetingCubit.availableTimeList[index]),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                  itemCount: meetingCubit.availableTimeList.length,
+                ),
               ),
-            if ((state is CheckFullyBookedLoadingState) && meetingCubit.availableTimeList.isEmpty)
+            if ((state is CheckFullyBookedLoadingState) &&
+                meetingCubit.availableTimeList.isEmpty)
               Expanded(child: CustomShimmerLoading())
           ],
         );
       },
       listener: (context, state) {
-         if (state is CheckFullyBookedFailureState) {
-        customShowToast(msg: state.errMessage);
+        if (state is CheckFullyBookedFailureState) {
+          customShowToast(msg: state.errMessage);
         }
       },
     );

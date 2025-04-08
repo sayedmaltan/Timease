@@ -206,4 +206,20 @@ class MeetingCubit extends Cubit<MeetingStates> {
     );
   }
 
+  Future<void> deleteUserMeetingItem({
+    required String meetingId,
+  }) async
+  {
+    emit(DeleteUserMeetingLoading());
+    var response = await meetingRepo.deleteUserMeetingItem(meetingId: meetingId);
+    response.fold(
+          (failure)   {
+        emit(DeleteUserMeetingFailure(errMessage: failure.errMessage));
+      },
+          (deleted) {
+        emit(DeleteUserMeetingSuccess(isDeleted: deleted));
+      },
+    );
+  }
+
 }

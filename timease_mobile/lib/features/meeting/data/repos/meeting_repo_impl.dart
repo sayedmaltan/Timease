@@ -67,4 +67,20 @@ class MeetingRepoImpl implements MeetingRepo {
       return left(ServerFailure(errMessage: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> deleteUserMeetingItem({required String meetingId}) async {
+      try {
+        await apiService.delete(
+          endPoint: 'meeting?meetingId=$meetingId',
+        );
+        return right(true);
+      } catch (e) {
+        if (e is DioException) {
+          return left(ServerFailure.fromDioError(dioError: e));
+        }
+        return left(ServerFailure(errMessage: e.toString()));
+      }
+
+  }
 }
