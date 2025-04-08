@@ -1,85 +1,92 @@
 import 'package:flutter/material.dart';
-import 'package:timease_mobile/features/meeting/presentation/views/meeting_details_screen.dart';
+import 'package:timease_mobile/core/utils/function/show_meeting_model_sheet.dart';
+import 'package:timease_mobile/features/meeting/data/models/get_user_meetings_model.dart';
+import '../../../../../core/utils/function/build_container_decoration.dart';
 
 class CustomMeetingBox extends StatelessWidget {
-  const CustomMeetingBox({super.key});
+  const CustomMeetingBox(
+      {super.key, required this.meetingId, required this.meetingModel});
+
+  final String meetingId;
+  final Meetings meetingModel;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const MeetingDetailsScreen(),
-        ),
-      ),
+    return GestureDetector(
+      onTap: () {
+        showMeetingModelSheet(
+          context,meetingModel
+        );
+      },
       child: Container(
         width: double.infinity,
-        height: 125,
-        decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: const Color.fromARGB(255, 218, 218, 218),
-            width: 1,
-          ),
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(0, 0),
-              color: const Color.fromARGB(255, 193, 193, 193),
-              blurRadius: 3,
-              spreadRadius: 1,
-            )
-          ],
-        ),
-        margin: EdgeInsets.all(20),
+        height: 103,
+        decoration: buildContainerDecoration(),
+        margin: EdgeInsets.symmetric(horizontal: 12,vertical: 10),
         padding: EdgeInsets.all(10),
         child: Row(
           spacing: 12,
           children: [
             SizedBox(
-              width: 8,
-              height: 90,
+              width: 5.2,
+              height: 80,
               child: DecoratedBox(
                 decoration: BoxDecoration(
                     color: Colors.purple,
                     borderRadius: BorderRadius.circular(15)),
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 5,
-              children: [
-                Text(
-                  '....',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: const Color.fromARGB(255, 113, 113, 113),
-                    fontWeight: FontWeight.bold,
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 5,
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Ggg",
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(
+                        fontSize: 16.5,
+                        color: const Color.fromARGB(255, 113, 113, 113),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
-                Text(
-                  '....',
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: const Color.fromARGB(255, 113, 113, 113),
-                      fontWeight: FontWeight.normal),
-                ),
-                Text(
-                  '....',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: const Color.fromARGB(255, 113, 113, 113),
-                    fontWeight: FontWeight.normal,
+                  Expanded(
+                    child: Text(
+                      'Elsayed Ahmed and Sayed Ahmed ',
+                      style: TextStyle(
+                          fontSize: 14.5,
+                          color: const Color.fromARGB(255, 30, 30, 30),
+                          fontWeight: FontWeight.w300),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
                   ),
-                )
-              ],
+                  Expanded(
+                    child: Text(
+                      '9:00 AM - 9:45 AM',
+                      style: TextStyle(
+                        fontSize: 14.5,
+                        color: const Color.fromARGB(255, 30, 30, 30),
+                        fontWeight: FontWeight.w300,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 2,
+                  )
+                ],
+              ),
             )
           ],
         ),
       ),
     );
   }
+
 }

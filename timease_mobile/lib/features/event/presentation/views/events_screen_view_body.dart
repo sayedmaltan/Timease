@@ -82,7 +82,8 @@ class _EventsScreenViewBodyState extends State<EventsScreenViewBody> {
                     ),
               ],
             );
-          } else {
+          }
+          else {
             return Column(
               children: [
                 SizedBox(
@@ -108,13 +109,10 @@ class _EventsScreenViewBodyState extends State<EventsScreenViewBody> {
           if (state is CreateEventsSuccess || state is UpdateEventsSuccess ||state is DeleteUserEventsSuccess) {
             passFirstTime = false;
           }
-          if (state is GetUserEventsSuccess) {
-          }
           else if (state is GetUserEventsFailure) {
             if (state.errMessage == 'JWT token has expired') {
               logout(context: context);
             }
-          } else if (state is GetUserEventsLoading) {
           } else if (state is DeleteUserEventsFailure) {
             await Future.delayed(Duration(seconds: 2));
             customShowToast(

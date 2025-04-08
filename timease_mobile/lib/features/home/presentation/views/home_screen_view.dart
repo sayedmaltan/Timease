@@ -4,11 +4,12 @@ import 'package:timease_mobile/features/event/presentation/views/events_screen_v
 import 'package:timease_mobile/features/home/presentation/views/widgets/custom_bottom_nav_bar.dart';
 import 'package:timease_mobile/features/home/presentation/views/widgets/custom_floating_action_button.dart';
 import 'package:timease_mobile/features/home/presentation/views/widgets/home_screen_view_body.dart';
-import 'package:timease_mobile/features/meeting/presentation/views/meetings_screen_view_body.dart';
+import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_cubit.dart';
 import 'package:timease_mobile/features/notification/presentation/views/notifications_screen_view_body.dart';
 
 import '../../../../core/utils/cash_helper.dart';
 import '../../../event/presentation/manger/event_cubit/user_events_cubit.dart';
+import '../../../meeting/presentation/views/meetings_screen_view_body.dart';
 
 
 
@@ -35,6 +36,8 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     super.initState();
     UserEventsCubit userEventsCubit = UserEventsCubit.get(context);
     userEventsCubit.getUserEventsList(userId: CashHelper.getData('userId'));
+    MeetingCubit meetingCubit = MeetingCubit.get(context);
+    meetingCubit.getUserMeetingsList();
     selectBottomNavBar=widget.bodyIndex;
   }
   @override
