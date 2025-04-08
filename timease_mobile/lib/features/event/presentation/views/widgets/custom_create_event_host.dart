@@ -66,6 +66,7 @@ class CustomCreateEventHost extends StatelessWidget {
                         size: 29,
                       ),
                       Column(
+
                         spacing: 5,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
