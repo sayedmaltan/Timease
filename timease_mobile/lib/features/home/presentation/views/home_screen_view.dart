@@ -5,11 +5,11 @@ import 'package:timease_mobile/features/home/presentation/views/widgets/custom_b
 import 'package:timease_mobile/features/home/presentation/views/widgets/custom_floating_action_button.dart';
 import 'package:timease_mobile/features/home/presentation/views/widgets/home_screen_view_body.dart';
 import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_cubit.dart';
-import 'package:timease_mobile/features/meeting/presentation/views/mettings_screen_view_body.dart';
 import 'package:timease_mobile/features/notification/presentation/views/notifications_screen_view_body.dart';
 
 import '../../../../core/utils/cash_helper.dart';
 import '../../../event/presentation/manger/event_cubit/user_events_cubit.dart';
+import '../../../meeting/presentation/views/meetings_screen_view_body.dart';
 
 
 
