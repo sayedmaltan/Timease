@@ -136,4 +136,9 @@ public class EventService {
         eventRepository.delete(event);
     }
 
+    public Event getEventById(UUID eventId) {
+        return eventRepository.findById(eventId)
+                .orElseThrow(() -> new EntityNotFoundException("Event not found"));
+    }
+
 }
