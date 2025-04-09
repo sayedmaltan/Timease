@@ -42,9 +42,10 @@ class CreateMeetingViewBody extends StatelessWidget {
                           context.push(
                             AppRouter.confirmMeetingScreenView,
                             extra: ConfirmMeetingArgsModel(
-                                eventModel: eventModel,
-                                startTime:
-                                    meetingCubit.availableTimeList[index]),
+                              eventModel: eventModel,
+                              startTime: meetingCubit.availableTimeList[index],
+                              hostName: '${eventModel.user!.firstName} ${eventModel.user!.lastName}'
+                            ),
                           );
                         },
                       ),

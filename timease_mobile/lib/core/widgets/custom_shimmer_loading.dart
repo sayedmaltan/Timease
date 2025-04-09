@@ -3,8 +3,9 @@ import 'package:shimmer/shimmer.dart';
 
 class CustomShimmerLoading extends StatelessWidget {
   const CustomShimmerLoading({
-    super.key,
+    super.key,  this.itemCount=10,
   });
+  final int itemCount ;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class CustomShimmerLoading extends StatelessWidget {
       baseColor: Colors.grey.shade300,
       highlightColor: Colors.grey.shade100,
       child: ListView.builder(
-        itemCount: 10,
+        itemCount: itemCount,
         itemBuilder: (context, index) => Padding(
           padding: const EdgeInsets.all(15.0),
           child: Container(

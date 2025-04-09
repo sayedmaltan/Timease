@@ -16,6 +16,7 @@ import 'package:timease_mobile/features/home/presentation/views/home_screen_view
 import 'package:timease_mobile/features/meeting/data/models/confirm_meeting_args_model.dart';
 import 'package:timease_mobile/features/meeting/presentation/views/create_meeting_screen_view.dart';
 import 'package:timease_mobile/features/meeting/presentation/views/widgets/confirm_meeting_screen_view.dart';
+import 'package:timease_mobile/features/meeting/presentation/views/widgets/try_book_meeting_view.dart';
 import 'package:timease_mobile/features/splash/presentation/views/splash_view.dart';
 
 abstract class AppRouter {
@@ -29,6 +30,7 @@ abstract class AppRouter {
   static const addDateSpecificHourFullScreen = '/addDateSpecificHourFullScreen';
   static const createMeetingScreenView = '/CreateMeetingView';
   static const confirmMeetingScreenView = '/ConfirmMeetingScreenView';
+  static const tryBookMeetingView='/TryBookMeetingView';
 
   static late EventModel eventModel;
   static final router = GoRouter(
@@ -113,6 +115,14 @@ abstract class AppRouter {
         builder: (BuildContext context, GoRouterState state) {
           return ConfirmMeetingScreenView(
             confirmMeetingArgsModel: state.extra as ConfirmMeetingArgsModel,
+          );
+        },
+      ),
+      GoRoute(
+        path: tryBookMeetingView,
+        builder: (BuildContext context, GoRouterState state) {
+          return TryBookMeetingView(
+            controller: state.extra as TextEditingController,
           );
         },
       )

@@ -74,7 +74,15 @@ class CustomCreateEventSaveChangesButton extends StatelessWidget {
               msg:
                   'Event description is required.Provide details about the event.',
             );
-          } else {
+          }
+          else if (schedulingRangeController.text=='0' && isPeriodic) {
+            showError(
+              context: context,
+              msg:
+              'Enter schedulingRange Value',
+            );
+          }
+          else {
             CreateEventModel createEventModel = CreateEventModel.fromJson({
               "title": titleController.text,
               "description": descriptionController.text,

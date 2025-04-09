@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timease_mobile/core/widgets/custom_shimmer_loading.dart';
 import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_cubit.dart';
 import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_state.dart';
+import 'package:timease_mobile/features/meeting/presentation/views/widgets/custom_meeting_search.dart';
 import '../../../../constants.dart';
 import '../../../../core/utils/function/custom_toast.dart';
-import '../../../../core/widgets/custom_search.dart';
 import 'widgets/custom_filter_bottom_sheet.dart';
 import 'widgets/custom_filter_row.dart';
 import 'widgets/custom_meeting_box.dart';
@@ -17,7 +17,6 @@ class MeetingsScreenViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller = TextEditingController();
     return RefreshIndicator(
       onRefresh: () {
         MeetingCubit meetingCubit = MeetingCubit.get(context);
@@ -44,10 +43,9 @@ class MeetingsScreenViewBody extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                CustomSearch(
-                  eventListModel: [],
-                  controller: controller,
-                  text: 'Search event Types...',
+                CustomMeetingSearch(
+                  controller: TextEditingController(),
+                  text: 'Book Meeting Types',
                 ),
                 SizedBox(
                   height: 7,
@@ -73,7 +71,9 @@ class MeetingsScreenViewBody extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 8,),
+                SizedBox(
+                  height: 8,
+                ),
                 Expanded(
                   child: ListView.builder(
                     itemCount: state.getUserMeetingsModel.meetingsNo,
@@ -87,7 +87,8 @@ class MeetingsScreenViewBody extends StatelessWidget {
               ],
             );
           } else {
-            if (state is! GetUserMeetingsLoadingState && state is! GetUserMeetingsFailureState) {
+            if (state is! GetUserMeetingsLoadingState &&
+                state is! GetUserMeetingsFailureState) {
               MeetingCubit meetingCubit = MeetingCubit.get(context);
               meetingCubit.getUserMeetingsList();
             }
@@ -96,10 +97,9 @@ class MeetingsScreenViewBody extends StatelessWidget {
                 SizedBox(
                   height: 7,
                 ),
-                CustomSearch(
-                  eventListModel: [],
-                  controller: controller,
-                  text: 'Search event Types...',
+                CustomMeetingSearch(
+                  controller: TextEditingController(),
+                  text: 'Book Meeting Types',
                 ),
                 SizedBox(
                   height: 7,

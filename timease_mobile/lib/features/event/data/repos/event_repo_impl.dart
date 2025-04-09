@@ -79,4 +79,21 @@ class EventRepoImpl implements EventRepo {
       return left(ServerFailure(errMessage: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, EventModel>> getOneEvent({required String eventId}) async {
+    try {
+      var json = await apiService.get(
+        endPoint: 'event/$eventId',
+      );
+      EventModel userEvent=EventModel.fromJson(json);
+
+      return right(userEvent);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioError(dioError: e));
+      }
+      return left(ServerFailure(errMessage: e.toString()));
+    }
+  }
 }
