@@ -4,8 +4,8 @@ import 'package:timease_mobile/core/widgets/custom_text_form_field.dart';
 import 'package:timease_mobile/features/event/data/models/event_model.dart';
 import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_cubit.dart';
 
-class CustomSearch extends StatelessWidget {
-  const CustomSearch({
+class CustomEventSearch extends StatelessWidget {
+  const CustomEventSearch({
     super.key,
     required this.controller,
     required this.text,

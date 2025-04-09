@@ -19,7 +19,7 @@ class CustomMeetingTableCalender extends StatelessWidget {
   Widget build(BuildContext context) {
     return TableCalendar(
       firstDay: DateTime.now(),
-      lastDay: eventModel.schedulingRange != 0
+      lastDay: eventModel.isPeriodic!
           ? DateTime.utc(
         DateTime.now().year,
         DateTime.now().month,
@@ -29,6 +29,9 @@ class CustomMeetingTableCalender extends StatelessWidget {
           : meetingCubit.getLastDate(eventModel: eventModel),
       focusedDay: meetingCubit.focusedDay,
       selectedDayPredicate: (day) {
+        if(meetingCubit.selectedDay == null) {
+          return false;
+        }
         return isSameDay(meetingCubit.selectedDay, day);
       },
       onDaySelected: (selectedDay, focusedDay) => meetingCubit.onDaySelected(selectedDay, focusedDay, eventModel),

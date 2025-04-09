@@ -75,30 +75,29 @@ class ConfirmMeetingViewBody extends StatelessWidget {
                       style: Styles.textStyleBlack.copyWith(fontSize: 16),
                     ),
                     CustomConfirmMeetingBuildAttendee(
-                        name: "Sayed Ahmed", isHost: true),
-                    CustomConfirmMeetingBuildAttendee(
-                      name: "ElSayed Ahmed",
-                      isHost: false,
+                      name: "Sayed Ahmed",
+                      isHost: true,
                     ),
+
                     Spacer(),
                     state is CreateMeetingLoadingState
                         ? CustomLoadingButton()
                         : CustomFullButton(
-                      text: "Schedule meeting",
-                      onPressed: () async {
-                        await meetingCubit.createMeeting(
-                          availabilityId: meetingCubit.availabilityId!,
-                          date: DatesConverter.convertDateFormat(
-                              date: date),
-                          startTime: DatesConverter.convert12hrTo24(
-                              time12Hr:
-                              confirmMeetingArgsModel.startTime),
-                          endTime: DatesConverter.convert12hrTo24(
-                              time12Hr: endTime12hr),
-                        );
-                      },
-                      height: 50,
-                    ),
+                            text: "Schedule meeting",
+                            onPressed: () async {
+                              await meetingCubit.createMeeting(
+                                availabilityId: meetingCubit.availabilityId!,
+                                date: DatesConverter.convertDateFormat(
+                                    date: date),
+                                startTime: DatesConverter.convert12hrTo24(
+                                    time12Hr:
+                                        confirmMeetingArgsModel.startTime),
+                                endTime: DatesConverter.convert12hrTo24(
+                                    time12Hr: endTime12hr),
+                              );
+                            },
+                            height: 50,
+                          ),
                   ],
                 ),
               ),
@@ -111,8 +110,7 @@ class ConfirmMeetingViewBody extends StatelessWidget {
           customShowToast(msg: 'Meeting created successfully');
           context.pop();
           context.pop();
-        }
-        else if (state is CreateMeetingFailureState) {
+        } else if (state is CreateMeetingFailureState) {
           customShowToast(msg: state.errMessage);
         }
       },

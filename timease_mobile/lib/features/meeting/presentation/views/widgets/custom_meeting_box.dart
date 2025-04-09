@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:timease_mobile/core/utils/function/show_meeting_model_sheet.dart';
 import 'package:timease_mobile/features/meeting/data/models/get_user_meetings_model.dart';
+import '../../../../../core/utils/dates_converter.dart';
 import '../../../../../core/utils/function/build_container_decoration.dart';
 
 class CustomMeetingBox extends StatelessWidget {
-  const CustomMeetingBox(
-      {super.key, required this.meetingId, required this.meetingModel});
+  const CustomMeetingBox({
+    super.key,
+    required this.meetingId,
+    required this.meetingModel,
+  });
 
   final String meetingId;
   final Meetings meetingModel;
@@ -14,15 +18,13 @@ class CustomMeetingBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        showMeetingModelSheet(
-          context,meetingModel
-        );
+        showMeetingModelSheet(context, meetingModel);
       },
       child: Container(
         width: double.infinity,
         height: 103,
         decoration: buildContainerDecoration(),
-        margin: EdgeInsets.symmetric(horizontal: 12,vertical: 10),
+        margin: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         padding: EdgeInsets.all(10),
         child: Row(
           spacing: 12,
@@ -32,8 +34,9 @@ class CustomMeetingBox extends StatelessWidget {
               height: 80,
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                    color: Colors.purple,
-                    borderRadius: BorderRadius.circular(15)),
+                  color: Colors.purple,
+                  borderRadius: BorderRadius.circular(15),
+                ),
               ),
             ),
             Expanded(
@@ -44,7 +47,7 @@ class CustomMeetingBox extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      "Ggg",
+                      meetingId,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: TextStyle(
@@ -56,7 +59,7 @@ class CustomMeetingBox extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                      'Elsayed Ahmed and Sayed Ahmed ',
+                      getAttendees(meetingModel: meetingModel),
                       style: TextStyle(
                           fontSize: 14.5,
                           color: const Color.fromARGB(255, 30, 30, 30),
@@ -67,7 +70,7 @@ class CustomMeetingBox extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                      '9:00 AM - 9:45 AM',
+                      '${DatesConverter.convert24hrTo12(time24Hr: meetingModel.startTime.toString())} - ${DatesConverter.convert24hrTo12(time24Hr: meetingModel.endTime.toString())}',
                       style: TextStyle(
                         fontSize: 14.5,
                         color: const Color.fromARGB(255, 30, 30, 30),
@@ -89,4 +92,15 @@ class CustomMeetingBox extends StatelessWidget {
     );
   }
 
+  String getAttendees({required Meetings meetingModel}) {
+    String attendees = '';
+    for (var element in meetingModel.attendees!) {
+      if (attendees == '') {
+        attendees = '$attendees${element.firstName!} ${element.lastName}';
+      } else {
+        attendees = '$attendees and ${element.firstName!} ${element.lastName}';
+      }
+    }
+    return attendees;
+  }
 }

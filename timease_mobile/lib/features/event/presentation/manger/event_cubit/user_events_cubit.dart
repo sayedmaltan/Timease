@@ -29,6 +29,21 @@ class UserEventsCubit extends Cubit<UserEventsState> {
     );
   }
 
+  Future<void> getEventByEventId({
+    required String eventId,
+  }) async {
+    emit(GetUserEventsLoading());
+    var response = await eventRepo.getOneEvent(eventId: eventId);
+    response.fold(
+          (failure) {
+            emit(GetUserEventsFailure(errMessage: failure.errMessage));
+          },
+          (event) {
+        emit(GetOneEventSuccess(eventModel: event));
+      },
+    );
+  }
+
   void searchEventsList(
       {required List<EventModel> eventModelList, required String value}) {
     emit(SearchEventsLoading());

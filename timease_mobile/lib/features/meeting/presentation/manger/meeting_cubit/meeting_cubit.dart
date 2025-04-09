@@ -46,8 +46,7 @@ class MeetingCubit extends Cubit<MeetingStates> {
     return false;
   }
 
-  List<String> getAvailableTimeList(
-      {required EventModel eventModel, DateTime? selectedDate})
+  List<String> getAvailableTimeList({required EventModel eventModel, DateTime? selectedDate})
   {
     if (!eventModel.isPeriodic! && selectedDate != null) {
       for (var element in eventModel.availabilities!) {
@@ -61,6 +60,7 @@ class MeetingCubit extends Cubit<MeetingStates> {
           checkFullyBooked(availabilityId: availabilityId!, date: DateFormat('yyyy-MM-dd').format(selectedDate))
               .then(
             (value) {
+              availableTimeList=[];
               CheckFullyBookedModel? fullyBooked = value;
               DateTime current = startDateTime;
               DateFormat formatter = DateFormat('hh:mm a');
@@ -77,7 +77,8 @@ class MeetingCubit extends Cubit<MeetingStates> {
 
         }
       }
-    } else if (eventModel.isPeriodic! && selectedDate != null) {
+    }
+    else if (eventModel.isPeriodic! && selectedDate != null) {
       String dayOfWeak = DateFormat('EEEE').format(selectedDate).toUpperCase();
       for (var element in eventModel.availabilities!) {
         if (dayOfWeak == element.dayOfWeek) {
@@ -91,6 +92,7 @@ class MeetingCubit extends Cubit<MeetingStates> {
               CheckFullyBookedModel ?fullyBooked =value;
               DateTime current = startDateTime;
               DateFormat formatter = DateFormat('hh:mm a');
+              availableTimeList=[];
               while (current.isBefore(endDateTime)) {
                 String time12hr = formatter.format(current);
                 String time24hr=DatesConverter.convert12hrTo24(time12Hr: time12hr);

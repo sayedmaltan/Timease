@@ -52,41 +52,37 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
       titleController = TextEditingController();
       descriptionController = TextEditingController();
       inviteeLimitController = TextEditingController(text: '2');
-    }
-    else {
-      List<AvailabilitiesItemModel> ava=[];
-      if(!widget.eventModel!.isPeriodic!) {
+    } else {
+      List<AvailabilitiesItemModel> ava = [];
+      if (!widget.eventModel!.isPeriodic!) {
         for (int i = 0; i < widget.eventModel!.availabilities!.length; i++) {
           ava.add(AvailabilitiesItemModel.fromJson(
               widget.eventModel!.availabilities![i].toJson()));
         }
       }
-        availabilitiesItemModelList = ava;
-      var list=UserEventsCubit(getIt.get<EventRepoImpl>())
-          .getStartAndEndTime(
+      availabilitiesItemModelList = ava;
+      var list = UserEventsCubit(getIt.get<EventRepoImpl>()).getStartAndEndTime(
           availabilitiesItemModelList: widget.eventModel!.availabilities!,
           isPeriodic: widget.eventModel!.isPeriodic!);
-        startTimeList = list[0];
-        endTimeList = list[1];
-        for(int i=0;i<startTimeList.length;i++){
-          if(startTimeList[i].text.isEmpty)
-            {
-              isUnavailable[i]=true;
-            }
+      startTimeList = list[0];
+      endTimeList = list[1];
+      for (int i = 0; i < startTimeList.length; i++) {
+        if (startTimeList[i].text.isEmpty) {
+          isUnavailable[i] = true;
         }
-        selectedDuration = 'Custom';
-        customController =
-            TextEditingController(text: widget.eventModel!.duration.toString());
-        schedulingRangeController = TextEditingController(
-            text: widget.eventModel!.schedulingRange.toString());
-        isPeriodic = widget.eventModel!.isPeriodic!;
-        titleController = TextEditingController(text: widget.eventModel!.title);
-        inviteeLimitController = TextEditingController(
-            text: widget.eventModel!.maxAttendees.toString());
-        descriptionController =
-            TextEditingController(text: widget.eventModel!.description);
       }
-
+      selectedDuration = 'Custom';
+      customController =
+          TextEditingController(text: widget.eventModel!.duration.toString());
+      schedulingRangeController = TextEditingController(
+          text: widget.eventModel!.schedulingRange.toString());
+      isPeriodic = widget.eventModel!.isPeriodic!;
+      titleController = TextEditingController(text: widget.eventModel!.title);
+      inviteeLimitController = TextEditingController(
+          text: widget.eventModel!.maxAttendees.toString());
+      descriptionController =
+          TextEditingController(text: widget.eventModel!.description);
+    }
   }
 
   late String selectedTimeType = 'min';
@@ -135,6 +131,15 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
                   children: [
                     CustomCreateEventClose(),
                     CustomCreateEventName(titleController: titleController),
+                    CustomCreateEventDivider(),
+                    CustomCreateEventDescription(
+                      descriptionController: descriptionController,
+                      isOpen: isDescriptionOpen,
+                      onExpansionChanged: (value) {
+                        isDescriptionOpen = value;
+                        setState(() {});
+                      },
+                    ),
                     CustomCreateEventDivider(),
                     CustomCreateEventDuration(
                       isOpen: isOpenDuration,
@@ -197,24 +202,33 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
                         setState(() {});
                       },
                     ),
-                    CustomCreateEventDivider(),
-                    CustomCreateEventDescription(
-                      descriptionController: descriptionController,
-                      isOpen: isDescriptionOpen,
-                      onExpansionChanged: (value) {
-                        isDescriptionOpen = value;
-                        setState(() {});
-                      },
-                    ),
                     Divider(),
                     SizedBox(
                       height: 5,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 23.0),
-                      child: state is CreateEventsLoading || state is UpdateEventsLoading
+                      child: state is CreateEventsLoading ||
+                              state is UpdateEventsLoading
                           ? CustomLoadingButton()
-                          : CustomCreateEventSaveChangesButton(userEventsCubit: userEventsCubit, isPeriodic: isPeriodic, availabilitiesItemModelList: availabilitiesItemModelList, isUnavailable: isUnavailable, startTimeList: startTimeList, endTimeList: endTimeList, formKey: formKey, descriptionController: descriptionController, titleController: titleController, customController: customController, selectedDuration: selectedDuration, selectedTimeType: selectedTimeType, inviteeLimitController: inviteeLimitController, schedulingRangeController: schedulingRangeController, widget: widget),
+                          : CustomCreateEventSaveChangesButton(
+                              userEventsCubit: userEventsCubit,
+                              isPeriodic: isPeriodic,
+                              availabilitiesItemModelList:
+                                  availabilitiesItemModelList,
+                              isUnavailable: isUnavailable,
+                              startTimeList: startTimeList,
+                              endTimeList: endTimeList,
+                              formKey: formKey,
+                              descriptionController: descriptionController,
+                              titleController: titleController,
+                              customController: customController,
+                              selectedDuration: selectedDuration,
+                              selectedTimeType: selectedTimeType,
+                              inviteeLimitController: inviteeLimitController,
+                              schedulingRangeController:
+                                  schedulingRangeController,
+                              widget: widget),
                     )
                   ],
                 ),
@@ -229,16 +243,16 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
           UserEventsCubit.get(context)
               .getUserEventsList(userId: CashHelper.getData('userId'));
           context.pop();
-        }
-        else if (state is UpdateEventsSuccess){
+        } else if (state is UpdateEventsSuccess) {
           customShowToast(msg: 'Event updated successfully');
           UserEventsCubit.get(context)
               .getUserEventsList(userId: CashHelper.getData('userId'));
           context.pop();
         }
-
+        if (state is UpdateEventsFailure) {
+          customShowToast(msg: state.errMessage);
+        }
       },
     );
   }
 }
-
