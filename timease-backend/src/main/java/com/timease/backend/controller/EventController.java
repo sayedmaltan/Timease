@@ -40,4 +40,11 @@ public class EventController {
         eventService.deleteEvent(eventId);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/{eventId}")
+
+    public ResponseEntity<?> getEvent(@PathVariable UUID eventId) {
+        return ResponseEntity.ok(eventService.getEventById(eventId));
+    }
+
 }
