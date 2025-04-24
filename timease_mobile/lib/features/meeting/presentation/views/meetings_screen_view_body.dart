@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timease_mobile/core/utils/function/counts_meetings_per_day.dart';
 import 'package:timease_mobile/core/widgets/custom_shimmer_loading.dart';
 import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_cubit.dart';
 import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_state.dart';
@@ -37,6 +38,7 @@ class MeetingsScreenViewBody extends StatelessWidget {
         },
         builder: (context, state) {
           if (state is GetUserMeetingsSuccessState) {
+           var meetings= sortMeetingsList(state.getUserMeetingsModel.meetings!);
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -76,11 +78,11 @@ class MeetingsScreenViewBody extends StatelessWidget {
                 ),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: state.getUserMeetingsModel.meetingsNo,
+                    itemCount: meetings.length,
                     itemBuilder: (context, index) => CustomMeetingBox(
                       meetingId:
-                          state.getUserMeetingsModel.meetings![index].id!,
-                      meetingModel: state.getUserMeetingsModel.meetings![index],
+                      meetings[index].id!,
+                      meetingModel: meetings[index],
                     ),
                   ),
                 ),
