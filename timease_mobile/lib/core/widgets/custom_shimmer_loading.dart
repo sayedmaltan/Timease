@@ -3,9 +3,13 @@ import 'package:shimmer/shimmer.dart';
 
 class CustomShimmerLoading extends StatelessWidget {
   const CustomShimmerLoading({
-    super.key,  this.itemCount=10,
+    super.key,
+    this.itemCount = 10,
+     this.height,
   });
-  final int itemCount ;
+
+  final int itemCount;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +21,9 @@ class CustomShimmerLoading extends StatelessWidget {
         itemBuilder: (context, index) => Padding(
           padding: const EdgeInsets.all(15.0),
           child: Container(
-            height: 80,
+            height:height?? 80,
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10)
-            ),
+                color: Colors.white, borderRadius: BorderRadius.circular(10)),
           ),
         ),
       ),
