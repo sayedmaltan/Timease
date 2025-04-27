@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:timease_mobile/features/meeting/data/models/get_user_meetings_model.dart';
 import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_cubit.dart';
-
 import '../../../constants.dart';
 
 void showMeetingModelSheet(context, Meetings meetingModel) {
@@ -38,11 +37,6 @@ void showMeetingModelSheet(context, Meetings meetingModel) {
               onTap: () {},
             ),
             ListTile(
-              leading: Icon(Icons.settings, color: kPrimaryColor),
-              title: Text('View meeting details'),
-              onTap: () {},
-            ),
-            ListTile(
               leading: Icon(Icons.share, color: kPrimaryColor),
               title: Text('More share options'),
               onTap: () {},
@@ -51,6 +45,7 @@ void showMeetingModelSheet(context, Meetings meetingModel) {
               leading: Icon(Icons.delete, color: Colors.red),
               title: Text('Delete Meeting Type'),
               onTap: () {
+                context.pop();
                 context.pop();
                 MeetingCubit meeting = MeetingCubit.get(context);
                 meeting.deleteUserMeetingItem(

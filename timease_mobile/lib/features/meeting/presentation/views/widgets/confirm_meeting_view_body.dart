@@ -87,7 +87,7 @@ class ConfirmMeetingViewBody extends StatelessWidget {
                             onPressed: () async {
                               await meetingCubit.createMeeting(
                                 availabilityId: meetingCubit.availabilityId!,
-                                date: DatesConverter.convertDateFormat(
+                                date: DatesConverter.convertDateFormat1(
                                     date: date),
                                 startTime: DatesConverter.convert12hrTo24(
                                     time12Hr:

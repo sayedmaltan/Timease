@@ -5,7 +5,6 @@ import 'package:timease_mobile/features/meeting/data/models/get_user_meetings_mo
 
 import '../../../../../core/utils/function/counts_meetings_per_day.dart';
 
-
 class CustomHomeTableCalendar extends StatelessWidget {
   const CustomHomeTableCalendar({
     super.key,
@@ -30,11 +29,11 @@ class CustomHomeTableCalendar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   DateTime day=DateTime.now();
-   String dayKey =
-       "${day.year}-${day.month.toString().padLeft(2, '0')}-${day.day.toString().padLeft(2, '0')}";
-   int meetingsCount = countMeetingsPerDay(meetings)[dayKey] ?? 0;
-   Color bgColor;
+    DateTime day = DateTime.now();
+    String dayKey =
+        "${day.year}-${day.month.toString().padLeft(2, '0')}-${day.day.toString().padLeft(2, '0')}";
+    int meetingsCount = countMeetingsPerDay(meetings)[dayKey] ?? 0;
+    Color bgColor;
     if (meetingsCount == 0) {
       bgColor = Colors.white;
     } else if (meetingsCount == 1) {

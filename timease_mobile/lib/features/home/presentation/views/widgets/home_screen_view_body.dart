@@ -5,6 +5,7 @@ import 'package:timease_mobile/core/utils/function/counts_meetings_per_day.dart'
 import 'package:timease_mobile/features/home/presentation/views/widgets/home_screen_succees_state.dart';
 import 'package:timease_mobile/features/meeting/data/models/get_user_meetings_model.dart';
 import '../../../../../core/utils/function/build_home_calendar_buildar.dart';
+import '../../../../../core/utils/function/custom_toast.dart';
 import '../../../../../core/widgets/custom_shimmer_loading.dart';
 import '../../../../meeting/presentation/manger/meeting_cubit/meeting_cubit.dart';
 import '../../../../meeting/presentation/manger/meeting_cubit/meeting_state.dart';
@@ -34,7 +35,17 @@ class _HomeScreenViewBodyState extends State<HomeScreenViewBody> {
       child: Column(
         children: [
           BlocConsumer<MeetingCubit, MeetingStates>(
-            listener: (context, state) async {},
+            listener: (context, state) async {
+              if (state is DeleteUserMeetingFailure) {
+                await Future.delayed(Duration(seconds: 2));
+                customShowToast(
+                  msg: 'Failed to delete the meeting. Please try again later.',
+                );
+              } else if (state is DeleteUserMeetingSuccess) {
+                await Future.delayed(Duration(seconds: 2));
+                customShowToast(msg: 'Meeting deleted successfully');
+              }
+            },
             builder: (context, state) {
               if (state is GetUserMeetingsSuccessState) {
                 meetings = state.getUserMeetingsModel.meetings!;
