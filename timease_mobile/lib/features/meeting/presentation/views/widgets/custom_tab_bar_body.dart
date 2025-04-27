@@ -1,0 +1,139 @@
+import 'package:flutter/material.dart';
+
+import '../../../../../constants.dart';
+import '../../../../../core/utils/dates_converter.dart';
+import '../../../../../core/utils/styles.dart';
+import '../../../data/models/get_user_meetings_model.dart';
+
+class CustomTabBarBody extends StatelessWidget {
+  const CustomTabBarBody({
+    super.key,
+    required this.meetings,
+  });
+
+  final Meetings meetings;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: TabBarView(
+        children: [
+          SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Column(
+                spacing: 20,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Meeting Details',
+                    style: Styles.textStyleBlack,
+                  ),
+                  Row(
+                    spacing: 10,
+                    children: [
+                      Icon(Icons.location_on_outlined),
+                      Text('Location'),
+                    ],
+                  ),
+                  Row(
+                    spacing: 10,
+                    children: [
+                      Icon(Icons.article_outlined),
+                      Text(DatesConverter.convertDateFormat2(
+                          date: meetings.date!)),
+                    ],
+                  ),
+                  Text(
+                    'Host',
+                    style: Styles.textStyleBlack,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: kPrimaryColor,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: ExpansionTile(
+                        title: Text('Host Details'),
+                        shape: RoundedRectangleBorder(
+                            side: BorderSide(color: kPrimaryColor)),
+                        children: [
+                          Divider(),
+                          ListView.separated(
+                            shrinkWrap: true,
+                            itemCount: 1,
+                            separatorBuilder: (context, index) =>
+                                Divider(),
+                            itemBuilder: (context, index) => ListTile(
+                              title: Text(''),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Text(
+                    'Invitee details',
+                    style: Styles.textStyleBlack,
+                  ),
+                  Row(
+                    spacing: 10,
+                    children: [
+                      CircleAvatar(
+                        radius: 12,
+                        backgroundColor: kSecPrimaryColor,
+                      ),
+                      Text(
+                        '${meetings.attendees![0].firstName!} ${meetings.attendees![0].lastName!}',
+                        style: Styles.textStyleSpaceButton,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    spacing: 10,
+                    children: [
+                      Icon(Icons.check_circle),
+                      Text('Scheduled'),
+                    ],
+                  ),
+                  Row(
+                    spacing: 10,
+                    children: [
+                      Icon(Icons.mail_outline),
+                      Text(
+                        'sayedmaltan@gmail.com',
+                        style: Styles.textStyleSpaceButton
+                            .copyWith(fontSize: 15),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    spacing: 10,
+                    children: [
+                      Icon(Icons.phone_iphone),
+                      Text('Phone number'),
+                    ],
+                  ),
+                  Row(
+                    spacing: 10,
+                    children: [
+                      Icon(Icons.public),
+                      Text('Gulf Standard Time'),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Text('Notes'),
+        ],
+      ),
+    );
+  }
+}

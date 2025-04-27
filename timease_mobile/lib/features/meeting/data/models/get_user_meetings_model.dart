@@ -33,14 +33,15 @@ class Meetings {
   List<Attendees>? attendees;
   bool? available;
 
-  Meetings(
-      {this.id,
-        this.availability,
-        this.date,
-        this.startTime,
-        this.endTime,
-        this.attendees,
-        this.available});
+  Meetings({
+    this.id,
+    this.availability,
+    this.date,
+    this.startTime,
+    this.endTime,
+    this.attendees,
+    this.available,
+  });
 
   Meetings.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -116,12 +117,12 @@ class Attendees {
 
   Attendees(
       {this.id,
-        this.firstName,
-        this.lastName,
-        this.birthdate,
-        this.email,
-        this.createdAt,
-        this.modifiedAt});
+      this.firstName,
+      this.lastName,
+      this.birthdate,
+      this.email,
+      this.createdAt,
+      this.modifiedAt});
 
   Attendees.fromJson(Map<String, dynamic> json) {
     id = json['id'];

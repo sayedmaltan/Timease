@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:timease_mobile/constants.dart';
+import 'package:timease_mobile/core/utils/function/show_meeting_model_sheet.dart';
 import 'package:timease_mobile/core/widgets/custom_full_button.dart';
+import 'package:timease_mobile/features/meeting/data/models/get_user_meetings_model.dart';
+import 'package:timease_mobile/features/meeting/presentation/views/widgets/custom_meeting_details_top.dart';
+import 'package:timease_mobile/features/meeting/presentation/views/widgets/custom_tab_bar_body.dart';
 import '../../../../core/utils/styles.dart';
 
 class MeetingDetailsScreen extends StatelessWidget {
-  const MeetingDetailsScreen({super.key});
+  const MeetingDetailsScreen({super.key, required this.meetings});
+
+  final Meetings meetings;
 
   @override
   Widget build(BuildContext context) {
@@ -13,52 +19,11 @@ class MeetingDetailsScreen extends StatelessWidget {
       child: Scaffold(
         body: SafeArea(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             spacing: 12,
             children: [
-              AppBar(
-                backgroundColor: Colors.white,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  spacing: 10,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Row(
-                        spacing: 10,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CircleAvatar(
-                            radius: 10,
-                            backgroundColor: kPrimaryColor,
-                          ),
-                          Column(
-                            spacing: 5,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Sayed and ahmad',
-                                style: Styles.textStyleBlack,
-                              ),
-                              Text(
-                                'wed , march , 12 , 2025',
-                              ),
-                              Text(
-                                '11:30 AM - 12:00 PM (GMT+02:00)',
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              SizedBox(height: 5,),
+              CustomMeetingDetailsTop(meetings: meetings),
               TabBar(
                 labelStyle: Styles.textStyleBlack,
                 indicatorSize: TabBarIndicatorSize.tab,
@@ -74,139 +39,15 @@ class MeetingDetailsScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    SingleChildScrollView(
-                      child: Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Column(
-                          spacing: 20,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Meeting Details',
-                              style: Styles.textStyleBlack,
-                            ),
-                            Row(
-                              spacing: 10,
-                              children: [
-                                Icon(Icons.location_on_outlined),
-                                Text('Location'),
-                              ],
-                            ),
-                            Row(
-                              spacing: 10,
-                              children: [
-                                Icon(Icons.article_outlined),
-                                Text('data'),
-                              ],
-                            ),
-                            Text(
-                              'Host',
-                              style: Styles.textStyleBlack,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: kPrimaryColor,
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                                child: ExpansionTile(
-                                  title: Text('Host Details'),
-                                  shape: RoundedRectangleBorder(
-                                      side: BorderSide(color: kPrimaryColor)),
-                                  children: [
-                                    Divider(),
-                                    ListView.separated(
-                                      shrinkWrap: true,
-                                      itemCount: 1,
-                                      separatorBuilder: (context, index) =>
-                                          Divider(),
-                                      itemBuilder: (context, index) => ListTile(
-                                        title: Text(''),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Text(
-                              'Invitee details',
-                              style: Styles.textStyleBlack,
-                            ),
-                            Row(
-                              spacing: 10,
-                              children: [
-                                CircleAvatar(
-                                  radius: 12,
-                                  backgroundColor: kSecPrimaryColor,
-                                ),
-                                Text('name'),
-                              ],
-                            ),
-                            Row(
-                              spacing: 10,
-                              children: [
-                                Icon(Icons.check_circle),
-                                Text('Scheduled'),
-                              ],
-                            ),
-                            Row(
-                              spacing: 10,
-                              children: [
-                                Icon(Icons.mail_outline),
-                                Text('mail'),
-                              ],
-                            ),
-                            Row(
-                              spacing: 10,
-                              children: [
-                                Icon(Icons.phone_iphone),
-                                Text('Phone number'),
-                              ],
-                            ),
-                            Row(
-                              spacing: 10,
-                              children: [
-                                Icon(Icons.public),
-                                Text('Gulf Standard Time'),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Text('Notes'),
-                  ],
-                ),
-              ),
+              CustomTabBarBody(meetings: meetings),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 23),
-                child: Row(
-                  spacing: 10,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: CustomFullButton(
-                        text: 'text',
-                        onPressed: () {},
-                        height: 50,
-                      ),
-                    ),
-                    Expanded(
-                      child: CustomFullButton(
-                        text: 'text',
-                        onPressed: () {},
-                        height: 50,
-                      ),
-                    ),
-                  ],
+                padding: const EdgeInsets.only(bottom: 23, left: 23, right: 23),
+                child: CustomFullButton(
+                  text: 'Book follow-up',
+                  onPressed: () {
+                    showMeetingModelSheet(context, meetings);
+                  },
+                  height: 50,
                 ),
               ),
             ],
@@ -216,3 +57,5 @@ class MeetingDetailsScreen extends StatelessWidget {
     );
   }
 }
+
+

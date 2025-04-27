@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:timease_mobile/core/utils/function/show_meeting_model_sheet.dart';
+import 'package:go_router/go_router.dart';
 import 'package:timease_mobile/features/meeting/data/models/get_user_meetings_model.dart';
+import '../../../../../core/utils/app_router.dart';
 import '../../../../../core/utils/dates_converter.dart';
 import '../../../../../core/utils/function/build_container_decoration.dart';
 
@@ -18,7 +19,7 @@ class CustomMeetingBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        showMeetingModelSheet(context, meetingModel);
+        context.push(AppRouter.meetingDetailsScreen,extra: meetingModel);
       },
       child: Container(
         width: double.infinity,
