@@ -1,0 +1,13 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.timease.timease_mobile",
+      "sha256_cert_fingerprints": [
+        "14:7E:2D:52:43:A3:8D:2B:FF:E2:7C:89:09:25:C9:1C:4F:F9:37:EB:1C:8D:E8:2D:CA:F8:54:FB:C8:B2:F5:14"            ]
+    }
+  }
+]
