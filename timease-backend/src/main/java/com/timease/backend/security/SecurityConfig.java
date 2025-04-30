@@ -24,6 +24,7 @@ public class SecurityConfig {
             "/swagger-ui.html",
             "/swagger-resources/**",
             "/swagger-resources",
+            "/.well-known/assetlinks.json"
     };
 
 
