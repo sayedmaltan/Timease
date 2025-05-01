@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:timease_mobile/constants.dart';
 import 'package:timease_mobile/core/utils/styles.dart';
 import 'package:timease_mobile/features/meeting/data/models/confirm_meeting_args_model.dart';
-import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_cubit.dart';
+import 'package:timease_mobile/features/meeting/presentation/manger/create_meeting_cubit/create_meeting_cubit.dart';
 
 import 'confirm_meeting_view_body.dart';
 
@@ -18,9 +18,9 @@ class ConfirmMeetingScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MeetingCubit meetingCubit = MeetingCubit.get(context);
-    String dayOfWeak = DateFormat('EEE').format(meetingCubit.selectedDay!);
-    String date = DateFormat("MMMM d, y").format(meetingCubit.selectedDay!);
+    CreateMeetingCubit createMeetingCubit = CreateMeetingCubit.get(context);
+    String dayOfWeak = DateFormat('EEE').format(createMeetingCubit.selectedDay!);
+    String date = DateFormat("MMMM d, y").format(createMeetingCubit.selectedDay!);
     DateTime startTime = DateFormat("hh:mm a").parse(confirmMeetingArgsModel.startTime);
     DateTime endTime24hr = startTime
         .add(Duration(minutes: confirmMeetingArgsModel.eventModel.duration!));

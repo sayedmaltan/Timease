@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timease_mobile/core/utils/function/counts_meetings_per_day.dart';
 import 'package:timease_mobile/core/widgets/custom_shimmer_loading.dart';
-import 'package:timease_mobile/features/meeting/data/models/get_user_meetings_model.dart';
 import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_cubit.dart';
 import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_state.dart';
 import 'package:timease_mobile/features/meeting/presentation/views/widgets/custom_meeting_search.dart';
 import '../../../../constants.dart';
 import '../../../../core/utils/function/custom_toast.dart';
-import 'widgets/custom_filter_bottom_sheet.dart';
-import 'widgets/custom_filter_row.dart';
 import 'widgets/custom_meeting_box.dart';
 
 class MeetingsScreenViewBody extends StatelessWidget {
@@ -19,7 +16,6 @@ class MeetingsScreenViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Meetings> originalMeetings = [];
     return RefreshIndicator(
       onRefresh: () {
         MeetingCubit meetingCubit = MeetingCubit.get(context);
@@ -43,7 +39,7 @@ class MeetingsScreenViewBody extends StatelessWidget {
           if (state is GetUserMeetingsSuccessState ||
               state is SearchMeetingState) {
             if (state is GetUserMeetingsSuccessState) {
-              originalMeetings =
+              meetingCubit.originalMeetings =
                   sortMeetingsList(state.getUserMeetingsModel.meetings!);
             }
             return Column(
@@ -57,14 +53,17 @@ class MeetingsScreenViewBody extends StatelessWidget {
                   text: 'Search Meetings Attenddes',
                   onChanged: (value) {
                     meetingCubit.searchMeetings(
-                    meetings: originalMeetings
-                  );
+                        meetings: meetingCubit.originalMeetings);
                   },
                   suffixIconResponse: () {
-                    meetingCubit.meetingController.text='';
-                    meetingCubit.searchMeetings(meetings: originalMeetings);
+                    meetingCubit.meetingController.text = '';
+                    meetingCubit.searchMeetings(
+                      meetings: meetingCubit.originalMeetings,
+                    );
                   },
-                  suffixIcon: meetingCubit.meetingController.text.isEmpty ? null : Icons.close,
+                  suffixIcon: meetingCubit.meetingController.text.isEmpty
+                      ? null
+                      : Icons.close,
                 ),
                 SizedBox(
                   height: 7,
@@ -73,40 +72,43 @@ class MeetingsScreenViewBody extends StatelessWidget {
                 SizedBox(
                   height: 7,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Container(
-                    color: kSecPrimaryColor[200],
-                    child: CustomFilterRow(
-                      onTap: () {
-                        showModalBottomSheet(
-                          backgroundColor: Colors.white,
-                          context: context,
-                          builder: (BuildContext context) {
-                            return CustomFilterBottomSheet();
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 10),
+                //   child: Container(
+                //     color: kSecPrimaryColor[200],
+                //     child: CustomFilterRow(
+                //       onTap: () {
+                //         showModalBottomSheet(
+                //           backgroundColor: Colors.white,
+                //           context: context,
+                //           builder: (BuildContext context) {
+                //             return CustomFilterBottomSheet();
+                //           },
+                //         );
+                //       },
+                //     ),
+                //   ),
+                // ),
                 SizedBox(
                   height: 8,
                 ),
-                if(state is GetUserMeetingsSuccessState)
-                Expanded(
-                  child: ListView.builder(
-                    itemCount:  state.getUserMeetingsModel.meetings!.length,
-                    itemBuilder: (context, index) => CustomMeetingBox(
-                      meetingId: state.getUserMeetingsModel.meetings![index].id!,
-                      meetingModel: state.getUserMeetingsModel.meetings![index],
-                    ),
-                  ),
-                ),
-                if(state is SearchMeetingState)
+
+                if (state is GetUserMeetingsSuccessState)
                   Expanded(
                     child: ListView.builder(
-                      itemCount:  state.meetings.length,
+                      itemCount: state.getUserMeetingsModel.meetings!.length,
+                      itemBuilder: (context, index) => CustomMeetingBox(
+                        meetingId:
+                            state.getUserMeetingsModel.meetings![index].id!,
+                        meetingModel:
+                            state.getUserMeetingsModel.meetings![index],
+                      ),
+                    ),
+                  ),
+                if (state is SearchMeetingState)
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: state.meetings.length,
                       itemBuilder: (context, index) => CustomMeetingBox(
                         meetingId: state.meetings[index].id!,
                         meetingModel: state.meetings[index],

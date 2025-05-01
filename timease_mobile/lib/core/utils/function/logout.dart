@@ -4,9 +4,13 @@ import 'package:go_router/go_router.dart';
 import '../app_router.dart';
 import '../cash_helper.dart';
 
-void logout({required BuildContext context}) {
+void logout({ BuildContext? context}) {
   CashHelper.removeData('refreshToken');
   CashHelper.removeData('accessToken');
   CashHelper.removeData('userId');
-  context.go(AppRouter.authScreen);
+  if(context!=null) {
+    context.go(AppRouter.authScreen);
+  } else {
+    AppRouter.router.go(AppRouter.authScreen);
+  }
 }

@@ -62,7 +62,8 @@ class CustomCreateEventSaveChangesButton extends StatelessWidget {
                 context: context,
                 msg:
                     'Availability is required. Please enter your available time.');
-          } else if (!areFieldsValid(startTimeList, endTimeList,isUnavailable)) {
+          } else if (!areFieldsValid(
+              startTimeList, endTimeList, isUnavailable)) {
             showError(
               context: context,
               msg:
@@ -74,15 +75,12 @@ class CustomCreateEventSaveChangesButton extends StatelessWidget {
               msg:
                   'Event description is required.Provide details about the event.',
             );
-          }
-          else if (schedulingRangeController.text=='0' && isPeriodic) {
+          } else if (schedulingRangeController.text == '0' && isPeriodic) {
             showError(
               context: context,
-              msg:
-              'Enter schedulingRange Value',
+              msg: 'Enter schedulingRange Value',
             );
-          }
-          else {
+          } else {
             CreateEventModel createEventModel = CreateEventModel.fromJson({
               "title": titleController.text,
               "description": descriptionController.text,
@@ -106,8 +104,9 @@ class CustomCreateEventSaveChangesButton extends StatelessWidget {
               );
             } else {
               userEventsCubit.updateNewEvent(
-                  createEventModel: createEventModel,
-                  eventId: widget.eventModel!.id!);
+                createEventModel: createEventModel,
+                eventId: widget.eventModel!.id!,
+              );
             }
           }
         } else {
@@ -118,9 +117,12 @@ class CustomCreateEventSaveChangesButton extends StatelessWidget {
       },
     );
   }
-  bool areFieldsValid(List<TextEditingController> startTimeList, List<TextEditingController> endTimeList,List<bool> isUnavailable) {
+
+  bool areFieldsValid(List<TextEditingController> startTimeList,
+      List<TextEditingController> endTimeList, List<bool> isUnavailable) {
     for (int i = 0; i < startTimeList.length; i++) {
-      if (!isUnavailable[i] && (startTimeList[i].text.isEmpty||endTimeList[i].text.isEmpty)) {
+      if (!isUnavailable[i] &&
+          (startTimeList[i].text.isEmpty || endTimeList[i].text.isEmpty)) {
         return false;
       }
     }

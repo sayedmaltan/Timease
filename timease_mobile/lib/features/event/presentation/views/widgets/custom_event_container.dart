@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:timease_mobile/constants.dart';
 import 'package:timease_mobile/core/utils/function/build_container_decoration.dart';
+import 'package:timease_mobile/core/utils/function/show_event_book_sheet.dart';
 import 'package:timease_mobile/features/event/data/models/event_model.dart';
 import '../../../../../core/utils/function/get_last_date.dart';
 import '../../../../../core/utils/function/show_event_bottom_sheet.dart';
@@ -24,10 +25,15 @@ class CustomEventContainer extends StatelessWidget {
       onTap: () {
         if (!eventModel.isPeriodic!) {
           if (!getLastDate(eventModel: eventModel).isBefore(DateTime.now())) {
-            showEventModelSheet(context, eventModel,isBooking);
+
+            isBooking?
+            showEventBookSheet(context, eventModel):
+            showEventModelSheet(context, eventModel);
           }
         } else {
-          showEventModelSheet(context, eventModel,isBooking);
+          isBooking?
+          showEventBookSheet(context, eventModel):
+          showEventModelSheet(context, eventModel);
         }
       },
       child: Container(

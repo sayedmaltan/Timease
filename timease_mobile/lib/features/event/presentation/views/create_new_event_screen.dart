@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:timease_mobile/core/utils/cash_helper.dart';
 import 'package:timease_mobile/core/utils/function/custom_toast.dart';
 import 'package:timease_mobile/core/widgets/custom_loading_button.dart';
 import 'package:timease_mobile/features/event/data/models/event_model.dart';
@@ -240,13 +239,9 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
       listener: (context, state) {
         if (state is CreateEventsSuccess) {
           customShowToast(msg: 'Event created successfully');
-          UserEventsCubit.get(context)
-              .getUserEventsList(userId: CashHelper.getData('userId'));
           context.pop();
         } else if (state is UpdateEventsSuccess) {
           customShowToast(msg: 'Event updated successfully');
-          UserEventsCubit.get(context)
-              .getUserEventsList(userId: CashHelper.getData('userId'));
           context.pop();
         }
         if (state is UpdateEventsFailure) {

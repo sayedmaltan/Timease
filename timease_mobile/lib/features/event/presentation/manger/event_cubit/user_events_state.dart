@@ -20,12 +20,11 @@ class GetUserEventsFailure extends UserEventsState {
 
 
 
-class SearchEventsLoading extends UserEventsState {}
 
-class SearchEventsSuccess extends UserEventsState {
+class SearchEventsState extends UserEventsState {
   List<EventModel> eventsListModel;
 
-  SearchEventsSuccess({required this.eventsListModel});
+  SearchEventsState({required this.eventsListModel});
 }
 
 class DeleteUserEventsLoading extends UserEventsState {}

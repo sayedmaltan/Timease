@@ -17,7 +17,6 @@ class CustomRowSearchAndAccount extends StatelessWidget {
       children: [
         Expanded(
           child: CustomEventSearch(
-            eventListModel: [],
             controller: controller,
             text: 'Search Your Schedule...',
           ),

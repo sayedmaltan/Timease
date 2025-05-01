@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:timease_mobile/core/utils/cash_helper.dart';
+import 'package:timease_mobile/core/utils/function/logout.dart';
 
 class ApiService {
   late Dio dio;
@@ -25,15 +26,23 @@ class ApiService {
   void interceptorsWrapper() {
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
-        if (options.path.compareTo('https://timease.up.railway.app/api/auth/login')==0||
-            options.path.compareTo('https://timease.up.railway.app/api/auth/signup')==0 ||
-            options.path.compareTo('https://timease.up.railway.app/api/auth/logout')==0||
-            options.path.compareTo('https://timease.up.railway.app/api/auth/refresh-token')==0){
-         options.headers["Authorization"] = "";
+        if (options.path.compareTo(
+                    'https://timease.up.railway.app/api/auth/login') ==
+                0 ||
+            options.path.compareTo(
+                    'https://timease.up.railway.app/api/auth/signup') ==
+                0 ||
+            options.path.compareTo(
+                    'https://timease.up.railway.app/api/auth/logout') ==
+                0 ||
+            options.path.compareTo(
+                    'https://timease.up.railway.app/api/auth/refresh-token') ==
+                0) {
+          options.headers["Authorization"] = "";
         } else {
           //HERE IS dio.options
           options.headers["Authorization"] =
-          "Bearer ${CashHelper.getData('accessToken')}";
+              "Bearer ${CashHelper.getData('accessToken')}";
         }
         return handler.next(options);
       },
@@ -49,6 +58,14 @@ class ApiService {
               return handler.resolve(retryResponse);
             }
           } catch (refreshError) {
+            return handler.next(error);
+          }
+        } else if (error.response?.statusCode == 403 &&
+            error.requestOptions.path == '${_baseUrl}auth/refresh-token') {
+          try {
+            logout();
+            return handler.next(error);
+          } catch (_) {
             return handler.next(error);
           }
         } else if (error.response?.statusCode == 502) {

@@ -8,7 +8,7 @@ import '../../../../../core/utils/function/custom_toast.dart';
 import '../../../../event/presentation/views/widgets/custom_event_container.dart';
 import '../../../../event/presentation/views/widgets/custom_your_text.dart';
 
-class TryBookMeetingView extends StatelessWidget {
+class TryBookMeetingView extends StatefulWidget {
   const TryBookMeetingView({
     super.key,
     required this.controller,
@@ -17,12 +17,22 @@ class TryBookMeetingView extends StatelessWidget {
   final TextEditingController controller;
 
   @override
-  Widget build(BuildContext context) {
+  State<TryBookMeetingView> createState() => _TryBookMeetingViewState();
+}
+
+class _TryBookMeetingViewState extends State<TryBookMeetingView> {
+  @override
+  void initState() {
+    super.initState();
     OneEventCubit oneEventCubit = OneEventCubit.get(context);
-    oneEventCubit.getEventByEventId(eventId: controller.text);
+    oneEventCubit.getEventByEventId(eventId: widget.controller.text);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BlocConsumer<OneEventCubit, OneEventsState>(
       builder: (context, state) {
-        return  Scaffold(
+        return Scaffold(
           body: SafeArea(
             child: Column(
               children: [
@@ -45,7 +55,7 @@ class TryBookMeetingView extends StatelessWidget {
                       color: kPrimaryColor,
                     ),
                   )
-               else if (state is GetOneEventLoading)
+                else if (state is GetOneEventLoading)
                   SizedBox(
                     height: 80,
                     child: CustomShimmerLoading(
@@ -53,9 +63,9 @@ class TryBookMeetingView extends StatelessWidget {
                     ),
                   )
                 else if (state is GetOneEventFailure)
-                 Center(child: Text('FAIL'))
-                  else
-                      Center(child: Text('kkkkkkkkkkkkkkkkkkkkkkkkkk'))
+                  Center(child: Text('FAIL'))
+                else
+                  Center(child: Text('kkkkkkkkkkkkkkkkkkkkkkkkkk'))
               ],
             ),
           ),

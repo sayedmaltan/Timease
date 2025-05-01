@@ -4,7 +4,7 @@ import 'package:timease_mobile/core/errors/failure.dart';
 import 'package:timease_mobile/core/utils/api_service.dart';
 import 'package:timease_mobile/features/meeting/data/models/check_fully_booked_model.dart';
 import 'package:timease_mobile/features/meeting/data/models/get_user_meetings_model.dart';
-import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_state.dart';
+import '../../presentation/manger/create_meeting_cubit/create_meeting_state.dart';
 import 'meeting_repo.dart';
 
 class MeetingRepoImpl implements MeetingRepo {
