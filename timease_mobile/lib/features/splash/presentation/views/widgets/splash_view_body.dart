@@ -34,6 +34,7 @@ class _SplashViewBodyState extends State<SplashViewBody> {
   }
 
   void navigateToAuthOrHomeOrLink() {
+
     Future.delayed(
         const Duration(
           seconds: 2,
