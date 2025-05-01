@@ -5,7 +5,6 @@ import 'package:timease_mobile/core/utils/function/logout.dart';
 import 'package:timease_mobile/core/widgets/custom_shimmer_loading.dart';
 import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_cubit.dart';
 import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_state.dart';
-import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_state.dart';
 import '../../../../constants.dart';
 import '../../../../core/utils/cash_helper.dart';
 import '../../../../core/widgets/custom_search.dart';
@@ -85,11 +84,6 @@ class _EventsScreenViewBodyState extends State<EventsScreenViewBody> {
             );
           }
           else {
-            if(state is GetOneEventSuccess||state is CreateMeetingSuccessState)
-              {
-                UserEventsCubit userEventsCubit = UserEventsCubit.get(context);
-                userEventsCubit.getUserEventsList(userId: CashHelper.getData('userId'));
-              }
             return Column(
               children: [
                 SizedBox(

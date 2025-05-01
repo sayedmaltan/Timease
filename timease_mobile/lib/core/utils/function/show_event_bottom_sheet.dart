@@ -64,7 +64,7 @@ void showEventModelSheet(context, EventModel eventModel, bool isBooking) {
                     leading: Icon(Icons.link, color: kPrimaryColor),
                     title: Text('Copy link'),
                     onTap: () {
-                      Clipboard.setData(ClipboardData(text: eventModel.id!));
+                      Clipboard.setData(ClipboardData(text:"https://api.timease.me/eventId/${eventModel.id!}"));
                       context.pop();
                       customShowToast(
                         msg: 'Copied to Keyboard',
@@ -76,8 +76,10 @@ void showEventModelSheet(context, EventModel eventModel, bool isBooking) {
                     title: Text('View event type details'),
                     onTap: () {
                       context.pop();
-                      context.push(AppRouter.eventDetailsScreen,
-                          extra: eventModel);
+                      context.push(
+                        AppRouter.eventDetailsScreen,
+                        extra: eventModel,
+                      );
                     },
                   ),
                   ListTile(
