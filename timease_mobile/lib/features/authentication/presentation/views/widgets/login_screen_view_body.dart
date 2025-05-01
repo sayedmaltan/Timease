@@ -100,7 +100,7 @@ class _LoginScreenViewBodyState extends State<LoginScreenViewBody> {
                       ? CustomLoadingButton()
                       : CustomFullButton(
                           text: 'Login',
-                          height: 50,
+                          height: 55,
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
                               loginCubit.login(
