@@ -5,5 +5,4 @@ abstract class AssetsImages {
   static const welcomeScreen = 'assets/images/welcomeScreen.png';
   static const loginScreen = 'assets/images/loginScreen.png';
   static const registerScreen = 'assets/images/registerScreen.png';
-  static const appLogo = 'assets/images/appLogo.png';
 }

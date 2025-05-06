@@ -28,7 +28,7 @@ abstract class Styles {
   );
 
   static const textStyleSpaceButton = TextStyle(
-    color: Color.fromARGB(255, 0, 0, 0),
+    color: kPrimaryColor,
     fontSize: 18,
   );
 
