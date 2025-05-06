@@ -61,7 +61,7 @@ class AuthScreenViewBody extends StatelessWidget {
             ),
             Spacer(),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
+              padding: const EdgeInsets.symmetric(horizontal: 17),
               child: CustomFullButton(
                 text: 'Create an Account',
                 onPressed: () => context.push(AppRouter.registerScreen),

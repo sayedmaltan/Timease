@@ -12,7 +12,7 @@ class CustomEmptyButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.response,
-    this.height = 55,
+    this.height = 57,
     this.textStyle,
     this.borderSide,
   });

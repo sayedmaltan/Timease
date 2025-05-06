@@ -130,7 +130,7 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
                       ? CustomLoadingButton()
                       : CustomFullButton(
                           text: 'Register',
-                          height: 55,
+                          height: 50,
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
                               registerCubit.register(
