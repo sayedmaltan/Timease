@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timease_mobile/core/widgets/custom_shimmer_loading.dart';
-import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_cubit.dart';
-import 'package:timease_mobile/features/meeting/presentation/views/widgets/custom_meeting_search.dart';
+import 'package:timease_mobile/features/event/presentation/manger/one_event_cubit/one_event_cubit.dart';
+import 'package:timease_mobile/features/event/presentation/manger/one_event_cubit/one_event_state.dart';
 import '../../../../../constants.dart';
 import '../../../../../core/utils/function/custom_toast.dart';
-import '../../../../event/presentation/manger/event_cubit/user_events_state.dart';
 import '../../../../event/presentation/views/widgets/custom_event_container.dart';
+import '../../../../event/presentation/views/widgets/custom_your_text.dart';
 
-class TryBookMeetingView extends StatelessWidget {
+class TryBookMeetingView extends StatefulWidget {
   const TryBookMeetingView({
     super.key,
     required this.controller,
@@ -17,36 +17,58 @@ class TryBookMeetingView extends StatelessWidget {
   final TextEditingController controller;
 
   @override
+  State<TryBookMeetingView> createState() => _TryBookMeetingViewState();
+}
+
+class _TryBookMeetingViewState extends State<TryBookMeetingView> {
+  @override
+  void initState() {
+    super.initState();
+    OneEventCubit oneEventCubit = OneEventCubit.get(context);
+    oneEventCubit.getEventByEventId(eventId: widget.controller.text);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    UserEventsCubit userEventsCubit = UserEventsCubit.get(context);
-    return BlocConsumer<UserEventsCubit, UserEventsState>(
+    return BlocConsumer<OneEventCubit, OneEventsState>(
       builder: (context, state) {
-        return  Column(
-          children: [
-            CustomMeetingSearch(
-              controller: controller,
-              text: 'Enter event id',
-              onChanged: (value) {
-                userEventsCubit.getEventByEventId(eventId: value);
-              },
+        return Scaffold(
+          body: SafeArea(
+            child: Column(
+              children: [
+                // CustomMeetingSearch(
+                //   controller: controller,
+                //   text: 'Enter event id',
+                //   onChanged: (value) {
+                //     oneEventCubit.getEventByEventId(eventId: value);
+                //   },
+                // ),
+                CustomYourText(
+                  text: 'BOOK EVENT HERE',
+                ),
+                if (state is GetOneEventSuccess)
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: CustomEventContainer(
+                      isBooking: true,
+                      eventModel: state.eventModel,
+                      color: kPrimaryColor,
+                    ),
+                  )
+                else if (state is GetOneEventLoading)
+                  SizedBox(
+                    height: 80,
+                    child: CustomShimmerLoading(
+                      itemCount: 1,
+                    ),
+                  )
+                else if (state is GetOneEventFailure)
+                  Center(child: Text('FAIL'))
+                else
+                  Center(child: Text('kkkkkkkkkkkkkkkkkkkkkkkkkk'))
+              ],
             ),
-            if (state is GetOneEventSuccess)
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: CustomEventContainer(
-                  isBooking: true,
-                  eventModel: state.eventModel,
-                  color: kPrimaryColor,
-                ),
-              ),
-            if (state is GetUserEventsLoading)
-              SizedBox(
-                height: 80,
-                child: CustomShimmerLoading(
-                  itemCount: 1,
-                ),
-              )
-          ],
+          ),
         );
       },
       listener: (context, state) {

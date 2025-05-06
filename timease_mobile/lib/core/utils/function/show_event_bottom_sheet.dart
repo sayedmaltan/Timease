@@ -6,11 +6,9 @@ import 'package:timease_mobile/core/utils/cash_helper.dart';
 import 'package:timease_mobile/core/utils/function/custom_toast.dart';
 import 'package:timease_mobile/features/event/data/models/event_model.dart';
 import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_cubit.dart';
-import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_cubit.dart';
-
 import '../../../constants.dart';
 
-void showEventModelSheet(context, EventModel eventModel, bool isBooking) {
+void showEventModelSheet(context, EventModel eventModel,) {
   showModalBottomSheet(
     backgroundColor: Colors.white,
     context: context,
@@ -32,71 +30,53 @@ void showEventModelSheet(context, EventModel eventModel, bool isBooking) {
               ),
             ),
             SizedBox(height: 16),
-            if (isBooking)
               ListTile(
-                leading: Icon(Icons.event, color: kPrimaryColor),
-                title: Text('Book meeting'),
+                leading:
+                    Icon(Icons.edit_note_rounded, color: kPrimaryColor),
+                title: Text('Edit event type'),
                 onTap: () {
                   context.pop();
-                  MeetingCubit meetingCubit = MeetingCubit.get(context);
-                  meetingCubit.selectedDay = null;
-                  meetingCubit.availabilityId = null;
-                  meetingCubit.focusedDay = DateTime.now();
-                  meetingCubit.availableTimeList = [];
-                  context.push(AppRouter.createMeetingScreenView,
+                  context.push(AppRouter.updateEventScreen,
                       extra: eventModel);
                 },
               ),
-            if (!isBooking)
-              Column(
-                children: [
-                  ListTile(
-                    leading:
-                        Icon(Icons.edit_note_rounded, color: kPrimaryColor),
-                    title: Text('Edit event type'),
-                    onTap: () {
-                      context.pop();
-                      context.push(AppRouter.updateEventScreen,
-                          extra: eventModel);
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.link, color: kPrimaryColor),
-                    title: Text('Copy link'),
-                    onTap: () {
-                      Clipboard.setData(ClipboardData(text: eventModel.id!));
-                      context.pop();
-                      customShowToast(
-                        msg: 'Copied to Keyboard',
-                      );
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.settings, color: kPrimaryColor),
-                    title: Text('View event type details'),
-                    onTap: () {
-                      context.pop();
-                      context.push(AppRouter.eventDetailsScreen,
-                          extra: eventModel);
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.share, color: kPrimaryColor),
-                    title: Text('More share options'),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.delete, color: Colors.red),
-                    title: Text('Delete Event Type'),
-                    onTap: () {
-                      context.pop();
-                      UserEventsCubit user = UserEventsCubit.get(context);
-                      user.deleteUserEventsItem(
-                          eventId: eventModel.id!,
-                          userId: CashHelper.getData('userId'));
-                    },
-                  ),
-                ],
+              ListTile(
+                leading: Icon(Icons.link, color: kPrimaryColor),
+                title: Text('Copy link'),
+                onTap: () {
+                  Clipboard.setData(ClipboardData(text:"https://api.timease.me/eventId/${eventModel.id!}"));
+                  context.pop();
+                  customShowToast(
+                    msg: 'Copied to Keyboard',
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.settings, color: kPrimaryColor),
+                title: Text('View event type details'),
+                onTap: () {
+                  context.pop();
+                  context.push(
+                    AppRouter.eventDetailsScreen,
+                    extra: eventModel,
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.share, color: kPrimaryColor),
+                title: Text('More share options'),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: Icon(Icons.delete, color: Colors.red),
+                title: Text('Delete Event Type'),
+                onTap: () {
+                  context.pop();
+                  UserEventsCubit user = UserEventsCubit.get(context);
+                  user.deleteUserEventsItem(
+                      eventId: eventModel.id!,
+                      userId: CashHelper.getData('userId'));
+                },
               ),
           ],
         ),

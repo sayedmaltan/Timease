@@ -5,39 +5,28 @@ import 'package:timease_mobile/core/utils/function/logout.dart';
 import 'package:timease_mobile/core/widgets/custom_shimmer_loading.dart';
 import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_cubit.dart';
 import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_state.dart';
-import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_state.dart';
+import 'package:timease_mobile/features/meeting/presentation/views/widgets/custom_meeting_search.dart';
 import '../../../../constants.dart';
-import '../../../../core/utils/cash_helper.dart';
-import '../../../../core/widgets/custom_search.dart';
 import 'widgets/custom_your_text.dart';
 import 'widgets/events_list.dart';
 
-class EventsScreenViewBody extends StatefulWidget {
+class EventsScreenViewBody extends StatelessWidget {
   const EventsScreenViewBody({super.key});
-
-  @override
-  State<EventsScreenViewBody> createState() => _EventsScreenViewBodyState();
-}
-
-class _EventsScreenViewBodyState extends State<EventsScreenViewBody> {
-  var controller = TextEditingController();
-  late GetUserEventsSuccess userEventsSuccess;
-  bool passFirstTime = false;
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () {
         UserEventsCubit userEventsCubit = UserEventsCubit.get(context);
-        userEventsCubit.getUserEventsList(userId: CashHelper.getData('userId'));
+        userEventsCubit.getUserEventsList();
         return Future.delayed(Duration(seconds: 2));
       },
       child: BlocConsumer<UserEventsCubit, UserEventsState>(
         builder: (context, state) {
-          if (state is GetUserEventsSuccess) {
-            if (!passFirstTime) {
-              userEventsSuccess = state;
-              passFirstTime = true;
+          UserEventsCubit userEventsCubit = UserEventsCubit.get(context);
+          if (state is GetUserEventsSuccess || state is SearchEventsState) {
+            if (state is GetUserEventsSuccess) {
+              userEventsCubit.originalEvents = state.eventsListModel;
             }
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,59 +34,73 @@ class _EventsScreenViewBodyState extends State<EventsScreenViewBody> {
                 SizedBox(
                   height: 7,
                 ),
-                CustomEventSearch(
-                  eventListModel: userEventsSuccess.eventsListModel,
-                  controller: controller,
-                  text: 'Search event Types...',
+                CustomMeetingSearch(
+                  controller: userEventsCubit.eventController,
+                  text: 'Search Event Types',
+                  onChanged: (value) {
+                    userEventsCubit.searchEvents(
+                        eventModelList: userEventsCubit.originalEvents);
+                  },
+                  suffixIconResponse: () {
+                    userEventsCubit.eventController.text = '';
+                    userEventsCubit.searchEvents(
+                        eventModelList: userEventsCubit.originalEvents);
+                  },
+                  suffixIcon: userEventsCubit.eventController.text.isEmpty
+                      ? null
+                      : Icons.close,
                 ),
-                userEventsSuccess.eventsListModel.isNotEmpty
-                    ? Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 7,
+                SizedBox(
+                  height: 7,
+                ),
+                Divider(
+                  color: kSecPrimaryColor.shade400,
+                ),
+                CustomYourText(
+                  text: 'YOUR EVENT TYPES',
+                ),
+                if (state is GetUserEventsSuccess)
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: EventsList(
+                              eventsList: state.eventsListModel,
                             ),
-                            Divider(
-                              color: kSecPrimaryColor.shade400,
-                            ),
-                            CustomYourText(
-                              text: 'YOUR EVENT TYPES',
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10.0),
-                                child: EventsList(
-                                  eventsList: state.eventsListModel,
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                    )
-                    : Expanded(
-                      child: Center(
-                          child: CustomYourText(text: 'No Events Created Yet !'),
-                        ),
+                      ],
                     ),
+                  )
+                else if (state is SearchEventsState)
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: EventsList(
+                        eventsList: state.eventsListModel,
+                      ),
+                    ),
+                  )
+                else
+                  Expanded(
+                    child: Center(
+                      child: CustomYourText(text: 'No Events Created Yet !'),
+                    ),
+                  ),
               ],
             );
-          }
-          else {
-            if(state is GetOneEventSuccess||state is CreateMeetingSuccessState)
-              {
-                UserEventsCubit userEventsCubit = UserEventsCubit.get(context);
-                userEventsCubit.getUserEventsList(userId: CashHelper.getData('userId'));
-              }
+          } else {
             return Column(
               children: [
                 SizedBox(
                   height: 7,
                 ),
-                CustomEventSearch(
-                  eventListModel: [],
-                  controller: controller,
+                CustomMeetingSearch(
+                  controller: TextEditingController(),
                   text: 'Search event Types...',
                 ),
                 SizedBox(
@@ -112,10 +115,7 @@ class _EventsScreenViewBodyState extends State<EventsScreenViewBody> {
           }
         },
         listener: (context, state) async {
-          if (state is CreateEventsSuccess || state is UpdateEventsSuccess ||state is DeleteUserEventsSuccess) {
-            passFirstTime = false;
-          }
-          else if (state is GetUserEventsFailure) {
+          if (state is GetUserEventsFailure) {
             if (state.errMessage == 'JWT token has expired') {
               logout(context: context);
             }
@@ -123,9 +123,18 @@ class _EventsScreenViewBodyState extends State<EventsScreenViewBody> {
             await Future.delayed(Duration(seconds: 2));
             customShowToast(
                 msg: 'Failed to delete the event. Please try again later.');
-          }   if (state is DeleteUserEventsSuccess) {
+          } else if (state is DeleteUserEventsSuccess) {
             await Future.delayed(Duration(seconds: 2));
             customShowToast(msg: 'Event deleted successfully');
+          }
+          if (state is DeleteUserEventsSuccess ||
+              state is CreateEventsSuccess ||
+              state is UpdateEventsSuccess ||
+              state is DeleteUserEventsFailure ||
+              state is CreateEventsFailure ||
+              state is UpdateEventsFailure) {
+            UserEventsCubit userEventsCubit = UserEventsCubit.get(context);
+            userEventsCubit.getUserEventsList();
           }
         },
       ),

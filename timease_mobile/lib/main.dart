@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timease_mobile/core/utils/app_router.dart';
 import 'package:timease_mobile/core/utils/service_locator.dart';
+import 'package:timease_mobile/features/event/presentation/manger/one_event_cubit/one_event_cubit.dart';
 import 'package:timease_mobile/features/meeting/data/repos/meeting_repo_impl.dart';
+import 'package:timease_mobile/features/meeting/presentation/manger/create_meeting_cubit/create_meeting_cubit.dart';
 import 'core/utils/cash_helper.dart';
 import 'core/utils/function/build_theme_data.dart';
 import 'core/utils/function/change_status_bar_color.dart';
@@ -28,6 +30,16 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) {
             return UserEventsCubit(getIt.get<EventRepoImpl>());
+          },
+        ),
+        BlocProvider(
+          create: (context) {
+            return OneEventCubit(getIt.get<EventRepoImpl>());
+          },
+        ),
+        BlocProvider(
+          create: (context) {
+            return CreateMeetingCubit(getIt.get<MeetingRepoImpl>());
           },
         ),
         BlocProvider(

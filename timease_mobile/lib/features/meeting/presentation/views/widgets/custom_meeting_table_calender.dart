@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-
+import 'package:timease_mobile/features/meeting/presentation/manger/create_meeting_cubit/create_meeting_cubit.dart';
 import '../../../../../constants.dart';
 import '../../../../event/data/models/event_model.dart';
-import '../../manger/meeting_cubit/meeting_cubit.dart';
 
 class CustomMeetingTableCalender extends StatelessWidget {
   const CustomMeetingTableCalender({
     super.key,
     required this.eventModel,
-    required this.meetingCubit,
+    required this.createMeetingCubit,
   });
 
   final EventModel eventModel;
-  final MeetingCubit meetingCubit;
+  final CreateMeetingCubit createMeetingCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -26,18 +25,18 @@ class CustomMeetingTableCalender extends StatelessWidget {
         DateTime.now().day +
             eventModel.schedulingRange!.toInt(),
       )
-          : meetingCubit.getLastDate(eventModel: eventModel),
-      focusedDay: meetingCubit.focusedDay,
+          : createMeetingCubit.getLastDate(eventModel: eventModel),
+      focusedDay: createMeetingCubit.focusedDay,
       selectedDayPredicate: (day) {
-        if(meetingCubit.selectedDay == null) {
+        if(createMeetingCubit.selectedDay == null) {
           return false;
         }
-        return isSameDay(meetingCubit.selectedDay, day);
+        return isSameDay(createMeetingCubit.selectedDay, day);
       },
-      onDaySelected: (selectedDay, focusedDay) => meetingCubit.onDaySelected(selectedDay, focusedDay, eventModel),
-      calendarFormat: meetingCubit.calendarFormat,
-      onFormatChanged: (format) => meetingCubit.onFormatChanged(format),
-      onPageChanged: meetingCubit.onPageChanged,
+      onDaySelected: (selectedDay, focusedDay) => createMeetingCubit.onDaySelected(selectedDay, focusedDay, eventModel),
+      calendarFormat: createMeetingCubit.calendarFormat,
+      onFormatChanged: (format) => createMeetingCubit.onFormatChanged(format),
+      onPageChanged: createMeetingCubit.onPageChanged,
       calendarStyle: CalendarStyle(
         weekendTextStyle: TextStyle(color: Colors.black),
         selectedDecoration: BoxDecoration(
@@ -53,7 +52,7 @@ class CustomMeetingTableCalender extends StatelessWidget {
         ),
       ),
       enabledDayPredicate: (date) {
-        return meetingCubit.isAllowedDay(
+        return createMeetingCubit.isAllowedDay(
             date: date, eventModel: eventModel);
       },
       daysOfWeekHeight: 40,

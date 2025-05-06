@@ -3,12 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:timease_mobile/core/utils/dates_converter.dart';
 import 'package:timease_mobile/core/widgets/custom_loading_button.dart';
-import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_cubit.dart';
+import 'package:timease_mobile/features/meeting/presentation/manger/create_meeting_cubit/create_meeting_cubit.dart';
 import '../../../../../core/utils/function/custom_toast.dart';
 import '../../../../../core/utils/styles.dart';
 import '../../../../../core/widgets/custom_full_button.dart';
 import '../../../data/models/confirm_meeting_args_model.dart';
-import '../../manger/meeting_cubit/meeting_state.dart';
+import '../../manger/create_meeting_cubit/create_meeting_state.dart';
+import '../../manger/meeting_cubit/meeting_cubit.dart';
 import 'custom_confirm_meeting_build_attendee.dart';
 
 class ConfirmMeetingViewBody extends StatelessWidget {
@@ -27,9 +28,9 @@ class ConfirmMeetingViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<MeetingCubit, MeetingStates>(
+    return BlocConsumer<CreateMeetingCubit, CreateMeetingState>(
       builder: (context, state) {
-        MeetingCubit meetingCubit = MeetingCubit.get(context);
+        CreateMeetingCubit createMeetingCubit = CreateMeetingCubit.get(context);
         return Column(
           children: [
             Divider(),
@@ -85,8 +86,8 @@ class ConfirmMeetingViewBody extends StatelessWidget {
                         : CustomFullButton(
                             text: "Schedule meeting",
                             onPressed: () async {
-                              await meetingCubit.createMeeting(
-                                availabilityId: meetingCubit.availabilityId!,
+                              await createMeetingCubit.createMeeting(
+                                availabilityId: createMeetingCubit.availabilityId!,
                                 date: DatesConverter.convertDateFormat1(
                                     date: date),
                                 startTime: DatesConverter.convert12hrTo24(
@@ -110,6 +111,9 @@ class ConfirmMeetingViewBody extends StatelessWidget {
           customShowToast(msg: 'Meeting created successfully');
           context.pop();
           context.pop();
+          context.pop();
+          MeetingCubit meetingCubit = MeetingCubit.get(context);
+          meetingCubit.getUserMeetingsList();
         } else if (state is CreateMeetingFailureState) {
           customShowToast(msg: state.errMessage);
         }

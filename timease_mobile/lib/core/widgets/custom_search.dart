@@ -1,39 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:timease_mobile/constants.dart';
-import 'package:timease_mobile/core/widgets/custom_text_form_field.dart';
-import 'package:timease_mobile/features/event/data/models/event_model.dart';
-import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_cubit.dart';
+import '../../../../../constants.dart';
+import '../../../../../core/widgets/custom_text_form_field.dart';
 
 class CustomEventSearch extends StatelessWidget {
   const CustomEventSearch({
     super.key,
     required this.controller,
     required this.text,
-    required this.eventListModel,
+    this.onSaved,
+    this.onChanged,
+    this.suffixIconResponse,
+    this.suffixIcon,
   });
 
-  final List<EventModel> eventListModel;
   final TextEditingController controller;
   final String text;
+  final ValueChanged? onSaved;
+  final ValueChanged? onChanged;
+  final void Function()? suffixIconResponse;
+  final IconData? suffixIcon;
 
   @override
   Widget build(BuildContext context) {
-    UserEventsCubit userEventsCubit=UserEventsCubit.get(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: CustomTextFormField(
         suffixIconColor: Colors.black,
-        suffixIconResponse: () {
-          controller.text = '';
-          userEventsCubit.reStartSearch(eventModelList: eventListModel);
-        },
-        onChanged: (value) {
-          userEventsCubit.searchEventsList(eventModelList: eventListModel, value: value);
-        },
+        onSaved: onSaved,
+        onChanged: onChanged,
         borderRadiusSize: 28,
         focusedBorderColor: kSecPrimaryColor,
         hintStyleWeight: FontWeight.w400,
-        suffixIcon: controller.text.isNotEmpty ? Icons.close : null,
         hintText: text,
         keyboardType: TextInputType.text,
         isPassword: false,
@@ -41,6 +38,8 @@ class CustomEventSearch extends StatelessWidget {
         validator: (value) {
           return null;
         },
+        suffixIcon: suffixIcon,
+        suffixIconResponse: suffixIconResponse,
         prefixIcon: Icons.search,
       ),
     );

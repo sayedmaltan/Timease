@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:timease_mobile/core/utils/app_router.dart';
 import 'package:timease_mobile/features/event/data/models/event_model.dart';
 import 'package:timease_mobile/features/meeting/data/models/confirm_meeting_args_model.dart';
-import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_cubit.dart';
-import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_state.dart';
+import 'package:timease_mobile/features/meeting/presentation/manger/create_meeting_cubit/create_meeting_cubit.dart';
 import '../../../../../core/utils/function/custom_toast.dart';
 import '../../../../../core/widgets/custom_shimmer_loading.dart';
+import '../../manger/create_meeting_cubit/create_meeting_state.dart';
 import 'custom_meeting_table_calender.dart';
 import 'custom_time_empty_button.dart';
 
@@ -18,17 +18,17 @@ class CreateMeetingViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<MeetingCubit, MeetingStates>(
+    return BlocConsumer<CreateMeetingCubit, CreateMeetingState>(
       builder: (context, state) {
-        MeetingCubit meetingCubit = MeetingCubit.get(context);
+        CreateMeetingCubit createMeetingCubit = CreateMeetingCubit.get(context);
         return Column(
           spacing: 20,
           children: [
             CustomMeetingTableCalender(
               eventModel: eventModel,
-              meetingCubit: meetingCubit,
+              createMeetingCubit: createMeetingCubit,
             ),
-            if (meetingCubit
+            if (createMeetingCubit
                 .getAvailableTimeList(eventModel: eventModel)
                 .isNotEmpty)
               Expanded(
@@ -37,13 +37,13 @@ class CreateMeetingViewBody extends StatelessWidget {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CustomTimeEmptyButton(
-                        text: meetingCubit.availableTimeList[index],
+                        text: createMeetingCubit.availableTimeList[index],
                         response: () {
                           context.push(
                             AppRouter.confirmMeetingScreenView,
                             extra: ConfirmMeetingArgsModel(
                               eventModel: eventModel,
-                              startTime: meetingCubit.availableTimeList[index],
+                              startTime: createMeetingCubit.availableTimeList[index],
                               hostName: '${eventModel.user!.firstName} ${eventModel.user!.lastName}'
                             ),
                           );
@@ -51,11 +51,11 @@ class CreateMeetingViewBody extends StatelessWidget {
                       ),
                     );
                   },
-                  itemCount: meetingCubit.availableTimeList.length,
+                  itemCount: createMeetingCubit.availableTimeList.length,
                 ),
               ),
             if ((state is CheckFullyBookedLoadingState) &&
-                meetingCubit.availableTimeList.isEmpty)
+                createMeetingCubit.availableTimeList.isEmpty)
               Expanded(child: CustomShimmerLoading())
           ],
         );

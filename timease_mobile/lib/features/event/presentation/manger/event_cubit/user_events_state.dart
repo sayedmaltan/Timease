@@ -18,25 +18,13 @@ class GetUserEventsFailure extends UserEventsState {
   GetUserEventsFailure({required this.errMessage});
 }
 
-class GetOneEventLoading extends UserEventsState {}
 
-class GetOneEventSuccess extends UserEventsState {
-  EventModel eventModel;
-  GetOneEventSuccess({required this.eventModel});
-}
 
-class GetOneEventFailure extends UserEventsState {
-  final String errMessage;
 
-  GetOneEventFailure({required this.errMessage});
-}
-
-class SearchEventsLoading extends UserEventsState {}
-
-class SearchEventsSuccess extends UserEventsState {
+class SearchEventsState extends UserEventsState {
   List<EventModel> eventsListModel;
 
-  SearchEventsSuccess({required this.eventsListModel});
+  SearchEventsState({required this.eventsListModel});
 }
 
 class DeleteUserEventsLoading extends UserEventsState {}

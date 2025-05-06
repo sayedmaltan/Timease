@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:timease_mobile/core/utils/app_router.dart';
 import '../../../../../constants.dart';
 import '../../../../../core/widgets/custom_text_form_field.dart';
 
@@ -9,16 +7,18 @@ class CustomMeetingSearch extends StatelessWidget {
     super.key,
     required this.controller,
     required this.text,
-    this.isMeetingBody = false,
     this.onSaved,
     this.onChanged,
+    this.suffixIconResponse,
+    this.suffixIcon,
   });
 
   final TextEditingController controller;
   final String text;
-  final bool isMeetingBody;
   final ValueChanged? onSaved;
   final ValueChanged? onChanged;
+  final void Function()? suffixIconResponse;
+  final IconData? suffixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -26,23 +26,20 @@ class CustomMeetingSearch extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: CustomTextFormField(
         suffixIconColor: Colors.black,
-        onTap: () {
-          if (isMeetingBody) {
-            context.push(AppRouter.tryBookMeetingView, extra: controller);
-          }
-        },
         onSaved: onSaved,
         onChanged: onChanged,
         borderRadiusSize: 28,
         focusedBorderColor: kSecPrimaryColor,
         hintStyleWeight: FontWeight.w400,
         hintText: text,
-        keyboardType: isMeetingBody ? TextInputType.none : TextInputType.text,
+        keyboardType: TextInputType.text,
         isPassword: false,
         controller: controller,
         validator: (value) {
           return null;
         },
+        suffixIcon: suffixIcon,
+        suffixIconResponse: suffixIconResponse,
         prefixIcon: Icons.search,
       ),
     );

@@ -7,8 +7,6 @@ import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubi
 import 'package:timease_mobile/features/meeting/presentation/views/widgets/custom_meeting_search.dart';
 import '../../../../constants.dart';
 import '../../../../core/utils/function/custom_toast.dart';
-import 'widgets/custom_filter_bottom_sheet.dart';
-import 'widgets/custom_filter_row.dart';
 import 'widgets/custom_meeting_box.dart';
 
 class MeetingsScreenViewBody extends StatelessWidget {
@@ -37,8 +35,13 @@ class MeetingsScreenViewBody extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          if (state is GetUserMeetingsSuccessState) {
-           var meetings= sortMeetingsList(state.getUserMeetingsModel.meetings!);
+          MeetingCubit meetingCubit = MeetingCubit.get(context);
+          if (state is GetUserMeetingsSuccessState ||
+              state is SearchMeetingState) {
+            if (state is GetUserMeetingsSuccessState) {
+              meetingCubit.originalMeetings =
+                  sortMeetingsList(state.getUserMeetingsModel.meetings!);
+            }
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -46,8 +49,21 @@ class MeetingsScreenViewBody extends StatelessWidget {
                   height: 10,
                 ),
                 CustomMeetingSearch(
-                  controller: TextEditingController(),
-                  text: 'Book Meeting Types',
+                  controller: meetingCubit.meetingController,
+                  text: 'Search Meetings Attenddes',
+                  onChanged: (value) {
+                    meetingCubit.searchMeetings(
+                        meetings: meetingCubit.originalMeetings);
+                  },
+                  suffixIconResponse: () {
+                    meetingCubit.meetingController.text = '';
+                    meetingCubit.searchMeetings(
+                      meetings: meetingCubit.originalMeetings,
+                    );
+                  },
+                  suffixIcon: meetingCubit.meetingController.text.isEmpty
+                      ? null
+                      : Icons.close,
                 ),
                 SizedBox(
                   height: 7,
@@ -56,36 +72,49 @@ class MeetingsScreenViewBody extends StatelessWidget {
                 SizedBox(
                   height: 7,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Container(
-                    color: kSecPrimaryColor[200],
-                    child: CustomFilterRow(
-                      onTap: () {
-                        showModalBottomSheet(
-                          backgroundColor: Colors.white,
-                          context: context,
-                          builder: (BuildContext context) {
-                            return CustomFilterBottomSheet();
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 10),
+                //   child: Container(
+                //     color: kSecPrimaryColor[200],
+                //     child: CustomFilterRow(
+                //       onTap: () {
+                //         showModalBottomSheet(
+                //           backgroundColor: Colors.white,
+                //           context: context,
+                //           builder: (BuildContext context) {
+                //             return CustomFilterBottomSheet();
+                //           },
+                //         );
+                //       },
+                //     ),
+                //   ),
+                // ),
                 SizedBox(
                   height: 8,
                 ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: meetings.length,
-                    itemBuilder: (context, index) => CustomMeetingBox(
-                      meetingId:
-                      meetings[index].id!,
-                      meetingModel: meetings[index],
+
+                if (state is GetUserMeetingsSuccessState)
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: state.getUserMeetingsModel.meetings!.length,
+                      itemBuilder: (context, index) => CustomMeetingBox(
+                        meetingId:
+                            state.getUserMeetingsModel.meetings![index].id!,
+                        meetingModel:
+                            state.getUserMeetingsModel.meetings![index],
+                      ),
                     ),
                   ),
-                ),
+                if (state is SearchMeetingState)
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: state.meetings.length,
+                      itemBuilder: (context, index) => CustomMeetingBox(
+                        meetingId: state.meetings[index].id!,
+                        meetingModel: state.meetings[index],
+                      ),
+                    ),
+                  ),
               ],
             );
           } else {

@@ -23,6 +23,7 @@ import '../../features/meeting/data/models/get_user_meetings_model.dart';
 import '../../features/meeting/presentation/views/meeting_details_screen.dart';
 
 abstract class AppRouter {
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   static const authScreen = '/authScreenView';
   static const loginScreen = '/LoginScreenView';
   static const registerScreen = '/RegisterScreenView';
@@ -38,6 +39,7 @@ abstract class AppRouter {
 
   static late EventModel eventModel;
   static final router = GoRouter(
+    navigatorKey: navigatorKey,
     routes: <RouteBase>[
       GoRoute(
         path: '/',
@@ -137,7 +139,17 @@ abstract class AppRouter {
             meetings: state.extra as Meetings,
           );
         },
-      )
+      ),
+      GoRoute(
+        path: '/:_(.*)',
+        builder: (BuildContext context, GoRouterState state) {
+          return const SplashView();
+        },
+      ),
     ],
   );
 }
+
+// Map<String ,Widget> getUrlAndScreen(){
+//   se
+// }

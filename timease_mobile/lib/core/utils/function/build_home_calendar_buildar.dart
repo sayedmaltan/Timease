@@ -90,5 +90,32 @@ CalendarBuilders<dynamic> buildHomeCalendarBuilders(List<Meetings> meetings) {
         ),
       );
     },
+    selectedBuilder: (context, day, focusedDay) {
+      return Container(
+        margin: EdgeInsets.all(6),
+        decoration: BoxDecoration(
+          color: kPrimaryColor,
+          shape: BoxShape.circle,
+        ),
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              '${day.day}',
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+            Container(
+              width: 3,
+              height: 3,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+              ),
+            )
+          ],
+        ),
+      );
+    },
   );
 }

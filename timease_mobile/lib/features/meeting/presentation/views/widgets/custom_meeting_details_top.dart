@@ -25,12 +25,12 @@ class CustomMeetingDetailsTop extends StatelessWidget {
             spacing: 10,
             children: [
               CircleAvatar(
-                radius: 11,
+                radius: 10,
                 backgroundColor: kPrimaryColor,
               ),
               Expanded(
                 child: SizedBox(
-                  height: 34,
+                  height: 35,
                   child: ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.horizontal,
