@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:timease_mobile/core/utils/app_router.dart';
+import 'package:timease_mobile/core/utils/asstes.dart';
 import 'package:timease_mobile/core/utils/function/custom_awesome_dialog.dart';
 import 'package:timease_mobile/core/utils/function/email_check.dart';
 import 'package:timease_mobile/core/utils/function/password_check.dart';
@@ -16,7 +18,6 @@ import 'custom_divider_with_Text.dart';
 import 'custom_field_column.dart';
 import 'custom_name_field_column.dart';
 import 'custom_sign_with_google.dart';
-import 'custom_text_opacity.dart';
 
 class RegisterScreenViewBody extends StatefulWidget {
   const RegisterScreenViewBody({super.key});
@@ -42,133 +43,130 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
         return Form(
           key: formKey,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 17.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Spacer(),
-                Text(
-                  'Register',
-                  style: Styles.textStyle32,
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                CustomTextOpacity(
-                  text: 'Sign up with Timease for free',
-                  opacity: 0.7,
-                ),
-                SizedBox(
-                  height: 24,
-                ),
-                CustomNameFieldColumn(
-                  firstNameController: firstNameController,
-                  hintText: 'John Doe',
-                  aboveHintText: 'Full Name',
-                  firstNameValidator: (value) {
-                    if (value.toString().isEmpty) {
-                      return 'Please enter first name';
-                    }
-                    if (value.toString().length < 2) {
-                      return 'Invalid name';
-                    }
-                    return null;
-                  },
-                  lastNameValidator:(value) {
-                    if (value.toString().isEmpty) {
-                      return 'Please enter last name';
-                    }
-                    if (value.toString().length < 2) {
-                      return 'Invalid name';
-                    }
-                    return null;
-                  },
-                  lastNameController: lastNameController,
-                ),
-                CustomFieldColumn(
-                  controller: emailController,
-                  hintText: 'hello@example.com',
-                  aboveHintText: 'Email Address',
-                  validator: (value) {
-                    if (!isValidEmail(value)) {
-                      return validateEmail(value);
-                    }
-                    return null;
-                  },
-                ),
-                CustomPasswordRow(
-                  isRegister: true,
-                ),
-                SizedBox(
-                  height: 7,
-                ),
-                CustomTextFormField(
-                  controller: passwordController,
-                  keyboardType: TextInputType.visiblePassword,
-                  hintText: 'password',
-                  isPasswordShown: isPasswordShown,
-                  isPassword: true,
-                  validator: (value) {
-                    if (!isStrongPassword(value)) {
-                      return validatePassword(value);
-                    }
-                    return null;
-                  },
-                  suffixIcon: suffixIcon,
-                  suffixIconResponse: () {
-                    isPasswordShown
-                        ? suffixIcon = Icons.remove_red_eye_sharp
-                        : suffixIcon = Icons.visibility_off_sharp;
-                    isPasswordShown = !isPasswordShown;
-                    setState(() {});
-                  },
-                ),
-                SizedBox(
-                  height: 22,
-                ),
-                state is RegisterLoading
-                    ? CustomLoadingButton()
-                    : CustomFullButton(
-                        text: 'Register',
-                        height: 52,
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            registerCubit.register(
-                              email: emailController.text,
-                              password: passwordController.text,
-                              firstName: firstNameController.toString(),
-                              lastName: lastNameController.toString(),
-                            );
-                          }
-                        },
-                      ),
-                SizedBox(
-                  height: 20,
-                ),
-                CustomDividerWithText(text: 'or sign up with'),
-                SizedBox(
-                  height: 20,
-                ),
-                CustomSignWithGoogle(),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Already have an account?"),
-                    TextButton(
+            padding: EdgeInsets.symmetric(horizontal: 17),
+            child: SafeArea(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    AssetsImages.registerScreen,
+                  ),
+                  Text(
+                    'Sign Up',
+                    style: GoogleFonts.acme(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  CustomNameFieldColumn(
+                    firstNameController: firstNameController,
+                    hintText: 'John Doe',
+                    aboveHintText: 'Full Name',
+                    firstNameValidator: (value) {
+                      if (value.toString().isEmpty) {
+                        return 'Please enter first name';
+                      }
+                      if (value.toString().length < 2) {
+                        return 'Invalid name';
+                      }
+                      return null;
+                    },
+                    lastNameValidator: (value) {
+                      if (value.toString().isEmpty) {
+                        return 'Please enter last name';
+                      }
+                      if (value.toString().length < 2) {
+                        return 'Invalid name';
+                      }
+                      return null;
+                    },
+                    lastNameController: lastNameController,
+                  ),
+                  CustomFieldColumn(
+                    controller: emailController,
+                    hintText: 'hello@example.com',
+                    aboveHintText: 'Email Address',
+                    validator: (value) {
+                      if (!isValidEmail(value)) {
+                        return validateEmail(value);
+                      }
+                      return null;
+                    },
+                  ),
+                  CustomPasswordRow(
+                    isRegister: true,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  CustomTextFormField(
+                    controller: passwordController,
+                    keyboardType: TextInputType.visiblePassword,
+                    hintText: 'password',
+                    isPasswordShown: isPasswordShown,
+                    isPassword: true,
+                    validator: (value) {
+                      if (!isStrongPassword(value)) {
+                        return validatePassword(value);
+                      }
+                      return null;
+                    },
+                    suffixIcon: suffixIcon,
+                    suffixIconResponse: () {
+                      isPasswordShown
+                          ? suffixIcon = Icons.remove_red_eye_sharp
+                          : suffixIcon = Icons.visibility_off_sharp;
+                      isPasswordShown = !isPasswordShown;
+                      setState(() {});
+                    },
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  state is RegisterLoading
+                      ? CustomLoadingButton()
+                      : CustomFullButton(
+                          text: 'Register',
+                          height: 55,
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              registerCubit.register(
+                                email: emailController.text,
+                                password: passwordController.text,
+                                firstName: firstNameController.toString(),
+                                lastName: lastNameController.toString(),
+                              );
+                            }
+                          },
+                        ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  CustomDividerWithText(text: 'or sign up with'),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  CustomSignWithGoogle(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Already have an account?"),
+                      TextButton(
                         onPressed: () {
                           context.pushReplacement(AppRouter.loginScreen);
                         },
                         child: Text(
                           'sign in',
                           style: Styles.textStyle15,
-                        )),
-                  ],
-                ),
-                Spacer()
-              ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         );

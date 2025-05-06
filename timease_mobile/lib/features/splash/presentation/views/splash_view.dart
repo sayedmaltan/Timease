@@ -16,7 +16,7 @@ class SplashView extends StatelessWidget {
           statusBarBrightness: Brightness.dark,
         ),
       ),
-      backgroundColor:Colors.white12,
+      backgroundColor:const Color.fromARGB(255, 255, 255, 255),
       body: const SplashViewBody(),
     );
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:timease_mobile/constants.dart';
 import 'package:timease_mobile/core/utils/styles.dart';
 
 class CustomEmptyButton extends StatelessWidget {
@@ -13,7 +12,7 @@ class CustomEmptyButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.response,
-    this.height = 57,
+    this.height = 55,
     this.textStyle,
     this.borderSide,
   });
@@ -24,7 +23,7 @@ class CustomEmptyButton extends StatelessWidget {
       height: height,
       shape: RoundedRectangleBorder(
         side: BorderSide(
-          color: kPrimaryColor,
+          color: const Color.fromARGB(255, 0, 0, 0),
           width: borderSide?? 2,
         ),
         borderRadius: BorderRadius.circular(30),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:timease_mobile/constants.dart';
 import 'package:timease_mobile/core/utils/styles.dart';
 
 class CustomFullButton extends StatelessWidget {
@@ -12,7 +11,7 @@ class CustomFullButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
-    this.height = 56,
+    this.height = 55,
      this.radios,
   });
 
@@ -24,7 +23,7 @@ class CustomFullButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(radios ?? 30),
       ),
       minWidth: double.infinity,
-      color: kPrimaryColor,
+      color: const Color.fromARGB(255, 0, 0, 0),
       onPressed: onPressed,
       child: Text(text, style: Styles.textStyleFullButton),
     );
