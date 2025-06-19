@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="29d8c682-1ac1-44a0-8b12-70ba93f1acde" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Timease.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Timease.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="29d8c682-1ac1-44a0-8b12-70ba93f1acde" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,6 +35,7 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2pRmG2KvPjyZKs60X0ht3yUZHgx" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -51,9 +49,9 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "deep-link",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/androidStudio/androidStudioProject/qb_academia-",
+    "last_opened_file_path": "D:/androidStudio/androidStudioProject/Timease/timease_mobile",
     "show.migrate.to.gradle.popup": "false"
   }
 }]]></component>

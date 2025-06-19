@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timease_mobile/core/utils/styles.dart';
-import 'package:timease_mobile/features/notification/presentation/views/widgets/notification_card.dart';
+import 'package:timease_mobile/features/notification/presentation/views/widgets/notification_item.dart';
 import '../../../../core/utils/function/logout.dart';
 
 class NotificationsScreenViewBody extends StatelessWidget {
@@ -28,9 +28,9 @@ class NotificationsScreenViewBody extends StatelessWidget {
         ),
         Expanded(
           child: ListView.builder(
-            itemCount: 2,
+            itemCount: 6,
             itemBuilder: (context, index) {
-              return NotificationCard();
+              return NotificationItem(index: index,);
             },
           ),
         ),
