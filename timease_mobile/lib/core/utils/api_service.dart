@@ -4,7 +4,7 @@ import 'package:timease_mobile/core/utils/function/logout.dart';
 
 class ApiService {
   late Dio dio;
-  final String _baseUrl = 'https://timease.up.railway.app/api/';
+  final String _baseUrl = 'https://timease-production.up.railway.app/api/';
 
   ApiService({required this.dio});
 
@@ -27,16 +27,16 @@ class ApiService {
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
         if (options.path.compareTo(
-                    'https://timease.up.railway.app/api/auth/login') ==
+                    '${_baseUrl}auth/login') ==
                 0 ||
             options.path.compareTo(
-                    'https://timease.up.railway.app/api/auth/signup') ==
+                    '${_baseUrl}auth/signup') ==
                 0 ||
             options.path.compareTo(
-                    'https://timease.up.railway.app/api/auth/logout') ==
+                    '${_baseUrl}auth/logout') ==
                 0 ||
             options.path.compareTo(
-                    'https://timease.up.railway.app/api/auth/refresh-token') ==
+                    '${_baseUrl}auth/refresh-token') ==
                 0) {
           options.headers["Authorization"] = "";
         } else {
