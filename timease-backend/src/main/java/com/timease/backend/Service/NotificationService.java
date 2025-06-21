@@ -16,10 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
@@ -84,12 +81,15 @@ public class NotificationService {
         });
     }
 
-    public List<Notification> getUserNotifications(UUID userId) {
+    public Map<Object,String> getUserNotifications(UUID userId) {
         List<Notification> list = notificationRepository.findByUserIdOrderByCreatedAtDesc(userId);
         for (Notification n: list) {
             markNotificationAsDelivered(n.getId());
         }
-        return list;
+        Map<Object,String> res=new HashMap<>();
+        res.put("noOfNotifications", String.valueOf(list.size()));
+        res.put("notifications", list.toString());
+        return res;
     }
 
     public long getUnreadNotificationCount(UUID userId) {

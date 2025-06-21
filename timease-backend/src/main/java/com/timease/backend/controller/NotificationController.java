@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -42,8 +43,8 @@ public class NotificationController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Notification>> getUserNotifications(@PathVariable UUID userId) {
-        List<Notification> notifications = notificationService.getUserNotifications(userId);
+    public ResponseEntity<Map<Object,String>> getUserNotifications(@PathVariable UUID userId) {
+        Map<Object,String> notifications = notificationService.getUserNotifications(userId);
         return ResponseEntity.ok(notifications);
     }
 
