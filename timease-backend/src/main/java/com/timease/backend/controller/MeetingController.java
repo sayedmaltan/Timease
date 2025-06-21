@@ -2,13 +2,10 @@ package com.timease.backend.controller;
 
 import com.timease.backend.Service.MeetingService;
 import com.timease.backend.model.DTO.MeetingRequestDTO;
-import com.timease.backend.model.Meeting;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
 import java.util.UUID;
 
 @RestController

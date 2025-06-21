@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -65,4 +66,14 @@ public interface MeetingRepository extends JpaRepository<Meeting, UUID> {
             @Param("date") LocalDate date,
             @Param("maxAttendees") int maxAttendees
     );
+
+    @Query("SELECT m FROM Meeting m WHERE " +
+            "CAST(CONCAT(m.date, 'T', m.startTime) AS java.time.LocalDateTime) BETWEEN :now AND :next24h")
+    List<Meeting> findMeetingsStartingBetween(@Param("now") LocalDateTime now,
+                                              @Param("next24h") LocalDateTime next24h);
+
+    @Query("SELECT m FROM Meeting m WHERE m.availability.event.id = :eventId")
+    List<Meeting> findAllByEventId(@Param("eventId") UUID eventId);
+
+
 }
