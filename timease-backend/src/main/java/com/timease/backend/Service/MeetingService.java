@@ -2,9 +2,11 @@ package com.timease.backend.Service;
 
 import com.timease.backend.model.Availability;
 import com.timease.backend.model.DTO.MeetingRequestDTO;
+import com.timease.backend.model.Event;
 import com.timease.backend.model.Meeting;
 import com.timease.backend.model.User;
 import com.timease.backend.repository.AvailabilityRepository;
+import com.timease.backend.repository.EventRepository;
 import com.timease.backend.repository.MeetingRepository;
 import com.timease.backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -21,13 +23,19 @@ public class MeetingService {
     private final AvailabilityRepository availabilityRepository;
     private final UserRepository userRepository;
     private final AuthService authService;
+    private final EventRepository eventRepository;
+    private final NotificationService notificationService;
 
-    public MeetingService(MeetingRepository meetingRepository, AvailabilityRepository availabilityRepository, UserRepository userRepository, AuthService authService) {
+    public MeetingService(MeetingRepository meetingRepository, AvailabilityRepository availabilityRepository, UserRepository userRepository, AuthService authService, EventRepository eventRepository, NotificationService notificationService) {
         this.meetingRepository = meetingRepository;
         this.availabilityRepository = availabilityRepository;
         this.userRepository = userRepository;
         this.authService = authService;
+        this.eventRepository = eventRepository;
+        this.notificationService = notificationService;
     }
+
+
 
     @Transactional
     public Meeting createOrUpdateMeeting(MeetingRequestDTO meetingRequest) {
@@ -39,6 +47,8 @@ public class MeetingService {
         UUID userId = authService.getCurrentUserId();
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
+        Event event = eventRepository.findEventByAvailabilityId(availabilityId);
+        UUID host = event.getUser().getId();
         Optional<Meeting> existingMeeting = meetingRepository.findByAvailability_IdAndDateAndStartTimeAndEndTime(availabilityId, date, startTime, endTime);
 
         if (existingMeeting.isPresent()) {
@@ -47,6 +57,12 @@ public class MeetingService {
                 meeting.getAttendees().add(user);
                 return meetingRepository.save(meeting);
             }
+            notificationService.createNotification(host,
+                    "New Booking!",
+                    user.getFirst_name() + " " + user.getLast_name() + " has booked a meeting on " + date + " from " + startTime + " to " + endTime + " for your event :" + event.getTitle() ,
+                    "MEETING_BOOKING",
+                    "{}"
+                    );
             return meeting;
         }
 
@@ -60,7 +76,12 @@ public class MeetingService {
                 .endTime(endTime)
                 .attendees(List.of(user))
                 .build();
-
+        notificationService.createNotification(host,
+                "New Booking!",
+                user.getFirst_name() + " " + user.getLast_name() + " has booked a meeting on " + date + " from " + startTime + " to " + endTime + " for your event :" + event.getTitle() ,
+                "MEETING_BOOKING",
+                "{}"
+        );
         return meetingRepository.save(newMeeting);
     }
 

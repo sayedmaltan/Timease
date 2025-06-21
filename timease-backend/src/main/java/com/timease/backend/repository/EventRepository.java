@@ -11,5 +11,9 @@ import java.util.UUID;
 public interface EventRepository extends JpaRepository<Event, UUID> {
     @Query(value = "SELECT * FROM event WHERE user_id = :userId", nativeQuery = true)
     List<Event> findByUserId(@Param("userId") UUID userId);
+
+    @Query("SELECT a.event FROM Availability a WHERE a.id = :availabilityId")
+    Event findEventByAvailabilityId(@Param("availabilityId") UUID availabilityId);
+
 }
 
