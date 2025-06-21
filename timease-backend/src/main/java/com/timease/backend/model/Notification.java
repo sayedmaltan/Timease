@@ -43,9 +43,6 @@ public class Notification {
     @Column(name = "is_sent", nullable = false)
     private Boolean isSent = false;
 
-    @Column(name = "is_delivered", nullable = false)
-    private Boolean isDelivered = false;
-
 
     public Notification(UUID userId, String title, String message, String notificationType, String payload) {
         this.userId = userId;
@@ -54,6 +51,5 @@ public class Notification {
         this.notificationType = notificationType;
         this.payload = payload;
         this.isSent = false;
-        this.isDelivered = false;
     }
 }
