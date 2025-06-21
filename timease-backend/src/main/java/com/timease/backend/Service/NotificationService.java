@@ -81,14 +81,14 @@ public class NotificationService {
         });
     }
 
-    public Map<Object,String> getUserNotifications(UUID userId) {
+    public Map<String,Object> getUserNotifications(UUID userId) {
         List<Notification> list = notificationRepository.findByUserIdOrderByCreatedAtDesc(userId);
         for (Notification n: list) {
             markNotificationAsDelivered(n.getId());
         }
-        Map<Object,String> res=new HashMap<>();
+        Map<String , Object> res=new HashMap<>();
         res.put("noOfNotifications", String.valueOf(list.size()));
-        res.put("notifications", list.toString());
+        res.put("notifications", list);
         return res;
     }
 
