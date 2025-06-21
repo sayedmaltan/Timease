@@ -75,7 +75,7 @@ public class NotificationService {
     @Transactional
     public void markNotificationAsDelivered(UUID notificationId) {
         notificationRepository.findById(notificationId).ifPresent(notification -> {
-            notification.setIsDelivered(true);
+            notification.setIsSent(true);
             notificationRepository.save(notification);
             logger.info("Marked notification {} as delivered", notificationId);
         });
@@ -93,7 +93,7 @@ public class NotificationService {
     }
 
     public long getUnreadNotificationCount(UUID userId) {
-        return notificationRepository.countByUserIdAndIsDeliveredFalse(userId);
+        return notificationRepository.countByUserIdAndIsSentFalse(userId);
     }
 
     @Transactional
