@@ -13,74 +13,76 @@ class AuthScreenViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              AssetsImages.timeaseLogo,
-              width: 180,
-              height: 100,
-              fit: BoxFit.cover,
-            ),
-            Image.asset(
-              AssetsImages.welcomeScreen,
-            ),
-            Text(
-              "Hello",
-              style: GoogleFonts.acme(
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                AssetsImages.timeaseLogo,
+                width: 180,
+                height: 100,
+                fit: BoxFit.cover,
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Welcome to ",
-                  style: GoogleFonts.acme(
-                      fontSize: 20,
-                      color: const Color.fromARGB(255, 106, 106, 106),
-                      fontWeight: FontWeight.normal),
+              Image.asset(
+                AssetsImages.welcomeScreen,
+              ),
+              Text(
+                "Hello",
+                style: GoogleFonts.acme(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
                 ),
-                Text(
-                  "Timease",
-                  style: GoogleFonts.acme(
-                      fontSize: 20,
-                      color: kPrimaryColor,
-                      fontWeight: FontWeight.normal),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Welcome to ",
+                    style: GoogleFonts.acme(
+                        fontSize: 20,
+                        color: const Color.fromARGB(255, 106, 106, 106),
+                        fontWeight: FontWeight.normal),
+                  ),
+                  Text(
+                    "Timease",
+                    style: GoogleFonts.acme(
+                        fontSize: 20,
+                        color: kPrimaryColor,
+                        fontWeight: FontWeight.normal),
+                  ),
+                ],
+              ),
+              Text(
+                "Where you can schedule your events",
+                style: GoogleFonts.acme(
+                    fontSize: 20,
+                    color: Color.fromARGB(255, 106, 106, 106),
+                    fontWeight: FontWeight.normal),
+              ),
+              SizedBox(height: 28,),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 17),
+                child: CustomFullButton(
+                  text: 'Create an Account',
+                  onPressed: () => context.push(AppRouter.registerScreen),
                 ),
-              ],
-            ),
-            Text(
-              "Where you can schedule your events",
-              style: GoogleFonts.acme(
-                  fontSize: 20,
-                  color: Color.fromARGB(255, 106, 106, 106),
-                  fontWeight: FontWeight.normal),
-            ),
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 17),
-              child: CustomFullButton(
-                text: 'Create an Account',
-                onPressed: () => context.push(AppRouter.registerScreen),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: CustomEmptyButton(
-                response: () => context.push(AppRouter.loginScreen),
-                text: 'Sign in',
+              SizedBox(
+                height: 20,
               ),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: CustomEmptyButton(
+                  response: () => context.push(AppRouter.loginScreen),
+                  text: 'Sign in',
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+            ],
+          ),
         ),
     );
   }

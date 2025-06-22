@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:timease_mobile/features/notification/presentation/views/widgets/rich_text_button.dart';
 
+import '../../../data/models/notifications_model.dart';
+
 class NotificationItem extends StatelessWidget {
-  const NotificationItem({super.key, required this.index});
+  const NotificationItem(
+      {super.key,
+      required this.index,
+      required this.notifications,
+      required this.onTap});
 
   final int index;
+  final Notifications notifications;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap:onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: index < 2 ? Color(0xfff6fbff) : null,
+          color: !notifications.isRead! ? Color(0xfff6fbff) : null,
           border: Border(
             top: BorderSide(
               color: Color(0xffeaebed),
@@ -40,8 +48,13 @@ class NotificationItem extends StatelessWidget {
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  RichTextButton(),
+                  RichTextButton(
+                    title: notifications.title!,
+                    message: notifications.message!,
+                    date: notifications.createdAt!,
+                  ),
                 ],
               ),
             ),

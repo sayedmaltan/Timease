@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:timease_mobile/constants.dart';
+import 'package:timease_mobile/core/utils/cash_helper.dart';
 import 'package:timease_mobile/features/event/presentation/views/events_screen_view_body.dart';
 import 'package:timease_mobile/features/home/presentation/views/widgets/custom_bottom_nav_bar.dart';
 import 'package:timease_mobile/features/home/presentation/views/widgets/custom_floating_action_button.dart';
 import 'package:timease_mobile/features/home/presentation/views/widgets/home_screen_view_body.dart';
 import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubit/meeting_cubit.dart';
+import 'package:timease_mobile/features/notification/presentation/views/manger/notifications_cubit/notifications_cubit.dart';
 import 'package:timease_mobile/features/notification/presentation/views/notifications_screen_view_body.dart';
 
 import '../../../event/presentation/manger/event_cubit/user_events_cubit.dart';
@@ -37,6 +39,8 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     userEventsCubit.getUserEventsList();
     MeetingCubit meetingCubit = MeetingCubit.get(context);
     meetingCubit.getUserMeetingsList();
+    NotificationsCubit notificationsCubit = NotificationsCubit.get(context);
+    notificationsCubit.getUnSentNotifications(userId: CashHelper.getData('userId'));
     selectBottomNavBar=widget.bodyIndex;
   }
   @override
