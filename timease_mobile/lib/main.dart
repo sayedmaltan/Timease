@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timease_mobile/core/utils/app_router.dart';
 import 'package:timease_mobile/core/utils/service_locator.dart';
-import 'package:timease_mobile/core/utils/workmanger.dart';
 import 'package:timease_mobile/features/event/presentation/manger/one_event_cubit/one_event_cubit.dart';
 import 'package:timease_mobile/features/meeting/data/repos/meeting_repo_impl.dart';
 import 'package:timease_mobile/features/meeting/presentation/manger/create_meeting_cubit/create_meeting_cubit.dart';
@@ -18,7 +17,6 @@ import 'features/meeting/presentation/manger/meeting_cubit/meeting_cubit.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CashHelper.init();
-  setupWorkManger();
   changeStatusBarColor();
   setupServiceLocator();
   runApp(const MyApp());

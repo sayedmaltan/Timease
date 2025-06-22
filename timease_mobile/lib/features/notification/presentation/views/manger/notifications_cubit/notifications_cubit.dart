@@ -17,8 +17,9 @@ class NotificationsCubit extends Cubit<NotificationsState> {
 
   Future<void> getUnSentNotifications({
     required String userId,
+    required bool isTimer
   }) async {
-    emit(GetUnSentNotificationsInitial());
+    emit(GetUnSentNotificationsLoading(isTimer: isTimer));
     var response =
         await notificationsRepo.getUnSentNotifications(userId: userId);
     response.fold(
