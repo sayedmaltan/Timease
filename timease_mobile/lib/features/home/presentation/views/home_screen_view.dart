@@ -41,7 +41,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     MeetingCubit meetingCubit = MeetingCubit.get(context);
     meetingCubit.getUserMeetingsList();
     NotificationsCubit notificationsCubit = NotificationsCubit.get(context);
-    notificationsCubit.getUnSentNotifications(userId: CashHelper.getData('userId'),isTimer: true);
+    notificationsCubit.getUnSentNotifications(userId: CashHelper.getData('userId'),isTimer: false);
     selectBottomNavBar=widget.bodyIndex;
     BackgroundTaskService().start(context: context);
   }

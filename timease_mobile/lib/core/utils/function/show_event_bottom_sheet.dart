@@ -44,7 +44,7 @@ void showEventModelSheet(context, EventModel eventModel,) {
                 leading: Icon(Icons.link, color: kPrimaryColor),
                 title: Text('Copy link'),
                 onTap: () {
-                  Clipboard.setData(ClipboardData(text:"https://api.timease.me/eventId/${eventModel.id!}"));
+                  Clipboard.setData(ClipboardData(text:"https://timease-production.up.railway.app/eventId/${eventModel.id!}"));
                   context.pop();
                   customShowToast(
                     msg: 'Copied to Keyboard',
