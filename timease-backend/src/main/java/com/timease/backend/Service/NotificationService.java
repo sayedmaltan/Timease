@@ -106,17 +106,15 @@ public class NotificationService {
             for (User user : meeting.getAttendees()) {
                 UUID userId = user.getId();
 
-                boolean alreadySent = notificationRepository.existsByUserIdAndPayload(userId, meetingId.toString());
 
-                if (!alreadySent) {
-                    createNotification(
-                            userId,
-                            title,
-                            message,
-                            "EVENT_BROADCAST",
-                            meetingId.toString()
-                    );
-                }
+                createNotification(
+                        userId,
+                        title,
+                        message,
+                        "EVENT_BROADCAST",
+                        meetingId.toString()
+                );
+
             }
         }
     }
