@@ -40,7 +40,6 @@ class ApiService {
                 0) {
           options.headers["Authorization"] = "";
         } else {
-          //HERE IS dio.options
           options.headers["Authorization"] =
               "Bearer ${CashHelper.getData('accessToken')}";
         }

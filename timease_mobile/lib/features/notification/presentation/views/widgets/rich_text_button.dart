@@ -3,14 +3,20 @@ import 'package:flutter/material.dart';
 class RichTextButton extends StatelessWidget {
   const RichTextButton({
     super.key,
+    required this.title,
+    required this.message, required this.date,
   });
+
+  final String title;
+  final String message;
+  final String date;
 
   @override
   Widget build(BuildContext context) {
     return RichText(
       overflow: TextOverflow.ellipsis,
       maxLines: 4,
-      text: const TextSpan(
+      text:  TextSpan(
         style: TextStyle(
           color: Colors.black54, // base color for general text
           fontSize: 15,
@@ -18,24 +24,23 @@ class RichTextButton extends StatelessWidget {
         ),
         children: [
           TextSpan(
-            text: "ElSayed Ahmed",
+            text: title,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Color(0xff0b1218), // Highlighted name
             ),
           ),
+          // TextSpan(
+          //     text: " scheduled ", style: TextStyle(color: Color(0xff252c32))),
+          // TextSpan(
+          //   text: "30 min 1 to 1",
+          //   style: TextStyle(
+          //     fontWeight: FontWeight.bold,
+          //     color: Color(0xff0b1218), // Highlighted session
+          //   ),
+          // ),
           TextSpan(
-              text: " scheduled ", style: TextStyle(color: Color(0xff252c32))),
-          TextSpan(
-            text: "30 min 1 to 1",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Color(0xff0b1218), // Highlighted session
-            ),
-          ),
-          TextSpan(
-            text:
-                " with Sayed Ahmed on Monday, 4 November 2024 at 09:00 Am.\n",
+            text: "\n$message.\n",
             style: TextStyle(
               color: Color(
                 0xff252c32,
@@ -43,7 +48,7 @@ class RichTextButton extends StatelessWidget {
             ),
           ),
           TextSpan(
-            text: '2d',
+            text: date,
             style: TextStyle(
               color: Color(0xff68707b),
             ),
