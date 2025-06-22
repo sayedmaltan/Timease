@@ -46,10 +46,11 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
             padding: EdgeInsets.symmetric(horizontal: 17),
             child: SafeArea(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
                     AssetsImages.registerScreen,
+                    width: 290,
+                    height: 290,
                   ),
                   Text(
                     'Sign Up',
