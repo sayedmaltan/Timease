@@ -1,8 +1,9 @@
 import 'dart:convert';
+import 'dart:math' as math;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timease_mobile/core/utils/cash_helper.dart';
 import 'package:timease_mobile/features/notification/data/repos/notifications_repo.dart';
-
+import '../../../../../../core/utils/notification_service.dart';
 import '../../../../data/models/notifications_model.dart';
 import 'notifications_state.dart';
 
@@ -15,10 +16,8 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     return BlocProvider.of(context);
   }
 
-  Future<void> getUnSentNotifications({
-    required String userId,
-    required bool isTimer
-  }) async {
+  Future<void> getUnSentNotifications(
+      {required String userId, required bool isTimer}) async {
     emit(GetUnSentNotificationsLoading(isTimer: isTimer));
     var response =
         await notificationsRepo.getUnSentNotifications(userId: userId);
@@ -31,14 +30,28 @@ class NotificationsCubit extends Cubit<NotificationsState> {
             await loadCashedNotifications();
         List<Notifications> unSentNotifications =
             notifications.notifications ?? [];
+        showAllNotifications(unSentNotifications: unSentNotifications,isTimer: isTimer);
         unSentNotifications.addAll(cashedNotifications);
-          while (unSentNotifications.length > 10) {
-            unSentNotifications.removeAt(unSentNotifications.length-1);
-          }
+        while (unSentNotifications.length > 10) {
+          unSentNotifications.removeAt(unSentNotifications.length - 1);
+        }
         saveCashedNotifications(unSentNotifications: unSentNotifications);
-        emit(GetUnSentNotificationsSuccess(notificationsList: unSentNotifications));
+        emit(GetUnSentNotificationsSuccess(
+            notificationsList: unSentNotifications));
       },
     );
+  }
+
+  void showAllNotifications(
+      {required List<Notifications> unSentNotifications, required isTimer}) {
+    if (isTimer) {
+      for (var element in unSentNotifications) {
+        NotificationsService().showNotification(
+            body: element.message,
+            title: element.title,
+            id: math.Random().nextInt(100));
+      }
+    }
   }
 
   Future<List<Notifications>> loadCashedNotifications() async {

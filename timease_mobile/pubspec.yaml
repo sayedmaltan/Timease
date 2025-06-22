@@ -48,6 +48,7 @@ dependencies:
   pretty_dio_logger: ^1.4.0
   google_fonts: ^6.2.1
   app_links: ^6.4.0
+  flutter_local_notifications: ^19.3.0
   
 
 dev_dependencies:

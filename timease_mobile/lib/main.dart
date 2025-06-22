@@ -10,6 +10,7 @@ import 'package:timease_mobile/features/notification/presentation/views/manger/n
 import 'core/utils/cash_helper.dart';
 import 'core/utils/function/build_theme_data.dart';
 import 'core/utils/function/change_status_bar_color.dart';
+import 'core/utils/notification_service.dart';
 import 'features/event/data/repos/event_repo_impl.dart';
 import 'features/event/presentation/manger/event_cubit/user_events_cubit.dart';
 import 'features/meeting/presentation/manger/meeting_cubit/meeting_cubit.dart';
@@ -17,6 +18,7 @@ import 'features/meeting/presentation/manger/meeting_cubit/meeting_cubit.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CashHelper.init();
+  NotificationsService().initNotification();
   changeStatusBarColor();
   setupServiceLocator();
   runApp(const MyApp());

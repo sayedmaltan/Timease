@@ -24,7 +24,7 @@ class _NotificationsScreenViewBodyState
       onRefresh: () {
         NotificationsCubit notificationsCubit = NotificationsCubit.get(context);
         notificationsCubit.getUnSentNotifications(
-            userId: CashHelper.getData('userId'), isTimer: true);
+            userId: CashHelper.getData('userId'), isTimer: false);
         return Future.delayed(Duration(seconds: 1));
       },
       child: BlocConsumer<NotificationsCubit, NotificationsState>(
