@@ -9,6 +9,7 @@ import 'package:timease_mobile/features/meeting/presentation/manger/meeting_cubi
 import 'package:timease_mobile/features/notification/presentation/views/manger/notifications_cubit/notifications_cubit.dart';
 import 'package:timease_mobile/features/notification/presentation/views/notifications_screen_view_body.dart';
 
+import '../../../../core/utils/workmanger.dart';
 import '../../../event/presentation/manger/event_cubit/user_events_cubit.dart';
 import '../../../meeting/presentation/views/meetings_screen_view_body.dart';
 
@@ -40,8 +41,9 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     MeetingCubit meetingCubit = MeetingCubit.get(context);
     meetingCubit.getUserMeetingsList();
     NotificationsCubit notificationsCubit = NotificationsCubit.get(context);
-    notificationsCubit.getUnSentNotifications(userId: CashHelper.getData('userId'));
+    notificationsCubit.getUnSentNotifications(userId: CashHelper.getData('userId'),isTimer: true);
     selectBottomNavBar=widget.bodyIndex;
+    BackgroundTaskService().start(context: context);
   }
   @override
   Widget build(BuildContext context) {
