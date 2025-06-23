@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -20,13 +21,15 @@ public class NotificationController {
     private NotificationService notificationService;
 
     @PostMapping("/broadcast")
-    public ResponseEntity<Void> broadcastToEventAttendees(@RequestBody BroadcastRequest request) {
+    public ResponseEntity<?> broadcastToEventAttendees(@RequestBody BroadcastRequest request) {
         notificationService.broadcastToEventAttendees(
                 request.getEventId(),
                 request.getTitle(),
                 request.getMessage()
         );
-        return ResponseEntity.ok().build();
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "message broadcasted Success" );
+        return ResponseEntity.ok(response);
     }
 
 
