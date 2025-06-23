@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:timease_mobile/core/utils/app_router.dart';
 import 'package:timease_mobile/core/utils/cash_helper.dart';
 import 'package:timease_mobile/core/utils/function/custom_toast.dart';
+import 'package:timease_mobile/core/utils/function/show_broadcast_sheet.dart';
 import 'package:timease_mobile/features/event/data/models/event_model.dart';
 import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_cubit.dart';
 import '../../../constants.dart';
@@ -63,9 +64,12 @@ void showEventModelSheet(context, EventModel eventModel,) {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.share, color: kPrimaryColor),
-                title: Text('More share options'),
-                onTap: () {},
+                leading: Icon(Icons.broadcast_on_personal_outlined, color: kPrimaryColor),
+                title: Text('Create a BroadCast'),
+                onTap: () {
+                  context.pop();
+                  showBroadCastBottomSheet(context: context,eventId:  eventModel.id!);
+                },
               ),
               ListTile(
                 leading: Icon(Icons.delete, color: Colors.red),
