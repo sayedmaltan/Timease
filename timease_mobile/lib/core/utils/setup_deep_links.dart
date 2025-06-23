@@ -8,7 +8,6 @@ final AppLinks _appLinks = AppLinks();
 
 Future<bool> setupDeepLinkHandler(BuildContext context) async {
   bool isNavigate = false;
-
   // // Handle incoming deep links
   // _appLinks.uriLinkStream.listen((Uri? uri) async {
   //   if (uri != null) {
