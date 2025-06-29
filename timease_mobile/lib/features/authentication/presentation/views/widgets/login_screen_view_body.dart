@@ -97,7 +97,9 @@ class _LoginScreenViewBodyState extends State<LoginScreenViewBody> {
                     height: 20,
                   ),
                   state is LoginLoading
-                      ? CustomLoadingButton()
+                      ? CustomLoadingButton(
+                          height: 50,
+                        )
                       : CustomFullButton(
                           text: 'Login',
                           height: 50,

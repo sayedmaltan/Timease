@@ -128,7 +128,9 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
                     height: 20,
                   ),
                   state is RegisterLoading
-                      ? CustomLoadingButton()
+                      ? CustomLoadingButton(
+                    height: 50,
+                  )
                       : CustomFullButton(
                           text: 'Register',
                           height: 50,

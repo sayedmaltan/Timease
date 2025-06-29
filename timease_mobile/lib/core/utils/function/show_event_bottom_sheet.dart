@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:timease_mobile/core/utils/app_router.dart';
 import 'package:timease_mobile/core/utils/cash_helper.dart';
-import 'package:timease_mobile/core/utils/function/custom_toast.dart';
 import 'package:timease_mobile/core/utils/function/show_broadcast_sheet.dart';
 import 'package:timease_mobile/features/event/data/models/event_model.dart';
 import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_cubit.dart';
@@ -42,14 +41,13 @@ void showEventModelSheet(context, EventModel eventModel,) {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.link, color: kPrimaryColor),
-                title: Text('Copy link'),
+                leading: Icon(Icons.share, color: kPrimaryColor),
+                title: Text('Share'),
                 onTap: () {
-                  Clipboard.setData(ClipboardData(text:"https://timease-production.up.railway.app/eventId/${eventModel.id!}"));
-                  context.pop();
-                  customShowToast(
-                    msg: 'Copied to Keyboard',
+                  SharePlus.instance.share(
+                      ShareParams(text: "https://timease-production.up.railway.app/eventId/${eventModel.id!}")
                   );
+                  context.pop();
                 },
               ),
               ListTile(
