@@ -42,7 +42,7 @@ class BackgroundTaskService {
   Timer? _timer;
 
   void start({required BuildContext context}) {
-    _timer ??= Timer.periodic(Duration(minutes: 10), (timer) {
+    _timer ??= Timer.periodic(Duration(minutes: 5), (timer) {
       NotificationsCubit notificationsCubit =
         NotificationsCubit.get(context);
     notificationsCubit.getUnSentNotifications(

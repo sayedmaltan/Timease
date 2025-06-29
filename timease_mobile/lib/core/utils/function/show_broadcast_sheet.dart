@@ -8,7 +8,6 @@ import 'package:timease_mobile/core/widgets/custom_loading_button.dart';
 import 'package:timease_mobile/features/authentication/presentation/views/widgets/custom_field_column.dart';
 import 'package:timease_mobile/features/event/presentation/manger/broad_cast_cubit/broad_cast_cubit.dart';
 import 'package:timease_mobile/features/event/presentation/manger/broad_cast_cubit/broad_cast_state.dart';
-
 import 'custom_toast.dart';
 
 void showBroadCastBottomSheet({
@@ -21,6 +20,7 @@ void showBroadCastBottomSheet({
   showModalBottomSheet(
     backgroundColor: Colors.white,
     context: context,
+    isScrollControlled: true,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
     ),
@@ -41,7 +41,14 @@ void showBroadCastBottomSheet({
             return Form(
               key: formKey,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding:  EdgeInsets.only(
+                  bottom: MediaQuery.of(context)
+                      .viewInsets
+                      .bottom,
+                  left: 16,
+                  right: 16,
+                  top: 16,
+                ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [

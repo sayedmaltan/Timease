@@ -11,7 +11,7 @@ class CustomFullButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
-    this.height = 56,
+    this.height = 50,
      this.radios,
   });
 

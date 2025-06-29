@@ -46,39 +46,6 @@ class CustomTabBarBody extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    'Host',
-                    style: Styles.textStyleBlack,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: kPrimaryColor,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: ExpansionTile(
-                        title: Text('Host Details'),
-                        shape: RoundedRectangleBorder(
-                            side: BorderSide(color: kPrimaryColor)),
-                        children: [
-                          Divider(),
-                          ListView.separated(
-                            shrinkWrap: true,
-                            itemCount: 1,
-                            separatorBuilder: (context, index) =>
-                                Divider(),
-                            itemBuilder: (context, index) => ListTile(
-                              title: Text(''),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Text(
                     'Invitee details',
                     style: Styles.textStyleBlack,
                   ),
@@ -89,9 +56,13 @@ class CustomTabBarBody extends StatelessWidget {
                         radius: 12,
                         backgroundColor: kSecPrimaryColor,
                       ),
-                      Text(
-                        '${meetings.attendees![0].firstName!} ${meetings.attendees![0].lastName!}',
-                        style: Styles.textStyleSpaceButton,
+                      Expanded(
+                        child: Text(
+                          '${meetings.attendees![0].firstName!} ${meetings.attendees![0].lastName!}',
+                          style: Styles.textStyleSpaceButton,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
                       ),
                     ],
                   ),

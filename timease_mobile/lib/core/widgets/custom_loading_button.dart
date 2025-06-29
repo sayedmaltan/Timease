@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:timease_mobile/constants.dart';
 
 class CustomLoadingButton extends StatelessWidget {
   final double height;
@@ -14,11 +13,12 @@ class CustomLoadingButton extends StatelessWidget {
     return Container(
         height: height,
         decoration: BoxDecoration(
-          color: kPrimaryColor,
+          color: Color.fromARGB(255, 0, 0, 0),
           borderRadius: BorderRadius.circular(30),
         ),
         width: double.infinity,
         child: Center(child: CircularProgressIndicator(
+          color: Colors.white,
         )));
   }
 }

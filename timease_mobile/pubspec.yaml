@@ -49,6 +49,7 @@ dependencies:
   google_fonts: ^6.2.1
   app_links: ^6.4.0
   flutter_local_notifications: ^19.3.0
+  share_plus: ^11.0.0
   
 
 dev_dependencies:
