@@ -137,4 +137,13 @@ public class MeetingService {
             meetingRepository.save(meeting);
         }
     }
+
+    public Map<String,String> getEventTitlesByMeetingIds(List<UUID> meetingIds) {
+        List<Meeting> meetings = meetingRepository.findAllById(meetingIds);
+        Map<String,String> res=new HashMap<>();
+        for (Meeting meeting : meetings) {
+            res.put(meeting.getId().toString(),meeting.getAvailability().getEvent().getTitle());
+        }
+        return res;
+    }
 }

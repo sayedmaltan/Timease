@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -40,6 +42,10 @@ public class MeetingController {
     @GetMapping("/fullMeeting")
     public ResponseEntity<?> getFullMeetings(@RequestParam UUID availabilityId, @RequestParam LocalDate date) {
         return ResponseEntity.ok(meetingService.getFullMeetings(availabilityId, date));
+    }
+    @GetMapping("/meetingTitles")
+    public ResponseEntity<?> getMeetingTitles(@RequestParam Map<String,Object> req) {
+        return ResponseEntity.ok(meetingService.getEventTitlesByMeetingIds((List<UUID>) req.get("list")));
     }
 
     @DeleteMapping
