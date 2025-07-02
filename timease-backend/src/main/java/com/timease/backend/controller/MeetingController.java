@@ -44,7 +44,7 @@ public class MeetingController {
         return ResponseEntity.ok(meetingService.getFullMeetings(availabilityId, date));
     }
     @GetMapping("/meetingTitles")
-    public ResponseEntity<?> getMeetingTitles(@RequestParam Map<String,Object> req) {
+    public ResponseEntity<?> getMeetingTitles(@RequestBody Map<String,Object> req) {
         return ResponseEntity.ok(meetingService.getEventTitlesByMeetingIds((List<UUID>) req.get("list")));
     }
 
