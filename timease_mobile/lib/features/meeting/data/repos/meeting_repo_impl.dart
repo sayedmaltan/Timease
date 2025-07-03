@@ -12,7 +12,6 @@ class MeetingRepoImpl implements MeetingRepo {
 
   MeetingRepoImpl({required this.apiService});
 
-
   @override
   Future<Either<Failure, CreateMeetingSuccessState>> createMeeting(
       {required String availabilityId,
@@ -20,13 +19,13 @@ class MeetingRepoImpl implements MeetingRepo {
       required String startTime,
       required String endTime}) async {
     try {
-       await apiService.post(
+      await apiService.post(
         endPoint: 'meeting',
         body: {
           "availabilityId": availabilityId,
           "date": date,
           "startTime": startTime,
-          "endTime" : endTime
+          "endTime": endTime
         },
       );
       return right(CreateMeetingSuccessState());
@@ -39,10 +38,12 @@ class MeetingRepoImpl implements MeetingRepo {
   }
 
   @override
-  Future<Either<Failure, CheckFullyBookedModel>> checkFullyBooked({required String availabilityId, required String date}) async {
+  Future<Either<Failure, CheckFullyBookedModel>> checkFullyBooked(
+      {required String availabilityId, required String date}) async {
     try {
-      var json=await apiService.get(
-        endPoint: 'meeting/fullMeeting?availabilityId=$availabilityId&date=$date',
+      var json = await apiService.get(
+        endPoint:
+            'meeting/fullMeeting?availabilityId=$availabilityId&date=$date',
       );
       return right(CheckFullyBookedModel.fromJson(json));
     } catch (e) {
@@ -56,8 +57,24 @@ class MeetingRepoImpl implements MeetingRepo {
   @override
   Future<Either<Failure, GetUserMeetingsModel>> getUserMeetings() async {
     try {
-      var json=await apiService.get(
+      var json = await apiService.get(
         endPoint: 'meeting/userMeetings',
+      );
+      List ids = [];
+      for (int i = 0; i < json['meetings'].length; i++) {
+        ids.add(json['meetings'][i]['id']);
+      }
+      var json2 = await apiService.get(
+        endPoint: 'meeting/meetingTitles',
+        body: {
+          "list": ids,
+        },
+      );
+      int counter = 0;
+      json2.forEach(
+        (key, value) {
+          json['meetings'][counter++]['title'] = value;
+        },
       );
       return right(GetUserMeetingsModel.fromJson(json));
     } catch (e) {
@@ -69,18 +86,18 @@ class MeetingRepoImpl implements MeetingRepo {
   }
 
   @override
-  Future<Either<Failure, bool>> deleteUserMeetingItem({required String meetingId}) async {
-      try {
-        await apiService.delete(
-          endPoint: 'meeting?meetingId=$meetingId',
-        );
-        return right(true);
-      } catch (e) {
-        if (e is DioException) {
-          return left(ServerFailure.fromDioError(dioError: e));
-        }
-        return left(ServerFailure(errMessage: e.toString()));
+  Future<Either<Failure, bool>> deleteUserMeetingItem(
+      {required String meetingId}) async {
+    try {
+      await apiService.delete(
+        endPoint: 'meeting?meetingId=$meetingId',
+      );
+      return right(true);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioError(dioError: e));
       }
-
+      return left(ServerFailure(errMessage: e.toString()));
+    }
   }
 }

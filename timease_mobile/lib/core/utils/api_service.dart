@@ -80,9 +80,10 @@ class ApiService {
     ));
   }
 
-  Future<Map<String, dynamic>> get({required String endPoint}) async {
+  Future<Map<String, dynamic>> get({required String endPoint,Map? body}) async {
     var response = await dio.get(
       _baseUrl + endPoint,
+      data: body
     );
     return response.data;
   }

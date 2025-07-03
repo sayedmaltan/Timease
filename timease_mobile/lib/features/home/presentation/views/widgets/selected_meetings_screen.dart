@@ -15,7 +15,7 @@ class SelectedMeetingsScreen extends StatelessWidget {
         child: ListView.builder(
           itemCount: selectedMeetings.length,
           itemBuilder: (context, index) => CustomMeetingBox(
-            meetingId: selectedMeetings[index].id!,
+            meetingTitle: selectedMeetings[index].id!,
             meetingModel: selectedMeetings[index],
           ),
         ),

@@ -84,7 +84,8 @@ class _HomeScreenViewBodyState extends State<HomeScreenViewBody> {
                 );
               } else {
                 if (state is! GetUserMeetingsLoadingState &&
-                    state is! GetUserMeetingsFailureState) {
+                    state is! GetUserMeetingsFailureState &&
+                    state is! DeleteUserMeetingLoading) {
                   MeetingCubit meetingCubit = MeetingCubit.get(context);
                   meetingCubit.getUserMeetingsList();
                 }

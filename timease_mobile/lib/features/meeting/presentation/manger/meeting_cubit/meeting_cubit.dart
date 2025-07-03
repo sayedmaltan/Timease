@@ -17,13 +17,9 @@ class MeetingCubit extends Cubit<MeetingStates> {
   TextEditingController meetingController = TextEditingController();
   List<Meetings> originalMeetings = [];
 
-
-
-
   static MeetingCubit get(context) {
     return BlocProvider.of(context);
   }
-
 
   Future<void> getUserMeetingsList() async {
     emit(GetUserMeetingsLoadingState());
@@ -67,8 +63,15 @@ class MeetingCubit extends Cubit<MeetingStates> {
         var attendee = meetings[i].attendees;
         for (int j = 0; j < attendee!.length; j++) {
           String name = '${attendee[j].firstName} ${attendee[j].lastName}';
-          if (name.toLowerCase().contains(meetingController.text.toLowerCase())) {
+          if (meetings[i]
+                  .title!
+                  .toLowerCase()
+                  .contains(meetingController.text.toLowerCase()) ||
+              name
+                  .toLowerCase()
+                  .contains(meetingController.text.toLowerCase())) {
             myList.add(meetings[i]);
+            break;
           }
         }
       }

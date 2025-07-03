@@ -8,11 +8,11 @@ import '../../../../../core/utils/function/build_container_decoration.dart';
 class CustomMeetingBox extends StatelessWidget {
   const CustomMeetingBox({
     super.key,
-    required this.meetingId,
+    required this.meetingTitle,
     required this.meetingModel,
   });
 
-  final String meetingId;
+  final String meetingTitle;
   final Meetings meetingModel;
 
   @override
@@ -48,7 +48,7 @@ class CustomMeetingBox extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      meetingId,
+                      meetingTitle,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: TextStyle(
