@@ -57,11 +57,19 @@ class CustomTabBarBody extends StatelessWidget {
                         backgroundColor: kSecPrimaryColor,
                       ),
                       Expanded(
-                        child: Text(
-                          '${meetings.attendees![0].firstName!} ${meetings.attendees![0].lastName!}',
-                          style: Styles.textStyleSpaceButton,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
+                        child: SizedBox(
+                          height: 28,
+                          child: ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) => Text(
+                              '${index != 0 ? ' and ' : ''}${meetings.attendees![index].firstName} ${meetings.attendees![index].lastName}',
+                              style: Styles.textStyleSpaceButton,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                            ),
+                            itemCount: meetings.attendees!.length,
+                          ),
                         ),
                       ),
                     ],
@@ -79,8 +87,8 @@ class CustomTabBarBody extends StatelessWidget {
                       Icon(Icons.mail_outline),
                       Text(
                         'sayedmaltan@gmail.com',
-                        style: Styles.textStyleSpaceButton
-                            .copyWith(fontSize: 15),
+                        style:
+                            Styles.textStyleSpaceButton.copyWith(fontSize: 15),
                       ),
                     ],
                   ),
@@ -108,3 +116,4 @@ class CustomTabBarBody extends StatelessWidget {
     );
   }
 }
+

@@ -32,6 +32,7 @@ class Meetings {
   String? endTime;
   List<Attendees>? attendees;
   bool? available;
+  String? title;
 
   Meetings({
     this.id,
@@ -41,10 +42,12 @@ class Meetings {
     this.endTime,
     this.attendees,
     this.available,
+    this.title
   });
 
   Meetings.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    title = json['title'];
     availability = json['availability'] != null
         ? Availability.fromJson(json['availability'])
         : null;

@@ -98,8 +98,8 @@ class MeetingsScreenViewBody extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: state.getUserMeetingsModel.meetings!.length,
                       itemBuilder: (context, index) => CustomMeetingBox(
-                        meetingId:
-                            state.getUserMeetingsModel.meetings![index].id!,
+                        meetingTitle:
+                            state.getUserMeetingsModel.meetings![index].title!,
                         meetingModel:
                             state.getUserMeetingsModel.meetings![index],
                       ),
@@ -110,7 +110,7 @@ class MeetingsScreenViewBody extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: state.meetings.length,
                       itemBuilder: (context, index) => CustomMeetingBox(
-                        meetingId: state.meetings[index].id!,
+                        meetingTitle: state.meetings[index].title!,
                         meetingModel: state.meetings[index],
                       ),
                     ),
@@ -119,7 +119,9 @@ class MeetingsScreenViewBody extends StatelessWidget {
             );
           } else {
             if (state is! GetUserMeetingsLoadingState &&
-                state is! GetUserMeetingsFailureState) {
+                state is! GetUserMeetingsFailureState
+            &&  state is! DeleteUserMeetingLoading
+            ) {
               MeetingCubit meetingCubit = MeetingCubit.get(context);
               meetingCubit.getUserMeetingsList();
             }

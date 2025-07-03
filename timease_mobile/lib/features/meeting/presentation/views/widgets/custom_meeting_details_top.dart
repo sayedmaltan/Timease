@@ -28,45 +28,32 @@ class CustomMeetingDetailsTop extends StatelessWidget {
                 radius: 10,
                 backgroundColor: kPrimaryColor,
               ),
-              Expanded(
-                child: SizedBox(
-                  height: 35,
-                  child: ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) => Text(
-                      '${index != 0 ? ' and ' : ''}${meetings.attendees![index].firstName} ${meetings.attendees![index].firstName}',
-                      style: Styles.textStyleBlack.copyWith(fontSize: 23),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                    itemCount: meetings.attendees!.length,
-                  ),
-                ),
+              Text(
+                '${meetings.title}',
+                style: Styles.textStyleBlack.copyWith(fontSize: 23),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 32.0),
-            child: Column(
-              spacing: 5,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  DatesConverter.convertDateFormat3(
-                    date: meetings.date!,
-                  ),
-                  style: Styles.textStyle14.copyWith(
-                    color: Colors.black45,
-                  ),
+          Column(
+            spacing: 5,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                DatesConverter.convertDateFormat3(
+                  date: meetings.date!,
                 ),
-                Text(
-                  '${DatesConverter.convert24hrTo12(time24Hr: meetings.startTime!)} - ${DatesConverter.convert24hrTo12(time24Hr: meetings.endTime!)} (GMT+02:00)',
-                  style: Styles.textStyle14.copyWith(color: Colors.black45),
+                style: Styles.textStyle14.copyWith(
+                  color: Colors.black45,
                 ),
-              ],
-            ),
+              ),
+              Text(
+                '${DatesConverter.convert24hrTo12(time24Hr: meetings.startTime!)} - ${DatesConverter.convert24hrTo12(time24Hr: meetings.endTime!)} (GMT+02:00)',
+                style: Styles.textStyle14.copyWith(color: Colors.black45),
+              ),
+            ],
           ),
         ],
       ),
