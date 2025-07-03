@@ -14,9 +14,7 @@ import 'package:timease_mobile/core/widgets/custom_text_form_field.dart';
 import 'package:timease_mobile/features/authentication/presentation/manger/login_cubit/login_cubit.dart';
 import 'package:timease_mobile/features/authentication/presentation/manger/login_cubit/login_state.dart';
 import 'package:timease_mobile/features/authentication/presentation/views/widgets/custom_password_row.dart';
-import 'custom_divider_with_Text.dart';
 import 'custom_field_column.dart';
-import 'custom_sign_with_google.dart';
 
 class LoginScreenViewBody extends StatefulWidget {
   const LoginScreenViewBody({super.key});
@@ -115,11 +113,11 @@ class _LoginScreenViewBodyState extends State<LoginScreenViewBody> {
                   SizedBox(
                     height: 10,
                   ),
-                  CustomDividerWithText(text: 'or sign in with'),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CustomSignWithGoogle(),
+                  // CustomDividerWithText(text: 'or sign in with'),
+                  // SizedBox(
+                  //   height: 10,
+                  // ),
+                  // CustomSignWithGoogle(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
