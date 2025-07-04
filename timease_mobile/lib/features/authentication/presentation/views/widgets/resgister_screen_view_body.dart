@@ -14,10 +14,8 @@ import 'package:timease_mobile/core/widgets/custom_text_form_field.dart';
 import 'package:timease_mobile/features/authentication/presentation/manger/register_cubit/register_cubit.dart';
 import 'package:timease_mobile/features/authentication/presentation/manger/register_cubit/register_state.dart';
 import 'package:timease_mobile/features/authentication/presentation/views/widgets/custom_password_row.dart';
-import 'custom_divider_with_Text.dart';
 import 'custom_field_column.dart';
 import 'custom_name_field_column.dart';
-import 'custom_sign_with_google.dart';
 
 class RegisterScreenViewBody extends StatefulWidget {
   const RegisterScreenViewBody({super.key});
@@ -49,8 +47,8 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
                 children: [
                   Image.asset(
                     AssetsImages.registerScreen,
-                    width: 200,
-                    height: 200,
+                    width: 250,
+                    height: 250,
                   ),
                   Text(
                     'Sign Up',
@@ -146,11 +144,6 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
                   SizedBox(
                     height: 10,
                   ),
-                  CustomDividerWithText(text: 'or sign up with'),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CustomSignWithGoogle(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
