@@ -19,9 +19,12 @@ class ConfirmMeetingScreenView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CreateMeetingCubit createMeetingCubit = CreateMeetingCubit.get(context);
-    String dayOfWeak = DateFormat('EEE').format(createMeetingCubit.selectedDay!);
-    String date = DateFormat("MMMM d, y").format(createMeetingCubit.selectedDay!);
-    DateTime startTime = DateFormat("hh:mm a").parse(confirmMeetingArgsModel.startTime);
+    String dayOfWeak =
+        DateFormat('EEE').format(createMeetingCubit.selectedDay!);
+    String date =
+        DateFormat("MMMM d, y").format(createMeetingCubit.selectedDay!);
+    DateTime startTime =
+        DateFormat("hh:mm a").parse(confirmMeetingArgsModel.startTime);
     DateTime endTime24hr = startTime
         .add(Duration(minutes: confirmMeetingArgsModel.eventModel.duration!));
     String endTime12hr = DateFormat("hh:mm a").format(endTime24hr);
@@ -53,8 +56,13 @@ class ConfirmMeetingScreenView extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: ConfirmMeetingViewBody(confirmMeetingArgsModel: confirmMeetingArgsModel, dayOfWeak: dayOfWeak, date: date, endTime12hr: endTime12hr),
+      body: ConfirmMeetingViewBody(
+        confirmMeetingArgsModel: confirmMeetingArgsModel,
+        dayOfWeak: dayOfWeak,
+        date: date,
+        endTime12hr: endTime12hr,
+        hostName: confirmMeetingArgsModel.hostName,
+      ),
     );
   }
 }
-

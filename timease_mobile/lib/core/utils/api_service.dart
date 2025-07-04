@@ -26,18 +26,10 @@ class ApiService {
   void interceptorsWrapper() {
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
-        if (options.path.compareTo(
-                    '${_baseUrl}auth/login') ==
-                0 ||
-            options.path.compareTo(
-                    '${_baseUrl}auth/signup') ==
-                0 ||
-            options.path.compareTo(
-                    '${_baseUrl}auth/logout') ==
-                0 ||
-            options.path.compareTo(
-                    '${_baseUrl}auth/refresh-token') ==
-                0) {
+        if (options.path.compareTo('${_baseUrl}auth/login') == 0 ||
+            options.path.compareTo('${_baseUrl}auth/signup') == 0 ||
+            options.path.compareTo('${_baseUrl}auth/logout') == 0 ||
+            options.path.compareTo('${_baseUrl}auth/refresh-token') == 0) {
           options.headers["Authorization"] = "";
         } else {
           options.headers["Authorization"] =
@@ -80,11 +72,9 @@ class ApiService {
     ));
   }
 
-  Future<Map<String, dynamic>> get({required String endPoint,Map? body}) async {
-    var response = await dio.get(
-      _baseUrl + endPoint,
-      data: body
-    );
+  Future<Map<String, dynamic>> get(
+      {required String endPoint, Map? body}) async {
+    var response = await dio.get(_baseUrl + endPoint, data: body);
     return response.data;
   }
 

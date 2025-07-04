@@ -3,6 +3,7 @@ import 'package:timease_mobile/core/utils/function/custom_box_decoration.dart';
 import 'package:timease_mobile/core/utils/styles.dart';
 
 import '../../../../../constants.dart';
+import '../../../../../core/utils/cash_helper.dart';
 import 'custom_image_icon.dart';
 
 class CustomCreateEventHost extends StatelessWidget {
@@ -41,7 +42,7 @@ class CustomCreateEventHost extends StatelessWidget {
                     size: imageSize,
                   ),
                   Text(
-                    "Sayed Ahmed (you)",
+                    "${CashHelper.getData('name')} (you)",
                     style: Styles.textStyle14
                         .copyWith(fontWeight: FontWeight.w400),
                   )
@@ -66,16 +67,15 @@ class CustomCreateEventHost extends StatelessWidget {
                         size: 29,
                       ),
                       Column(
-
                         spacing: 5,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Sayed Ahmed (you)",
+                            "${CashHelper.getData('name')}",
                           ),
                           Text(
-                            "sayedmaltan@gmail.com",
+                            "${CashHelper.getData('email')}",
                             style: TextStyle(
                               color: kSecPrimaryColor.shade500,
                             ),

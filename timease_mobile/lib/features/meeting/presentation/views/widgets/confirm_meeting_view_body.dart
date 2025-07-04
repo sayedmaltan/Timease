@@ -19,12 +19,14 @@ class ConfirmMeetingViewBody extends StatelessWidget {
     required this.dayOfWeak,
     required this.date,
     required this.endTime12hr,
+    required this.hostName,
   });
 
   final ConfirmMeetingArgsModel confirmMeetingArgsModel;
   final String dayOfWeak;
   final String date;
   final String endTime12hr;
+  final String hostName;
 
   @override
   Widget build(BuildContext context) {
@@ -76,10 +78,9 @@ class ConfirmMeetingViewBody extends StatelessWidget {
                       style: Styles.textStyleBlack.copyWith(fontSize: 16),
                     ),
                     CustomConfirmMeetingBuildAttendee(
-                      name: "Sayed Ahmed",
+                      name: hostName,
                       isHost: true,
                     ),
-
                     Spacer(),
                     state is CreateMeetingLoadingState
                         ? CustomLoadingButton()
@@ -87,7 +88,8 @@ class ConfirmMeetingViewBody extends StatelessWidget {
                             text: "Schedule meeting",
                             onPressed: () async {
                               await createMeetingCubit.createMeeting(
-                                availabilityId: createMeetingCubit.availabilityId!,
+                                availabilityId:
+                                    createMeetingCubit.availabilityId!,
                                 date: DatesConverter.convertDateFormat1(
                                     date: date),
                                 startTime: DatesConverter.convert12hrTo24(

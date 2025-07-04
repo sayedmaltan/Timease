@@ -119,9 +119,8 @@ class MeetingsScreenViewBody extends StatelessWidget {
             );
           } else {
             if (state is! GetUserMeetingsLoadingState &&
-                state is! GetUserMeetingsFailureState
-            &&  state is! DeleteUserMeetingLoading
-            ) {
+                state is! GetUserMeetingsFailureState &&
+                state is! DeleteUserMeetingLoading) {
               MeetingCubit meetingCubit = MeetingCubit.get(context);
               meetingCubit.getUserMeetingsList();
             }

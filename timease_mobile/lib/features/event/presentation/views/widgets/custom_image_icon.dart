@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../../constants.dart';
+import '../../../../../core/utils/cash_helper.dart';
 import '../../../../../core/utils/styles.dart';
 
 class CustomImageIcon extends StatelessWidget {
@@ -24,7 +25,7 @@ class CustomImageIcon extends StatelessWidget {
       ),
       onPressed: () {},
       child: Text(
-        'S',
+        CashHelper.getData('name')[0].toString().toUpperCase(),
         style: Styles.textStyle12.copyWith(
           color: kSecPrimaryColor.shade600,
           fontSize: textSize??10,

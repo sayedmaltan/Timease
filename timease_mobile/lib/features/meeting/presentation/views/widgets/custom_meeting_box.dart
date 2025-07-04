@@ -19,7 +19,7 @@ class CustomMeetingBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push(AppRouter.meetingDetailsScreen,extra: meetingModel);
+        context.push(AppRouter.meetingDetailsScreen, extra: meetingModel);
       },
       child: Container(
         width: double.infinity,

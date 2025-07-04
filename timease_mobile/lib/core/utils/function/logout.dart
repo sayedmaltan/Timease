@@ -8,6 +8,8 @@ void logout({ BuildContext? context}) {
   CashHelper.removeData('refreshToken');
   CashHelper.removeData('accessToken');
   CashHelper.removeData('userId');
+  CashHelper.removeData('email');
+  CashHelper.removeData('name');
   if(context!=null) {
     context.go(AppRouter.authScreen);
   } else {

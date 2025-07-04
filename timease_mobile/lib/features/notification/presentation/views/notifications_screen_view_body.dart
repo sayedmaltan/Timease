@@ -6,7 +6,6 @@ import 'package:timease_mobile/core/widgets/custom_shimmer_loading.dart';
 import 'package:timease_mobile/features/notification/presentation/views/manger/notifications_cubit/notifications_cubit.dart';
 import 'package:timease_mobile/features/notification/presentation/views/manger/notifications_cubit/notifications_state.dart';
 import 'package:timease_mobile/features/notification/presentation/views/widgets/notification_item.dart';
-import '../../../../core/utils/function/logout.dart';
 
 class NotificationsScreenViewBody extends StatefulWidget {
   const NotificationsScreenViewBody({super.key});
@@ -66,12 +65,6 @@ class _NotificationsScreenViewBodyState
                       );
                     },
                   ),
-                ),
-                TextButton(
-                  onPressed: () async {
-                    logout(context: context);
-                  },
-                  child: Text('LOGOUT'),
                 ),
               ],
             );

@@ -6,6 +6,8 @@ import 'package:timease_mobile/features/authentication/data/models/login_model.d
 import 'package:timease_mobile/features/authentication/data/models/register_model.dart';
 import 'package:timease_mobile/features/authentication/data/repos/auth_repo.dart';
 
+import '../../../../core/utils/cash_helper.dart';
+
 class AuthRepoImpl implements AuthRepo {
   ApiService apiService;
 
@@ -21,6 +23,11 @@ class AuthRepoImpl implements AuthRepo {
         endPoint: 'auth/login',
         body: {'email': email, 'password': password},
       );
+      CashHelper.setData('accessToken', json['accessToken']);
+      var json2 = await apiService.get(
+        endPoint: 'user/${json['id']}',
+      );
+      json.addAll(json2);
       LoginModel loginModel = LoginModel.fromJson(json);
       return right(loginModel);
     } catch (e) {
@@ -56,6 +63,4 @@ class AuthRepoImpl implements AuthRepo {
       return Left(ServerFailure(errMessage: e.toString()));
     }
   }
-
-
 }
