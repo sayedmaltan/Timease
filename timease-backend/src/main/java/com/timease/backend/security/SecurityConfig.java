@@ -24,7 +24,9 @@ public class SecurityConfig {
             "/swagger-ui.html",
             "/swagger-resources/**",
             "/swagger-resources",
-            "/.well-known/assetlinks.json"
+            "/.well-known/assetlinks.json",
+            "/eventId",
+            "/eventId/**",
     };
 
 
