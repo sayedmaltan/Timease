@@ -28,7 +28,7 @@ public class Meeting {
     private LocalTime startTime;
     private LocalTime endTime;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "meeting_attendees",
             joinColumns = @JoinColumn(name = "meeting_id"),

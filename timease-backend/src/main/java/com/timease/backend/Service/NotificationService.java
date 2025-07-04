@@ -41,6 +41,7 @@ public class NotificationService {
         return notificationRepository.save(notification);
     }
 
+    @Transactional
     public void processUpComingNotifications() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime next24h = now.plusHours(24);
