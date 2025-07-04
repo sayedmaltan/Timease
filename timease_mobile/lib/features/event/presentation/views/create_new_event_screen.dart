@@ -6,6 +6,7 @@ import 'package:timease_mobile/core/widgets/custom_loading_button.dart';
 import 'package:timease_mobile/features/event/data/models/event_model.dart';
 import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_cubit.dart';
 import 'package:timease_mobile/features/event/presentation/manger/event_cubit/user_events_state.dart';
+import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_location.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_name.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_availability.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_close.dart';
@@ -13,7 +14,6 @@ import 'package:timease_mobile/features/event/presentation/views/widgets/custom_
 import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_divider.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_host.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_invitee.dart';
-import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_location.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_duration.dart';
 import 'package:timease_mobile/features/event/presentation/views/widgets/custom_create_event_save_changes_button.dart';
 import '../../../../core/utils/service_locator.dart';
@@ -50,6 +50,7 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
       customController = TextEditingController();
       titleController = TextEditingController();
       descriptionController = TextEditingController();
+      locationController = TextEditingController();
       inviteeLimitController = TextEditingController(text: '2');
     } else {
       List<AvailabilitiesItemModel> ava = [];
@@ -81,6 +82,8 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
           text: widget.eventModel!.maxAttendees.toString());
       descriptionController =
           TextEditingController(text: widget.eventModel!.description);
+      locationController =
+          TextEditingController(text: widget.eventModel!.location);
     }
   }
 
@@ -95,10 +98,12 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
   late TextEditingController titleController;
   late TextEditingController inviteeLimitController;
   late TextEditingController descriptionController;
+  late TextEditingController locationController;
   List<bool> isUnavailable = List.filled(7, false);
   bool isOpenDuration = false;
   bool isInviteeOpen = false;
   bool isDescriptionOpen = false;
+  bool isLocationOpen = false;
   bool isHostOpen = false;
   final List<String> durations = [
     "15 min",
@@ -166,7 +171,12 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
                     ),
                     CustomCreateEventDivider(),
                     CustomCreateEventLocation(
-                      onExpansionChanged: (value) {},
+                      onExpansionChanged: (value) {
+                        isLocationOpen = value;
+                        setState(() {});
+                      },
+                      isOpen: isLocationOpen,
+                      locationController: locationController,
                     ),
                     CustomCreateEventDivider(),
                     CustomCreateEventAvailability(
@@ -227,7 +237,9 @@ class _CreateNewEventScreenState extends State<CreateNewEventScreen> {
                               inviteeLimitController: inviteeLimitController,
                               schedulingRangeController:
                                   schedulingRangeController,
-                              widget: widget),
+                              widget: widget,
+                              locationController: locationController,
+                            ),
                     )
                   ],
                 ),

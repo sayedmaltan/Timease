@@ -34,16 +34,15 @@ class Meetings {
   bool? available;
   String? title;
 
-  Meetings({
-    this.id,
-    this.availability,
-    this.date,
-    this.startTime,
-    this.endTime,
-    this.attendees,
-    this.available,
-    this.title
-  });
+  Meetings(
+      {this.id,
+      this.availability,
+      this.date,
+      this.startTime,
+      this.endTime,
+      this.attendees,
+      this.available,
+      this.title});
 
   Meetings.fromJson(Map<String, dynamic> json) {
     id = json['id'];

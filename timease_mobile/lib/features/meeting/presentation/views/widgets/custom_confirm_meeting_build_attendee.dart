@@ -4,7 +4,9 @@ import '../../../../../constants.dart';
 import '../../../../../core/utils/styles.dart';
 
 class CustomConfirmMeetingBuildAttendee extends StatelessWidget {
-  const CustomConfirmMeetingBuildAttendee({super.key, required this.name, required this.isHost});
+  const CustomConfirmMeetingBuildAttendee(
+      {super.key, required this.name, required this.isHost});
+
   final String name;
   final bool isHost;
 
@@ -21,12 +23,20 @@ class CustomConfirmMeetingBuildAttendee extends StatelessWidget {
               color: kSecPrimaryColor.shade300,
               shape: BoxShape.circle,
             ),
-            child: Center(child: Text('SA')),
+            child: Center(
+              child: Text(
+                '${name.split(' ')[0][0].toUpperCase()}${name.split(' ')[1][0].toUpperCase()}',
+              ),
+            ),
           ),
           SizedBox(width: 10),
-          Text(
-            name,
-            style: Styles.textStyleBlack.copyWith(fontWeight: FontWeight.w500),
+          Expanded(
+            child: Text(
+              name,
+              style: Styles.textStyleBlack.copyWith(fontWeight: FontWeight.w500),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
           if (isHost) ...[
             SizedBox(width: 8),

@@ -24,6 +24,7 @@ class CustomCreateEventSaveChangesButton extends StatelessWidget {
     required this.inviteeLimitController,
     required this.schedulingRangeController,
     required this.widget,
+    required this.locationController,
   });
 
   final UserEventsCubit userEventsCubit;
@@ -34,6 +35,7 @@ class CustomCreateEventSaveChangesButton extends StatelessWidget {
   final List<TextEditingController> endTimeList;
   final GlobalKey<FormState> formKey;
   final TextEditingController descriptionController;
+  final TextEditingController locationController;
   final TextEditingController titleController;
   final TextEditingController customController;
   final String selectedDuration;
@@ -75,7 +77,14 @@ class CustomCreateEventSaveChangesButton extends StatelessWidget {
               msg:
                   'Event description is required.Provide details about the event.',
             );
-          } else if (schedulingRangeController.text == '0' && isPeriodic) {
+          }else if (locationController.text.isEmpty) {
+            showError(
+              context: context,
+              msg:
+              'Location is required.',
+            );
+          }
+          else if (schedulingRangeController.text == '0' && isPeriodic) {
             showError(
               context: context,
               msg: 'Enter schedulingRange Value',
@@ -84,7 +93,7 @@ class CustomCreateEventSaveChangesButton extends StatelessWidget {
             CreateEventModel createEventModel = CreateEventModel.fromJson({
               "title": titleController.text,
               "description": descriptionController.text,
-              "location": "Conference Room A",
+              "location": locationController.text,
               "duration": userEventsCubit.getDurationByMinutes(
                 customController: customController,
                 selectedDuration: selectedDuration,
