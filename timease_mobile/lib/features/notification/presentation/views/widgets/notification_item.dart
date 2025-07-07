@@ -37,11 +37,7 @@ class NotificationItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.asset(
-              index == 0
-                  ? 'assets/images/zoom.png'
-                  : index == 1
-                      ? "assets/images/google-meet.png"
-                      : "assets/images/Microsoft-Teams.png",
+              "assets/images/google-meet.png",
               height: 65,
               width: 65,
             ),
