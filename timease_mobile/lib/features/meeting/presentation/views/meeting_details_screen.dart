@@ -22,7 +22,9 @@ class MeetingDetailsScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             spacing: 12,
             children: [
-              SizedBox(height: 5,),
+              SizedBox(
+                height: 5,
+              ),
               CustomMeetingDetailsTop(meetings: meetings),
               TabBar(
                 labelStyle: Styles.textStyleBlack,
@@ -57,5 +59,3 @@ class MeetingDetailsScreen extends StatelessWidget {
     );
   }
 }
-
-
