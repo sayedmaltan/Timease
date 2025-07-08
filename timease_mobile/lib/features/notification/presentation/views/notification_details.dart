@@ -11,7 +11,6 @@ class NotificationDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Format the creation date and time
     final createdAt = notification.createdAt != null
         ? DateFormat.yMMMMd()
             .add_jm()
@@ -51,28 +50,25 @@ class NotificationDetailsScreen extends StatelessWidget {
             ),
           ),
           SingleChildScrollView(
-            // Use SingleChildScrollView for longer messages
             padding: const EdgeInsets.all(16.0),
             child: Card(
-              elevation: 5, // Slightly increased elevation for more depth
+              elevation: 5,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15)),
               child: Padding(
-                padding: const EdgeInsets.all(20.0), // Increased padding
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       notification.title ?? "No Title Provided",
                       style: const TextStyle(
-                        fontSize: 24, // Larger title
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: kPrimaryColor, // Matching app bar color
+                        color: kPrimaryColor,
                       ),
                     ),
                     const SizedBox(height: 8),
-
-                    // Creation Date and Time
                     Text(
                       'Received on: $createdAt',
                       style: TextStyle(
@@ -82,32 +78,23 @@ class NotificationDetailsScreen extends StatelessWidget {
                       ),
                     ),
                     const Divider(height: 30, thickness: 1.5),
-                    // Thicker divider
-
-                    // Notification Message
                     Text(
                       notification.message ?? "No message content.",
                       style: const TextStyle(
                         fontSize: 16,
-                        height: 1.5, // Line height for better readability
+                        height: 1.5,
                       ),
                     ),
                     const SizedBox(height: 20),
-                    // Spacing before optional details
-
-                    // Optional: Notification Type (newly added)
                     if (notification.notificationType != null) ...[
                       const Divider(height: 20, thickness: 0.8),
                       _buildDetailRow(
                         context,
                         "Type:",
                         notification.notificationType!.replaceAll('_', ' '),
-                        // Format type
                         Icons.category,
                       ),
                     ],
-
-                    // Optional: Payload ID
                     if (notification.payload != null) ...[
                       const Divider(height: 20, thickness: 0.8),
                       _buildDetailRow(
@@ -117,8 +104,6 @@ class NotificationDetailsScreen extends StatelessWidget {
                         Icons.link,
                       ),
                     ],
-
-                    // Optional: Is Sent (if available)
                     if (notification.isSent != null) ...[
                       const Divider(height: 20, thickness: 0.8),
                       _buildDetailRow(
@@ -140,7 +125,6 @@ class NotificationDetailsScreen extends StatelessWidget {
     );
   }
 
-  // Helper method to build consistent detail rows
   Widget _buildDetailRow(
       BuildContext context, String label, String value, IconData icon) {
     return Padding(

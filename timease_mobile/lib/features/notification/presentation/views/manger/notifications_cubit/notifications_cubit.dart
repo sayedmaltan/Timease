@@ -47,9 +47,11 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     if (isTimer) {
       for (var element in unSentNotifications) {
         NotificationsService().showNotification(
-            body: element.message,
-            title: element.title,
-            id: math.Random().nextInt(100));
+          body: element.message,
+          title: element.title,
+          id: math.Random().nextInt(100),
+          payloadData: element.toJson(),
+        );
       }
     }
   }

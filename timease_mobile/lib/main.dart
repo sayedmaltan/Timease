@@ -14,11 +14,22 @@ import 'core/utils/notification_service.dart';
 import 'features/event/data/repos/event_repo_impl.dart';
 import 'features/event/presentation/manger/event_cubit/user_events_cubit.dart';
 import 'features/meeting/presentation/manger/meeting_cubit/meeting_cubit.dart';
+import 'features/notification/data/models/notifications_model.dart';
+import 'features/notification/presentation/views/notification_details.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CashHelper.init();
-  NotificationsService().initNotification();
+  await NotificationsService().initNotification(
+    onNotificationClick: (payload) {
+      final notification = Notifications.fromJson(payload);
+      AppRouter.navigatorKey.currentState?.push(
+        MaterialPageRoute(
+          builder: (_) => NotificationDetailsScreen(notification: notification),
+        ),
+      );
+    },
+  );
   changeStatusBarColor();
   setupServiceLocator();
   runApp(const MyApp());
