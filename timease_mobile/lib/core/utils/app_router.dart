@@ -17,10 +17,12 @@ import 'package:timease_mobile/features/meeting/data/models/confirm_meeting_args
 import 'package:timease_mobile/features/meeting/presentation/views/create_meeting_screen_view.dart';
 import 'package:timease_mobile/features/meeting/presentation/views/widgets/confirm_meeting_screen_view.dart';
 import 'package:timease_mobile/features/meeting/presentation/views/widgets/try_book_meeting_view.dart';
+import 'package:timease_mobile/features/notification/presentation/views/notification_details.dart';
 import 'package:timease_mobile/features/splash/presentation/views/splash_view.dart';
 
 import '../../features/meeting/data/models/get_user_meetings_model.dart';
 import '../../features/meeting/presentation/views/meeting_details_screen.dart';
+import '../../features/notification/data/models/notifications_model.dart';
 
 abstract class AppRouter {
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -36,6 +38,8 @@ abstract class AppRouter {
   static const confirmMeetingScreenView = '/ConfirmMeetingScreenView';
   static const tryBookMeetingView = '/TryBookMeetingView';
   static const meetingDetailsScreen = '/meetingDetailsScreen';
+  static const notificationDetailsScreen = '/notificationDetailsScreen';
+
 
   static late EventModel eventModel;
   static final router = GoRouter(
@@ -137,6 +141,14 @@ abstract class AppRouter {
         builder: (BuildContext context, GoRouterState state) {
           return MeetingDetailsScreen(
             meetings: state.extra as Meetings,
+          );
+        },
+      ),
+      GoRoute(
+        path: notificationDetailsScreen,
+        builder: (BuildContext context, GoRouterState state) {
+          return NotificationDetailsScreen(
+            notification: state.extra as Notifications,
           );
         },
       ),

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:timease_mobile/features/notification/presentation/views/widgets/rich_text_button.dart';
-
 import '../../../data/models/notifications_model.dart';
 
 class NotificationItem extends StatelessWidget {
-  const NotificationItem(
-      {super.key,
-      required this.index,
-      required this.notifications,
-      required this.onTap});
+  const NotificationItem({
+    super.key,
+    required this.index,
+    required this.notifications,
+    required this.onTap,
+  });
 
   final int index;
   final Notifications notifications;
@@ -16,6 +17,11 @@ class NotificationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final createdAt = notifications.createdAt != null
+        ? DateFormat.yMMMMd()
+            .add_jm()
+            .format(DateTime.parse(notifications.createdAt!))
+        : 'Unknown date';
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -49,7 +55,7 @@ class NotificationItem extends StatelessWidget {
                   RichTextButton(
                     title: notifications.title!,
                     message: notifications.message!,
-                    date: notifications.createdAt!,
+                    date: createdAt,
                   ),
                 ],
               ),

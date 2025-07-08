@@ -34,7 +34,7 @@ class CustomTabBarBody extends StatelessWidget {
                     spacing: 10,
                     children: [
                       Icon(Icons.location_on_outlined),
-                      Text('Location'),
+                      Text('Cairo'),
                     ],
                   ),
                   Row(
@@ -86,17 +86,10 @@ class CustomTabBarBody extends StatelessWidget {
                     children: [
                       Icon(Icons.mail_outline),
                       Text(
-                        'sayedmaltan@gmail.com',
+                        '${meetings.attendees![0].firstName!.toLowerCase()}${meetings.attendees![0].lastName!.toLowerCase()}@gmail.com',
                         style:
                             Styles.textStyleSpaceButton.copyWith(fontSize: 15),
                       ),
-                    ],
-                  ),
-                  Row(
-                    spacing: 10,
-                    children: [
-                      Icon(Icons.phone_iphone),
-                      Text('Phone number'),
                     ],
                   ),
                   Row(
@@ -110,10 +103,9 @@ class CustomTabBarBody extends StatelessWidget {
               ),
             ),
           ),
-          Text('Notes'),
+          Center(child: Text('Coming Soon!')),
         ],
       ),
     );
   }
 }
-

@@ -6,32 +6,28 @@ class NotificationsService {
 
   bool get isInitialized => _isInitialized;
 
-  // initialize
   Future<void> initNotification() async {
     if (_isInitialized) return;
 
-    //   prepare android init setting
     const AndroidInitializationSettings initSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    //   prepare ios init setting
     const initSettingsIOS = DarwinInitializationSettings(
       requestSoundPermission: true,
       requestBadgePermission: true,
       requestAlertPermission: true,
     );
 
-    //  init setting
     const initSettings = InitializationSettings(
       android: initSettingsAndroid,
       iOS: initSettingsIOS,
     );
 
-    // init the plugin
-    await notificationPlugin.initialize(initSettings);
+    await notificationPlugin.initialize(
+      initSettings,
+    );
   }
 
-  // Notifications Details Setup
   NotificationDetails notificationDetails() {
     return const NotificationDetails(
         android: AndroidNotificationDetails(
@@ -44,7 +40,6 @@ class NotificationsService {
         iOS: DarwinNotificationDetails());
   }
 
-  // Show Notifications
   Future<void> showNotification({
     int id = 0,
     String? title,
