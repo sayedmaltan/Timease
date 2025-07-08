@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationsService {
@@ -6,25 +8,32 @@ class NotificationsService {
 
   bool get isInitialized => _isInitialized;
 
-  Future<void> initNotification() async {
-    if (_isInitialized) return;
-
+  Future<void> initNotification({
+    required void Function(Map<String, dynamic> payload) onNotificationClick,
+  }) async {
     const AndroidInitializationSettings initSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    const initSettingsIOS = DarwinInitializationSettings(
+    const DarwinInitializationSettings initSettingsIOS =
+        DarwinInitializationSettings(
       requestSoundPermission: true,
       requestBadgePermission: true,
       requestAlertPermission: true,
     );
 
-    const initSettings = InitializationSettings(
+    final initSettings = InitializationSettings(
       android: initSettingsAndroid,
       iOS: initSettingsIOS,
     );
 
     await notificationPlugin.initialize(
       initSettings,
+      onDidReceiveNotificationResponse: (NotificationResponse response) {
+        if (response.payload != null) {
+          final data = jsonDecode(response.payload!);
+          onNotificationClick(data);
+        }
+      },
     );
   }
 
@@ -44,7 +53,16 @@ class NotificationsService {
     int id = 0,
     String? title,
     String? body,
+    Map<String, dynamic>? payloadData,
   }) {
-    return notificationPlugin.show(id, title, body, notificationDetails());
+    final payload = payloadData != null ? jsonEncode(payloadData) : null;
+
+    return notificationPlugin.show(
+      id,
+      title,
+      body,
+      notificationDetails(),
+      payload: payload,
+    );
   }
 }

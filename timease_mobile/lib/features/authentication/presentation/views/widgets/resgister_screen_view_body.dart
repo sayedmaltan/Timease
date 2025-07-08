@@ -127,8 +127,8 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
                   ),
                   state is RegisterLoading
                       ? CustomLoadingButton(
-                    height: 50,
-                  )
+                          height: 50,
+                        )
                       : CustomFullButton(
                           text: 'Register',
                           height: 50,
@@ -137,8 +137,8 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
                               registerCubit.register(
                                 email: emailController.text,
                                 password: passwordController.text,
-                                firstName: firstNameController.toString(),
-                                lastName: lastNameController.toString(),
+                                firstName: firstNameController.text,
+                                lastName: lastNameController.text,
                               );
                             }
                           },
