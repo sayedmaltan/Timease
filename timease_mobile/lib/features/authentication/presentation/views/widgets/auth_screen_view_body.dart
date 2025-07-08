@@ -69,10 +69,10 @@ class AuthScreenViewBody extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 15,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
+                padding: const EdgeInsets.symmetric(horizontal: 17),
                 child: CustomEmptyButton(
                   response: () => context.push(AppRouter.loginScreen),
                   text: 'Sign in',

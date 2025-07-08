@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../../../constants.dart';
-import '../../../../../core/utils/styles.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomYourText extends StatelessWidget {
   final String text;
@@ -15,10 +13,13 @@ class CustomYourText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: Text(text,
-          style: Styles.textStyleBlack.copyWith(
-            color: kSecPrimaryColor.shade600,
-          )),
+      child: Text(
+        text,
+        style: GoogleFonts.acme(
+          fontSize: 20 ,
+          color : const Color.fromARGB(255, 108, 108, 108),
+        )
+      ),
     );
   }
 }
