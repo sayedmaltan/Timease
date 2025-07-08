@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:timease_mobile/core/utils/app_router.dart';
 import 'package:timease_mobile/core/utils/cash_helper.dart';
 import 'package:timease_mobile/core/utils/styles.dart';
 import 'package:timease_mobile/core/widgets/custom_shimmer_loading.dart';
@@ -61,6 +63,7 @@ class _NotificationsScreenViewBodyState
                               .saveCashedNotifications(
                                   unSentNotifications: state.notificationsList);
                           setState(() {});
+                          context.push(AppRouter.notificationDetailsScreen,extra: state.notificationsList[index]);
                         },
                       );
                     },

@@ -44,7 +44,7 @@ class BackgroundTaskService {
   Timer? _timer;
 
   void start({required BuildContext context}) {
-    _timer ??= Timer.periodic(Duration(minutes: 5), (timer) {
+    _timer ??= Timer.periodic(Duration(seconds: 30), (timer) {
       NotificationsCubit notificationsCubit = NotificationsCubit.get(context);
       notificationsCubit.getUnSentNotifications(
           userId: CashHelper.getData('userId'), isTimer: true);
