@@ -82,7 +82,7 @@ class CustomEventContainer extends StatelessWidget {
                 color: kSecPrimaryColor.shade300,
                 shape: BoxShape.circle,
               ),
-              child: Center(child: Text('SA')),
+              child: Center(child: Text('${eventModel.title?[0].toUpperCase()}${eventModel.title?[1].toUpperCase()}')),
             ),
             SizedBox(
               width: 15,
