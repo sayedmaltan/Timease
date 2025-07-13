@@ -19,8 +19,8 @@ class NotificationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final createdAt = notifications.createdAt != null
         ? DateFormat.yMMMMd()
-            .add_jm()
-            .format(DateTime.parse(notifications.createdAt!))
+        .add_jm()
+        .format(DateTime.parse(notifications.createdAt!))
         : 'Unknown date';
     return GestureDetector(
       onTap: onTap,
