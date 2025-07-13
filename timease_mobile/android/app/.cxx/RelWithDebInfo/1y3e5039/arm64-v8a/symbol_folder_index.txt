@@ -1,1 +1,0 @@
-D:\androidStudio\androidStudioProject\Timease\timease_mobile\build\app\intermediates\cxx\RelWithDebInfo\1y3e5039\obj\arm64-v8a
