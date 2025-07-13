@@ -25,15 +25,14 @@ class CustomEventContainer extends StatelessWidget {
       onTap: () {
         if (!eventModel.isPeriodic!) {
           if (!getLastDate(eventModel: eventModel).isBefore(DateTime.now())) {
-
-            isBooking?
-            showEventBookSheet(context, eventModel):
-            showEventModelSheet(context, eventModel);
+            isBooking
+                ? showEventBookSheet(context, eventModel)
+                : showEventModelSheet(context, eventModel);
           }
         } else {
-          isBooking?
-          showEventBookSheet(context, eventModel):
-          showEventModelSheet(context, eventModel);
+          isBooking
+              ? showEventBookSheet(context, eventModel)
+              : showEventModelSheet(context, eventModel);
         }
       },
       child: Container(
@@ -82,7 +81,9 @@ class CustomEventContainer extends StatelessWidget {
                 color: kSecPrimaryColor.shade300,
                 shape: BoxShape.circle,
               ),
-              child: Center(child: Text('${eventModel.title?[0].toUpperCase()}${eventModel.title?[1].toUpperCase()}')),
+              child: Center(
+                  child: Text(
+                      '${eventModel.title?[0].toUpperCase()}${eventModel.title?[1].toUpperCase()}')),
             ),
             SizedBox(
               width: 15,
