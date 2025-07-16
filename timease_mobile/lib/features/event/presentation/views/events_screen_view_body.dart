@@ -57,7 +57,7 @@ class EventsScreenViewBody extends StatelessWidget {
                   color: kSecPrimaryColor.shade400,
                 ),
                 CustomYourText(
-                  text: 'YOUR EVENT TYPES',
+                  text: 'YOUR EVENTS'
                 ),
                 if (state is GetUserEventsSuccess)
                   Expanded(

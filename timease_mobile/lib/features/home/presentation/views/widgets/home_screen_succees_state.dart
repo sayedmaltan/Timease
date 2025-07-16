@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../../../meeting/data/models/get_user_meetings_model.dart';
 import '../../../../meeting/presentation/views/widgets/custom_meeting_box.dart';
@@ -56,11 +57,8 @@ class HomeScreenSuccessState extends StatelessWidget {
             ),
             Text(
               'Timease',
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 29,
-                fontWeight: FontWeight.w700,
-                fontFamily: "jannah",
+              style: GoogleFonts.acme(
+                fontSize: 30
               ),
             ),
           ],

@@ -47,8 +47,8 @@ class _RegisterScreenViewBodyState extends State<RegisterScreenViewBody> {
                 children: [
                   Image.asset(
                     AssetsImages.registerScreen,
-                    width: 200,
-                    height: 200,
+                    width: 250,
+                    height: 250,
                   ),
                   Text(
                     'Sign Up',

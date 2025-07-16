@@ -45,6 +45,8 @@ class _LoginScreenViewBodyState extends State<LoginScreenViewBody> {
                 children: [
                   Image.asset(
                     AssetsImages.loginScreen,
+                    height: 350,
+                    width: 350,
                   ),
                   Text(
                     'Login',
